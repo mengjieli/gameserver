@@ -77,14 +77,14 @@ module swan {
          */
         public constructor() {
             super();
-            this.on(lark.TouchEvent.TOUCH_BEGIN, this.onWindowTouchBegin, this, false, 100);
+            this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onWindowTouchBegin, this, false, 100);
         }
 
         /**
          * @private
          * 在窗体上按下时前置窗口
          */
-        private onWindowTouchBegin(event:lark.TouchEvent):void {
+        private onWindowTouchBegin(event:egret.TouchEvent):void {
             this.$parent.addChild(this);
         }
 
@@ -104,7 +104,7 @@ module swan {
          * @version Swan 1.0
          * @platform Web,Native
          */
-        public set elementsContent(value:lark.DisplayObject[]) {
+        public set elementsContent(value:egret.DisplayObject[]) {
             if (value) {
                 var length = value.length;
                 for (var i = 0; i < length; i++) {
@@ -154,7 +154,7 @@ module swan {
          * @version Swan 1.0
          * @platform Web,Native
          */
-        public moveArea:lark.DisplayObject = null;
+        public moveArea:egret.DisplayObject = null;
 
         /**
          * @language en_US
@@ -227,10 +227,10 @@ module swan {
                 this.titleDisplay.text = this._title;
             }
             else if (instance == this.moveArea) {
-                this.moveArea.on(lark.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
+                this.moveArea.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
             }
             else if (instance == this.closeButton) {
-                this.closeButton.on(lark.TouchEvent.TOUCH_TAP, this.onCloseButtonClick, this);
+                this.closeButton.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onCloseButtonClick, this);
             }
         }
 
@@ -244,10 +244,10 @@ module swan {
         protected partRemoved(partName:string, instance:any):void {
             super.partRemoved(partName, instance);
             if (instance == this.moveArea) {
-                this.moveArea.removeListener(lark.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
+                this.moveArea.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
             }
             else if (instance == this.closeButton) {
-                this.closeButton.removeListener(lark.TouchEvent.TOUCH_TAP, this.onCloseButtonClick, this);
+                this.closeButton.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.onCloseButtonClick, this);
             }
         }
 
@@ -267,7 +267,7 @@ module swan {
          * @version Swan 1.0
          * @platform Web,Native
          */
-        protected onCloseButtonClick(event:lark.TouchEvent):void {
+        protected onCloseButtonClick(event:egret.TouchEvent):void {
             if (UIEvent.emitUIEvent(this, UIEvent.CLOSING)) {
                 this.close();
             }
@@ -322,12 +322,12 @@ module swan {
          * @version Swan 1.0
          * @platform Web,Native
          */
-        protected onTouchBegin(event:lark.TouchEvent):void {
+        protected onTouchBegin(event:egret.TouchEvent):void {
             this.$includeInLayout = false;
             this.offsetPointX = this.x - event.$stageX;
             this.offsetPointY = this.y - event.$stageY;
-            this.$stage.on(lark.TouchEvent.TOUCH_MOVE, this.onTouchMove, this);
-            this.$stage.on(lark.TouchEvent.TOUCH_END, this.onTouchEnd, this);
+            this.$stage.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.onTouchMove, this);
+            this.$stage.addEventListener(egret.TouchEvent.TOUCH_END, this.onTouchEnd, this);
         }
 
         /**
@@ -346,7 +346,7 @@ module swan {
          * @version Swan 1.0
          * @platform Web,Native
          */
-        protected onTouchMove(event:lark.TouchEvent):void {
+        protected onTouchMove(event:egret.TouchEvent):void {
             this.x = event.$stageX + this.offsetPointX;
             this.y = event.$stageY + this.offsetPointY;
         }
@@ -367,9 +367,9 @@ module swan {
          * @version Swan 1.0
          * @platform Web,Native
          */
-        protected onTouchEnd(event:lark.TouchEvent):void {
-            this.$stage.removeListener(lark.TouchEvent.TOUCH_MOVE, this.onTouchMove, this);
-            this.$stage.removeListener(lark.TouchEvent.TOUCH_END, this.onTouchEnd, this);
+        protected onTouchEnd(event:egret.TouchEvent):void {
+            this.$stage.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.onTouchMove, this);
+            this.$stage.removeEventListener(egret.TouchEvent.TOUCH_END, this.onTouchEnd, this);
         }
     }
 

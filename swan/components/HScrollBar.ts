@@ -70,7 +70,7 @@ module swan {
             if (!thumb || !viewport) {
                 return;
             }
-            var bounds = lark.$TempRectangle;
+            var bounds = egret.$TempRectangle;
             thumb.getPreferredBounds(bounds);
             var thumbWidth = bounds.width;
             var thumbY = bounds.y;

@@ -74,9 +74,9 @@ module swan {
      * @language en_US
      * The ListBase class is the base class for list component.
      * It can display items of list as vertical or horizontal such as SELECT of HTML.
-     * @event lark.Event.CHANGE Emitted after the selection has changed.
+     * @event egret.Event.CHANGE Emitted after the selection has changed.
      * This event is emitted when the user interacts with the control.
-     * @event lark.Event.CHANGING Emitted when the selection is going to change.
+     * @event egret.Event.CHANGING Emitted when the selection is going to change.
      * Calling the <code>preventDefault()</code> method
      * on the event prevents the selection from changing.<p/>
      * This event is emitted when the user interacts with the control.
@@ -90,8 +90,8 @@ module swan {
     /**
      * @language zh_CN
      * ListBase 是列表控件基类。可显示垂直或水平的项目列表。其功能与 HTML 中的 SELECT 表单元素的功能相似。
-     * @event lark.Event.CHANGE 选中的索引已经发生改变,注意：此事件仅在索引改变是由用户触摸操作引起时才抛出。
-     * @event lark.Event.CHANGING 选中的索引即将发生改变，可以通过调用事件对象的 preventDefault() 方法来阻止改变。<p/>
+     * @event egret.Event.CHANGE 选中的索引已经发生改变,注意：此事件仅在索引改变是由用户触摸操作引起时才抛出。
+     * @event egret.Event.CHANGING 选中的索引即将发生改变，可以通过调用事件对象的 preventDefault() 方法来阻止改变。<p/>
      * 注意：此事件仅在索引改变是由用户触摸操作引起时才抛出。
      *
      * @event swan.ItemTapEvent.ITEM_TAP 项呈示器单击事件。
@@ -561,7 +561,7 @@ module swan {
 
 
             if (values[sys.ListBaseKeys.emitChangeAfterSelection]) {
-                var result = this.emitWith(lark.Event.CHANGING, false, true);
+                var result = this.dispatchEventWith(egret.Event.CHANGING, false, true);
                 if (!result) {
                     this.itemSelected(values[sys.ListBaseKeys.proposedSelectedIndex], false);
                     values[sys.ListBaseKeys.proposedSelectedIndex] = ListBase.NO_PROPOSED_SELECTION;
@@ -582,7 +582,7 @@ module swan {
             //子类若需要自身抛出Change事件，而不是在此处抛出，可以设置emitChangedEvents为false
             if (emitChangedEvents) {
                 if (values[sys.ListBaseKeys.emitChangeAfterSelection]) {
-                    this.emitWith(lark.Event.CHANGE);
+                    this.dispatchEventWith(egret.Event.CHANGE);
                     values[sys.ListBaseKeys.emitChangeAfterSelection] = false;
                 }
                 PropertyEvent.emitPropertyEvent(this,PropertyEvent.PROPERTY_CHANGE,"selectedIndex");
@@ -706,7 +706,7 @@ module swan {
         /**
          * @language en_US
          * Event Listener of source data changed.
-         * @param The <code>lark.CollectionEvent</code> object.
+         * @param The <code>egret.CollectionEvent</code> object.
          * @version Lark 1.0
          * @version Swan 1.0
          * @platform Web,Native
@@ -714,7 +714,7 @@ module swan {
         /**
          * @language zh_CN
          * 数据源改变事件处理。
-         * @param event 事件 <code>lark.CollectionEvent</code> 的对象。
+         * @param event 事件 <code>egret.CollectionEvent</code> 的对象。
          * @version Lark 1.0
          * @version Swan 1.0
          * @platform Web,Native
@@ -770,8 +770,8 @@ module swan {
          * @platform Web,Native
          */
         protected rendererAdded(renderer:IItemRenderer, index:number, item:any):void {
-            renderer.on(lark.TouchEvent.TOUCH_BEGIN, this.onRendererTouchBegin, this);
-            renderer.on(lark.TouchEvent.TOUCH_END, this.onRendererTouchEnd, this);
+            renderer.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onRendererTouchBegin, this);
+            renderer.addEventListener(egret.TouchEvent.TOUCH_END, this.onRendererTouchEnd, this);
         }
 
         /**
@@ -795,39 +795,39 @@ module swan {
          * @platform Web,Native
          */
         protected rendererRemoved(renderer:IItemRenderer, index:number, item:any):void {
-            renderer.removeListener(lark.TouchEvent.TOUCH_BEGIN, this.onRendererTouchBegin, this);
-            renderer.removeListener(lark.TouchEvent.TOUCH_END, this.onRendererTouchEnd, this);
+            renderer.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onRendererTouchBegin, this);
+            renderer.removeEventListener(egret.TouchEvent.TOUCH_END, this.onRendererTouchEnd, this);
         }
 
         /**
          * @language en_US
-         * Handles <code>lark.TouchEvent.TOUCH_BEGIN</code> events from any of the
-         * item renderers. This method handles <code>lark.TouchEvent.TOUCH_END</code>.
-         * @param event The <code>lark.TouchEvent</code> object.
+         * Handles <code>egret.TouchEvent.TOUCH_BEGIN</code> events from any of the
+         * item renderers. This method handles <code>egret.TouchEvent.TOUCH_END</code>.
+         * @param event The <code>egret.TouchEvent</code> object.
          * @version Lark 1.0
          * @version Swan 1.0
          * @platform Web,Native
          */
         /**
          * @language zh_CN
-         * 侦听项呈示器<code>lark.TouchEvent.TOUCH_BEGIN</code>事件的方法。同时会添加对舞台<code>lark.TouchEvent.TOUCH_END</code>
+         * 侦听项呈示器<code>egret.TouchEvent.TOUCH_BEGIN</code>事件的方法。同时会添加对舞台<code>egret.TouchEvent.TOUCH_END</code>
          * 事件的侦听。
-         * @param event 事件<code>lark.TouchEvent</code>的对象。
+         * @param event 事件<code>egret.TouchEvent</code>的对象。
          * @version Lark 1.0
          * @version Swan 1.0
          * @platform Web,Native
          */
-        protected onRendererTouchBegin(event:lark.TouchEvent):void {
+        protected onRendererTouchBegin(event:egret.TouchEvent):void {
             if (event.$isDefaultPrevented)
                 return;
             this.$ListBase[sys.ListBaseKeys.touchDownItemRenderer] = <IItemRenderer> (event.$currentTarget);
-            this.$stage.on(lark.TouchEvent.TOUCH_END, this.stage_touchEndHandler, this);
+            this.$stage.addEventListener(egret.TouchEvent.TOUCH_END, this.stage_touchEndHandler, this);
         }
 
         /**
          * @language en_US
-         * Handles <code>lark.TouchEvent.TOUCH_END</code> events and emit <code>ItemTapEvent.ITEM_TAP</code> event.
-         * @param event The <code>lark.TouchEvent</code> object.
+         * Handles <code>egret.TouchEvent.TOUCH_END</code> events and emit <code>ItemTapEvent.ITEM_TAP</code> event.
+         * @param event The <code>egret.TouchEvent</code> object.
          * @version Lark 1.0
          * @version Swan 1.0
          * @platform Web,Native
@@ -835,12 +835,12 @@ module swan {
         /**
          * @language zh_CN
          * 触摸在项呈示器上结束，抛出<code>ItemTapEvent.ITEM_TAP</code>事件。
-         * @param event 事件<code>lark.TouchEvent</code>的对象。
+         * @param event 事件<code>egret.TouchEvent</code>的对象。
          * @version Lark 1.0
          * @version Swan 1.0
          * @platform Web,Native
          */
-        protected onRendererTouchEnd(event:lark.TouchEvent):void {
+        protected onRendererTouchEnd(event:egret.TouchEvent):void {
             var itemRenderer = <IItemRenderer> (event.$currentTarget);
             var touchDownItemRenderer = this.$ListBase[sys.ListBaseKeys.touchDownItemRenderer];
             if (itemRenderer != touchDownItemRenderer)
@@ -853,9 +853,9 @@ module swan {
          * @private
          * 触摸在舞台上结束
          */
-        private stage_touchEndHandler(event:lark.Event):void {
-            var stage = <lark.Stage>event.$currentTarget;
-            stage.removeListener(lark.TouchEvent.TOUCH_END, this.stage_touchEndHandler, this);
+        private stage_touchEndHandler(event:egret.Event):void {
+            var stage = <egret.Stage>event.$currentTarget;
+            stage.removeEventListener(egret.TouchEvent.TOUCH_END, this.stage_touchEndHandler, this);
             this.$ListBase[sys.ListBaseKeys.touchDownItemRenderer] = null;
         }
     }

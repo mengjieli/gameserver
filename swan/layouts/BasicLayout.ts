@@ -129,7 +129,7 @@ module swan {
                 return this.$useVirtualLayout;
             },
             set: function (value) {
-                lark.$error(2201);
+                egret.$error(2201);
             },
             enumerable: true,
             configurable: true
@@ -151,11 +151,11 @@ module swan.sys {
         }
         var width = 0;
         var height = 0;
-        var bounds = lark.$TempRectangle;
+        var bounds = egret.$TempRectangle;
         var count = target.numChildren;
         for (var i = 0; i < count; i++) {
             var layoutElement = <swan.UIComponent> (target.getChildAt(i));
-            if (!lark.is(layoutElement,UIComponentClass) || !layoutElement.$includeInLayout) {
+            if (!egret.is(layoutElement,UIComponentClass) || !layoutElement.$includeInLayout) {
                 continue;
             }
 
@@ -214,7 +214,7 @@ module swan.sys {
      * 一个工具方法，使用BasicLayout规则布局目标对象。
      */
     export function updateDisplayList(target:swan.Group|swan.Component,
-                                                 unscaledWidth:number, unscaledHeight:number):lark.Point{
+                                                 unscaledWidth:number, unscaledHeight:number):egret.Point{
         if (!target)
             return;
 
@@ -222,10 +222,10 @@ module swan.sys {
 
         var maxX = 0;
         var maxY = 0;
-        var bounds = lark.$TempRectangle;
+        var bounds = egret.$TempRectangle;
         for (var i = 0; i < count; i++) {
             var layoutElement = <swan.UIComponent> (target.getChildAt(i));
-            if (!lark.is(layoutElement,UIComponentClass) || !layoutElement.$includeInLayout) {
+            if (!egret.is(layoutElement,UIComponentClass) || !layoutElement.$includeInLayout) {
                 continue;
             }
 
@@ -288,6 +288,6 @@ module swan.sys {
             maxX = Math.max(maxX, childX + elementWidth);
             maxY = Math.max(maxY, childY + elementHeight);
         }
-        return lark.$TempPoint.setTo(maxX,maxY);
+        return egret.$TempPoint.setTo(maxX,maxY);
     }
 }

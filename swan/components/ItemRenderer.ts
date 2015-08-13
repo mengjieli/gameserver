@@ -75,7 +75,7 @@ module swan {
          */
         public constructor() {
             super();
-            this.on(lark.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
+            this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
         }
 
         /**
@@ -201,8 +201,8 @@ module swan {
          * @version Swan 1.0
          * @platform Web,Native
          */
-        protected onTouchBegin(event:lark.TouchEvent):void {
-            this.$stage.on(lark.TouchEvent.TOUCH_END, this.onStageTouchEnd, this);
+        protected onTouchBegin(event:egret.TouchEvent):void {
+            this.$stage.addEventListener(egret.TouchEvent.TOUCH_END, this.onStageTouchEnd, this);
             this.touchCaptured = true;
             this.invalidateState();
             event.updateAfterEvent();
@@ -212,9 +212,9 @@ module swan {
          * @private
          * 舞台上触摸弹起事件
          */
-        private onStageTouchEnd(event:lark.Event):void {
+        private onStageTouchEnd(event:egret.Event):void {
             var stage = event.$currentTarget;
-            stage.removeListener(lark.TouchEvent.TOUCH_END, this.onStageTouchEnd, this);
+            stage.removeEventListener(egret.TouchEvent.TOUCH_END, this.onStageTouchEnd, this);
             this.touchCaptured = false;
             this.invalidateState();
         }

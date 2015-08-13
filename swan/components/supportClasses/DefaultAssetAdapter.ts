@@ -30,7 +30,7 @@
 
 module swan {
 
-    var loaderPool:lark.ImageLoader[] = [];
+    var loaderPool:egret.ImageLoader[] = [];
     var callBackMap:any = {};
     var loaderMap:any = {};
 
@@ -81,13 +81,13 @@ module swan {
             }
             var loader = loaderPool.pop();
             if (!loader) {
-                loader = new lark.ImageLoader();
+                loader = new egret.ImageLoader();
             }
             callBackMap[source] = [[callBack, thisObject]];
             loaderMap[loader.$hashCode] = source;
 
-            loader.on(lark.Event.COMPLETE, this.onLoadFinish, this);
-            loader.on(lark.Event.IO_ERROR, this.onLoadFinish, this);
+            loader.addEventListener(egret.Event.COMPLETE, this.onLoadFinish, this);
+            loader.addEventListener(egret.Event.IO_ERROR, this.onLoadFinish, this);
             loader.load(source);
         }
 
@@ -96,12 +96,12 @@ module swan {
          * 
          * @param event 
          */
-        private onLoadFinish(event:lark.Event):void {
+        private onLoadFinish(event:egret.Event):void {
             var loader = event.currentTarget;
-            loader.removeListener(lark.Event.COMPLETE, this.onLoadFinish, this);
-            loader.removeListener(lark.Event.IO_ERROR, this.onLoadFinish, this);
-            var data:lark.BitmapData;
-            if (event.$type == lark.Event.COMPLETE) {
+            loader.removeEventListener(egret.Event.COMPLETE, this.onLoadFinish, this);
+            loader.removeEventListener(egret.Event.IO_ERROR, this.onLoadFinish, this);
+            var data:egret.BitmapData;
+            if (event.$type == egret.Event.COMPLETE) {
                 data = loader.data;
                 loader.data = null;
             }

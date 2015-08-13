@@ -104,7 +104,7 @@ module swan {
                 9: true,     //liveDragging
             };
             this.maximum = 10;
-            this.on(lark.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
+            this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
         }
 
         /**
@@ -128,7 +128,7 @@ module swan {
          * @version Swan 1.0
          * @platform Web,Native
          */
-        public trackHighlight:lark.DisplayObject = null;
+        public trackHighlight:egret.DisplayObject = null;
         /**
          * @language en_US
          * [SkinPart] Thumb display object.
@@ -315,17 +315,17 @@ module swan {
             super.partAdded(partName, instance);
 
             if (instance == this.thumb) {
-                this.thumb.on(lark.TouchEvent.TOUCH_BEGIN, this.onThumbTouchBegin, this);
-                this.thumb.on(lark.Event.RESIZE, this.onTrackOrThumbResize, this);
+                this.thumb.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onThumbTouchBegin, this);
+                this.thumb.addEventListener(egret.Event.RESIZE, this.onTrackOrThumbResize, this);
             }
             else if (instance == this.track) {
-                this.track.on(lark.TouchEvent.TOUCH_BEGIN, this.onTrackTouchBegin, this);
-                this.track.on(lark.Event.RESIZE, this.onTrackOrThumbResize, this);
+                this.track.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTrackTouchBegin, this);
+                this.track.addEventListener(egret.Event.RESIZE, this.onTrackOrThumbResize, this);
             }
             else if (instance === this.trackHighlight) {
                 this.trackHighlight.touchEnabled = false;
-                if (lark.is(this.trackHighlight, "lark.DisplayObjectContainer")) {
-                    (<lark.DisplayObjectContainer> this.trackHighlight).touchChildren = false;
+                if (egret.is(this.trackHighlight, "egret.DisplayObjectContainer")) {
+                    (<egret.DisplayObjectContainer> this.trackHighlight).touchChildren = false;
                 }
             }
         }
@@ -341,12 +341,12 @@ module swan {
             super.partRemoved(partName, instance);
 
             if (instance == this.thumb) {
-                this.thumb.removeListener(lark.TouchEvent.TOUCH_BEGIN, this.onThumbTouchBegin, this);
-                this.thumb.removeListener(lark.Event.RESIZE, this.onTrackOrThumbResize, this);
+                this.thumb.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onThumbTouchBegin, this);
+                this.thumb.removeEventListener(egret.Event.RESIZE, this.onTrackOrThumbResize, this);
             }
             else if (instance == this.track) {
-                this.track.removeListener(lark.TouchEvent.TOUCH_BEGIN, this.onTrackTouchBegin, this);
-                this.track.removeListener(lark.Event.RESIZE, this.onTrackOrThumbResize, this);
+                this.track.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTrackTouchBegin, this);
+                this.track.removeEventListener(egret.Event.RESIZE, this.onTrackOrThumbResize, this);
             }
         }
 
@@ -354,7 +354,7 @@ module swan {
          * @private
          * 滑块或轨道尺寸改变事件
          */
-        private onTrackOrThumbResize(event:lark.Event):void {
+        private onTrackOrThumbResize(event:egret.Event):void {
             this.updateSkinDisplayList();
         }
 
@@ -363,7 +363,7 @@ module swan {
          * @language en_US
          * Handle touch-begin events on the scroll thumb. Records the touch begin point in clickOffset.
          *
-         * @param The <code>lark.TouchEvent</code> object.
+         * @param The <code>egret.TouchEvent</code> object.
          *
          * @version Lark 1.0
          * @version Swan 1.0
@@ -373,22 +373,22 @@ module swan {
          * @language zh_CN
          * 滑块触摸开始事件，记录触碰开始的坐标偏移量。
          *
-         * @param event 事件 <code>lark.TouchEvent</code> 的对象.
+         * @param event 事件 <code>egret.TouchEvent</code> 的对象.
          *
          * @version Lark 1.0
          * @version Swan 1.0
          * @platform Web,Native
          */
-        protected onThumbTouchBegin(event:lark.TouchEvent):void {
+        protected onThumbTouchBegin(event:egret.TouchEvent):void {
             var values = this.$SliderBase;
             if (values[Keys.animation] && values[Keys.animation].isPlaying)
                 this.stopAnimation();
 
             var stage = this.$stage;
-            stage.on(lark.TouchEvent.TOUCH_MOVE, this.onStageTouchMove, this);
-            stage.on(lark.TouchEvent.TOUCH_END, this.onStageTouchEnd, this);
+            stage.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.onStageTouchMove, this);
+            stage.addEventListener(egret.TouchEvent.TOUCH_END, this.onStageTouchEnd, this);
 
-            var clickOffset = this.thumb.globalToLocal(event.stageX, event.stageY, lark.$TempPoint);
+            var clickOffset = this.thumb.globalToLocal(event.stageX, event.stageY, egret.$TempPoint);
 
             values[Keys.clickOffsetX] = clickOffset.x;
             values[Keys.clickOffsetY] = clickOffset.y;
@@ -399,14 +399,14 @@ module swan {
          * @private
          * 舞台上触摸移动事件
          */
-        private onStageTouchMove(event:lark.TouchEvent):void {
+        private onStageTouchMove(event:egret.TouchEvent):void {
             var values = this.$SliderBase;
             values[Keys.moveStageX] = event.$stageX;
             values[Keys.moveStageY] = event.$stageY;
             var track = this.track;
             if (!track)
                 return;
-            var p = track.globalToLocal(values[Keys.moveStageX], values[Keys.moveStageY], lark.$TempPoint);
+            var p = track.globalToLocal(values[Keys.moveStageX], values[Keys.moveStageY], egret.$TempPoint);
             var newValue = this.pointToValue(p.x - values[Keys.clickOffsetX], p.y - values[Keys.clickOffsetY]);
             newValue = this.nearestValidValue(newValue, this.snapInterval);
             this.updateWhenTouchMove(newValue);
@@ -433,7 +433,7 @@ module swan {
             if (newValue != this.$SliderBase[Keys.pendingValue]) {
                 if (this.liveDragging) {
                     this.setValue(newValue);
-                    this.emitWith(lark.Event.CHANGE);
+                    this.dispatchEventWith(egret.Event.CHANGE);
                 }
                 else {
                     this.pendingValue = newValue;
@@ -445,7 +445,7 @@ module swan {
          * @language en_US
          * Handle touch-end events anywhere on or off the stage.
          *
-         * @param The <code>lark.Event</code> object.
+         * @param The <code>egret.Event</code> object.
          *
          * @version Lark 1.0
          * @version Swan 1.0
@@ -455,21 +455,21 @@ module swan {
          * @language zh_CN
          * 触摸结束事件
          *
-         * @param event 事件 <code>lark.Event</code> 的对象。
+         * @param event 事件 <code>egret.Event</code> 的对象。
          *
          * @version Lark 1.0
          * @version Swan 1.0
          * @platform Web,Native
          */
-        protected onStageTouchEnd(event:lark.Event):void {
-            var stage:lark.Stage = event.$currentTarget;
-            stage.removeListener(lark.TouchEvent.TOUCH_MOVE, this.onStageTouchMove, this);
-            stage.removeListener(lark.TouchEvent.TOUCH_END, this.onStageTouchEnd, this);
+        protected onStageTouchEnd(event:egret.Event):void {
+            var stage:egret.Stage = event.$currentTarget;
+            stage.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.onStageTouchMove, this);
+            stage.removeEventListener(egret.TouchEvent.TOUCH_END, this.onStageTouchEnd, this);
             UIEvent.emitUIEvent(this, UIEvent.CHANGE_END);
             var values = this.$SliderBase;
             if (!this.liveDragging && this.value != values[Keys.pendingValue]) {
                 this.setValue(values[Keys.pendingValue]);
-                this.emitWith(lark.Event.CHANGE);
+                this.dispatchEventWith(egret.Event.CHANGE);
             }
         }
 
@@ -477,21 +477,21 @@ module swan {
          * @private
          * 当在组件上按下时记录被按下的子显示对象
          */
-        private onTouchBegin(event:lark.TouchEvent):void {
-            this.$stage.on(lark.TouchEvent.TOUCH_END, this.stageTouchEndHandler, this);
-            this.$SliderBase[Keys.touchDownTarget] = <lark.DisplayObject> (event.$target);
+        private onTouchBegin(event:egret.TouchEvent):void {
+            this.$stage.addEventListener(egret.TouchEvent.TOUCH_END, this.stageTouchEndHandler, this);
+            this.$SliderBase[Keys.touchDownTarget] = <egret.DisplayObject> (event.$target);
         }
 
         /**
          * @private
          * 当结束时，若不是在 touchDownTarget 上弹起，而是另外的子显示对象上弹起时，额外抛出一个触摸单击事件。
          */
-        private stageTouchEndHandler(event:lark.TouchEvent):void {
-            var target:lark.DisplayObject = event.$target;
+        private stageTouchEndHandler(event:egret.TouchEvent):void {
+            var target:egret.DisplayObject = event.$target;
             var values = this.$SliderBase;
-            event.$currentTarget.removeListener(lark.TouchEvent.TOUCH_END, this.stageTouchEndHandler, this);
-            if (values[Keys.touchDownTarget] != target && this.contains(<lark.DisplayObject> (target))) {
-                lark.TouchEvent.emitTouchEvent(this, lark.TouchEvent.TOUCH_TAP, true, true,
+            event.$currentTarget.removeEventListener(egret.TouchEvent.TOUCH_END, this.stageTouchEndHandler, this);
+            if (values[Keys.touchDownTarget] != target && this.contains(<egret.DisplayObject> (target))) {
+                egret.TouchEvent.emitTouchEvent(this, egret.TouchEvent.TOUCH_TAP, true, true,
                     event.$stageX, event.$stageY, event.touchPointID);
             }
             values[Keys.touchDownTarget] = null;
@@ -512,7 +512,7 @@ module swan {
          */
         private animationEndHandler(animation:sys.Animation):void {
             this.setValue(this.$SliderBase[Keys.slideToValue]);
-            this.emitWith(lark.Event.CHANGE);
+            this.dispatchEventWith(egret.Event.CHANGE);
             UIEvent.emitUIEvent(this, UIEvent.CHANGE_END);
         }
 
@@ -523,7 +523,7 @@ module swan {
         private stopAnimation():void {
             this.$SliderBase[Keys.animation].stop();
             this.setValue(this.nearestValidValue(this.pendingValue, this.snapInterval));
-            this.emitWith(lark.Event.CHANGE);
+            this.dispatchEventWith(egret.Event.CHANGE);
             UIEvent.emitUIEvent(this, UIEvent.CHANGE_END);
         }
 
@@ -533,7 +533,7 @@ module swan {
          * calculate the value based on the new position and then
          * move the thumb to the correct location as well as
          * commit the value.
-         * @param The <code>lark.TouchEvent</code> object.
+         * @param The <code>egret.TouchEvent</code> object.
          * @version Lark 1.0
          * @version Swan 1.0
          * @platform Web,Native
@@ -542,18 +542,18 @@ module swan {
          * @language zh_CN
          * 轨道的触碰开始事件。我们会在这里根据新的坐标位置计算value，然后移动滑块到当前位置。
          *
-         * @param event 事件 <code>lark.TouchEvent</code> 的对象.
+         * @param event 事件 <code>egret.TouchEvent</code> 的对象.
          *
          * @version Lark 1.0
          * @version Swan 1.0
          * @platform Web,Native
          */
-        protected onTrackTouchBegin(event:lark.TouchEvent):void {
+        protected onTrackTouchBegin(event:egret.TouchEvent):void {
             var thumbW = this.thumb ? this.thumb.width : 0;
             var thumbH = this.thumb ? this.thumb.height : 0;
             var offsetX = event.$stageX - (thumbW / 2);
             var offsetY = event.$stageY - (thumbH / 2);
-            var p = this.track.globalToLocal(offsetX, offsetY, lark.$TempPoint);
+            var p = this.track.globalToLocal(offsetX, offsetY, egret.$TempPoint);
 
             var rangeValues = this.$Range
             var newValue = this.pointToValue(p.x, p.y);
@@ -579,7 +579,7 @@ module swan {
                 }
                 else {
                     this.setValue(newValue);
-                    this.emitWith(lark.Event.CHANGE);
+                    this.dispatchEventWith(egret.Event.CHANGE);
                 }
             }
         }

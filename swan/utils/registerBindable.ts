@@ -57,10 +57,10 @@ module swan {
     export function registerBindable(instance:any,property:string):void{
         if (DEBUG) {
             if(!instance){
-                lark.$error(1003, "instance");
+                egret.$error(1003, "instance");
             }
             if(!property){
-                lark.$error(1003, "property");
+                egret.$error(1003, "property");
             }
         }
 

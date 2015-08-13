@@ -50,7 +50,7 @@ module swan {
      * @platform Web,Native
      * @includeExample examples/Samples/src/extension/swan/events/PropertyEventExample.ts
      */
-    export class PropertyEvent extends lark.Event {
+    export class PropertyEvent extends egret.Event {
         /**
          * @language en_US
          * Emit when a property changed.
@@ -141,14 +141,14 @@ module swan {
          * @version Swan 1.0
          * @platform Web,Native
          */
-        public static emitPropertyEvent(target:lark.IEventEmitter, eventType:string, property?:string):boolean {
+        public static emitPropertyEvent(target:egret.IEventDispatcher, eventType:string, property?:string):boolean {
             if (!target.hasListener(eventType)) {
                 return true;
             }
-            var event = lark.Event.create(PropertyEvent, eventType);
+            var event = egret.Event.create(PropertyEvent, eventType);
             event.property = property;
             var result = target.emit(event);
-            lark.Event.release(event);
+            egret.Event.release(event);
             return result;
         }
     }

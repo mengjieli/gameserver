@@ -89,9 +89,9 @@ module swan.sys {
          * 创建一个 TouchScroll 实例
          * @param updateFunction 滚动位置更新回调函数
          */
-        public constructor(updateFunction:(scrollPos:number)=>void, endFunction:()=>void, target:lark.IEventEmitter) {
+        public constructor(updateFunction:(scrollPos:number)=>void, endFunction:()=>void, target:egret.IEventDispatcher) {
             if (DEBUG && !updateFunction) {
-                lark.$error(1003, "updateFunction");
+                egret.$error(1003, "updateFunction");
             }
             this.updateFunction = updateFunction;
             this.endFunction = endFunction;
@@ -110,7 +110,7 @@ module swan.sys {
         /**
          * @private
          */
-        private target:lark.IEventEmitter;
+        private target:egret.IEventDispatcher;
         /**
          * @private
          */
@@ -173,7 +173,7 @@ module swan.sys {
          */
         public stop():void {
             this.animation.stop();
-            lark.stopTick(this.onTick, this);
+            egret.stopTick(this.onTick, this);
             this.started = false;
         }
 
@@ -196,10 +196,10 @@ module swan.sys {
             this.started = true;
             this.velocity = 0;
             this.previousVelocity.length = 0;
-            this.previousTime = lark.getTimer();
+            this.previousTime = egret.getTimer();
             this.previousPosition = this.currentPosition = touchPoint;
             this.offsetPoint = scrollValue + touchPoint;
-            lark.startTick(this.onTick, this);
+            egret.startTick(this.onTick, this);
         }
 
         /**
@@ -229,7 +229,7 @@ module swan.sys {
          * @param maxScrollPos 容器可以滚动的最大值。当目标值不在 0~maxValue之间时，将会应用更大的摩擦力，从而影响缓动时间的长度。
          */
         public finish(currentScrollPos:number, maxScrollPos:number):void {
-            lark.stopTick(this.onTick, this);
+            egret.stopTick(this.onTick, this);
             this.started = false;
             var sum = this.velocity * CURRENT_VELOCITY_WEIGHT;
             var previousVelocityX = this.previousVelocity;

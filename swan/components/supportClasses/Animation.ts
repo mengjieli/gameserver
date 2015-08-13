@@ -127,9 +127,9 @@ module swan.sys {
         private start():void {
             this.isPlaying = false;
             this.currentValue = 0;
-            this.startTime = lark.getTimer();
+            this.startTime = egret.getTimer();
             this.doInterval(this.startTime);
-            lark.startTick(this.doInterval,this);
+            egret.startTick(this.doInterval,this);
         }
 
         /**
@@ -139,7 +139,7 @@ module swan.sys {
         public stop():void {
             this.isPlaying = false;
             this.startTime = 0;
-            lark.stopTick(this.doInterval,this);
+            egret.stopTick(this.doInterval,this);
         }
 
         /**

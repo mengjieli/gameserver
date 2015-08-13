@@ -45,7 +45,7 @@ module swan {
      * @platform Web,Native
      * @includeExample examples/Samples/src/extension/swan/events/ItemTapEventExample.ts
      */
-    export class ItemTapEvent extends lark.Event {
+    export class ItemTapEvent extends egret.Event {
         /**
          * @language en_US
          * The type of the event object for an <code>itemTap</code> event.
@@ -147,16 +147,16 @@ module swan {
          * @version Swan 1.0
          * @platform Web,Native
          */
-        public static emitItemTapEvent(target:lark.IEventEmitter, eventType:string, itemRenderer?:IItemRenderer):boolean {
+        public static emitItemTapEvent(target:egret.IEventDispatcher, eventType:string, itemRenderer?:IItemRenderer):boolean {
             if (!target.hasListener(eventType)) {
                 return true;
             }
-            var event = lark.Event.create(ItemTapEvent, eventType);
+            var event = egret.Event.create(ItemTapEvent, eventType);
             event.item = itemRenderer.data;
             event.itemIndex = itemRenderer.itemIndex;
             event.itemRenderer = itemRenderer;
             var result = target.emit(event);
-            lark.Event.release(event);
+            egret.Event.release(event);
             return result;
         }
     }

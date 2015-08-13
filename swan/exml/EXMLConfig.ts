@@ -184,11 +184,11 @@ module swan.sys {
             var prototype = getPrototypeOf(className);
             if (prototype) {
                 if (!prototype.hasOwnProperty("__hashCode__")) {
-                    var clazz = lark.getDefinitionByName(className);
+                    var clazz = egret.getDefinitionByName(className);
                     var instance = getInstanceOf(clazz);
                     if (!instance) {
                         if (DEBUG) {
-                            lark.$warn(2104, className);
+                            egret.$warn(2104, className);
                         }
                         return resultType;
                     }
@@ -216,7 +216,7 @@ module swan.sys {
      * 获取一个类名对应的prototype引用
      */
     function getPrototypeOf(className:string):any {
-        var clazz = lark.getDefinitionByName(className);
+        var clazz = egret.getDefinitionByName(className);
         if (!clazz) {
             return null;
         }

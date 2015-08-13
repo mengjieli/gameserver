@@ -71,7 +71,7 @@ module swan {
         public constructor() {
             super();
             this.touchChildren = false;
-            this.on(lark.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
+            this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
         }
 
         /**
@@ -142,7 +142,7 @@ module swan {
         /**
          * @private
          */
-        private _icon:string|lark.BitmapData = null;
+        private _icon:string|egret.BitmapData = null;
         /**
          * @language en_US
          * Icon to appear on the Button control.
@@ -157,11 +157,11 @@ module swan {
          * @version Swan 1.0
          * @platform Web,Native
          */
-        public get icon():string|lark.BitmapData {
+        public get icon():string|egret.BitmapData {
             return this._icon;
         }
 
-        public set icon(value:string|lark.BitmapData) {
+        public set icon(value:string|egret.BitmapData) {
             this._icon = value;
             if (this.iconDisplay) {
                 this.iconDisplay.source = value;
@@ -177,7 +177,7 @@ module swan {
         /**
          * @language en_US
          * This method handles the touch events
-         * @param  The <code>lark.TouchEvent</code> object.
+         * @param  The <code>egret.TouchEvent</code> object.
          * @version Lark 1.0
          * @version Swan 1.0
          * @platform Web,Native
@@ -185,13 +185,13 @@ module swan {
         /**
          * @language zh_CN
          * 触碰事件处理。
-         * @param event 事件 <code>lark.TouchEvent</code> 的对象。
+         * @param event 事件 <code>egret.TouchEvent</code> 的对象。
          * @version Lark 1.0
          * @version Swan 1.0
          * @platform Web,Native
          */
-        protected onTouchBegin(event:lark.TouchEvent):void {
-            this.$stage.on(lark.TouchEvent.TOUCH_END, this.onStageTouchEnd, this);
+        protected onTouchBegin(event:egret.TouchEvent):void {
+            this.$stage.addEventListener(egret.TouchEvent.TOUCH_END, this.onStageTouchEnd, this);
             this.touchCaptured = true;
             this.invalidateState();
             event.updateAfterEvent();
@@ -201,9 +201,9 @@ module swan {
          * @private
          * 舞台上触摸弹起事件
          */
-        private onStageTouchEnd(event:lark.Event):void {
+        private onStageTouchEnd(event:egret.Event):void {
             var stage = event.$currentTarget;
-            stage.removeListener(lark.TouchEvent.TOUCH_END, this.onStageTouchEnd, this);
+            stage.removeEventListener(egret.TouchEvent.TOUCH_END, this.onStageTouchEnd, this);
             if (this.contains(event.target)){
                 this.buttonReleased();
             }
@@ -246,7 +246,7 @@ module swan {
 
         /**
          * @language en_US
-         * This method is called when handling a <code>lark.TouchEvent.TOUCH_END</code> event
+         * This method is called when handling a <code>egret.TouchEvent.TOUCH_END</code> event
          * when the user touches on the button. It is only called when the button
          * is the target and when <code>touchCaptured</code> is <code>true</code>.
          * @version Lark 1.0
@@ -255,7 +255,7 @@ module swan {
          */
         /**
          * @language zh_CN
-         * 当在用户单击按钮之后处理 <code>lark.TouchEvent.TOUCH_END</code> 事件时，将调用此方法。
+         * 当在用户单击按钮之后处理 <code>egret.TouchEvent.TOUCH_END</code> 事件时，将调用此方法。
          * 仅当以按钮为目标，并且 <code>touchCaptured</code> 为 <code>true</code> 时，才会调用此方法。
          * @version Lark 1.0
          * @version Swan 1.0

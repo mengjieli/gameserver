@@ -41,7 +41,7 @@ module swan {
      * to show the data. you can also set the <code>source</code> property, Image will auto load
      * and show the url image or the bitmapData.
      *
-     * @event lark.Event.COMPLETE Emitted when the image loaded complete.
+     * @event egret.Event.COMPLETE Emitted when the image loaded complete.
      * @version Lark 1.0
      * @version Swan 1.0
      * @platform Web,Native
@@ -53,20 +53,20 @@ module swan {
      * 赋值从外部加载得到的位图数据以显示对应图片。同时，Image 还提供了更加方便的 source 属性，source 属性可以接受一个网络图片url作为值，
      * 赋值为url后，它内部会自动去加载并显示图片。并且您同样也可以直接把 BitmapData 对象赋值给 source 属性以显示图片。
      *
-     * @event lark.Event.COMPLETE 当图片加载完成后调度
+     * @event egret.Event.COMPLETE 当图片加载完成后调度
      * @version Lark 1.0
      * @version Swan 1.0
      * @platform Web,Native
      * @includeExample examples/Samples/src/extension/swan/components/ImageExample.ts
      */
-    export class Image extends lark.Bitmap implements UIComponent {
+    export class Image extends egret.Bitmap implements UIComponent {
 
         /**
          * @language en_US
          * Constructor.
          *
          * @param source The source used for the bitmap fill. the value can be
-         * a string or an instance of <code>lark.BitmapData</code>
+         * a string or an instance of <code>egret.BitmapData</code>
          *
          * @version Lark 1.0
          * @version Swan 1.0
@@ -76,13 +76,13 @@ module swan {
          * @language zh_CN
          * 构造函数。
          *
-         * @param source 用于位图填充的源。可以是一个字符串或者 <code>lark.BitmapData</code> 对象
+         * @param source 用于位图填充的源。可以是一个字符串或者 <code>egret.BitmapData</code> 对象
          *
          * @version Lark 1.0
          * @version Swan 1.0
          * @platform Web,Native
          */
-        public constructor(source?:string|lark.BitmapData) {
+        public constructor(source?:string|egret.BitmapData) {
             super();
             this.initializeUIValues();
             if (source) {
@@ -93,7 +93,7 @@ module swan {
         /**
          * @private
          */
-        private _scale9Grid:lark.Rectangle = null;
+        private _scale9Grid:egret.Rectangle = null;
 
         /**
          * @language en_US
@@ -114,11 +114,11 @@ module swan {
          * @version Swan 1.0
          * @platform Web,Native
          */
-        public get scale9Grid():lark.Rectangle {
+        public get scale9Grid():egret.Rectangle {
             return this._scale9Grid;
         }
 
-        public set scale9Grid(value:lark.Rectangle) {
+        public set scale9Grid(value:egret.Rectangle) {
             this._scale9Grid = value;
             this.invalidateDisplayList();
         }
@@ -175,11 +175,11 @@ module swan {
         /**
          * @private
          */
-        private _source:string|lark.BitmapData = null;
+        private _source:string|egret.BitmapData = null;
         /**
          * @language en_US
          * The source used for the bitmap fill. the value can be
-         * a string or an instance of <code>lark.BitmapData</code>
+         * a string or an instance of <code>egret.BitmapData</code>
          *
          * @version Lark 1.0
          * @version Swan 1.0
@@ -187,17 +187,17 @@ module swan {
          */
         /**
          * @language zh_CN
-         * 用于位图填充的源。可以是一个字符串或者 <code>lark.BitmapData</code> 对象
+         * 用于位图填充的源。可以是一个字符串或者 <code>egret.BitmapData</code> 对象
          *
          * @version Lark 1.0
          * @version Swan 1.0
          * @platform Web,Native
          */
-        public get source():string|lark.BitmapData {
+        public get source():string|egret.BitmapData {
             return this._source;
         }
 
-        public set source(value:string|lark.BitmapData) {
+        public set source(value:string|egret.BitmapData) {
             if (value == this._source) {
                 return;
             }
@@ -209,9 +209,9 @@ module swan {
         /**
          * @private
          */
-        $setBitmapData(value:lark.BitmapData|lark.Texture):void {
+        $setBitmapData(value:egret.BitmapData|egret.Texture):void {
             var values = this.$Bitmap;
-            if (value == values[lark.sys.BitmapKeys.bitmapData]) {
+            if (value == values[egret.sys.BitmapKeys.bitmapData]) {
                 return;
             }
             super.$setBitmapData(value);
@@ -235,7 +235,7 @@ module swan {
                 adapter.getAsset(<string>this._source, this.contentChanged, this);
             }
             else {
-                this.$setBitmapData(<lark.BitmapData>source);
+                this.$setBitmapData(<egret.BitmapData>source);
             }
         }
 
@@ -246,24 +246,24 @@ module swan {
         private contentChanged(data:any, source:any):void {
             if (source !== this._source)
                 return;
-            if (!lark.is(data, "lark.BitmapData")&&!(data instanceof lark.Texture)) {
+            if (!egret.is(data, "egret.BitmapData")&&!(data instanceof egret.Texture)) {
                 return;
             }
             this.$setBitmapData(data);
             if (data) {
-                this.emitWith(lark.Event.COMPLETE);
+                this.dispatchEventWith(egret.Event.COMPLETE);
             }
             else if (DEBUG) {
-                lark.$warn(2301, source);
+                egret.$warn(2301, source);
             }
         }
 
         /**
          * @private
          */
-        $measureContentBounds(bounds:lark.Rectangle):void {
+        $measureContentBounds(bounds:egret.Rectangle):void {
             var values = this.$Bitmap;
-            var image = values[lark.sys.BitmapKeys.image];
+            var image = values[egret.sys.BitmapKeys.image];
             if (image) {
                 var uiValues = this.$UIComponent;
                 var width = uiValues[sys.UIKeys.width];
@@ -273,11 +273,11 @@ module swan {
                     return;
                 }
                 if (this._fillMode == "clip") {
-                    if (width > values[lark.sys.BitmapKeys.width]) {
-                        width = values[lark.sys.BitmapKeys.width];
+                    if (width > values[egret.sys.BitmapKeys.width]) {
+                        width = values[egret.sys.BitmapKeys.width];
                     }
-                    if (height > values[lark.sys.BitmapKeys.height]) {
-                        height = values[lark.sys.BitmapKeys.height];
+                    if (height > values[egret.sys.BitmapKeys.height]) {
+                        height = values[egret.sys.BitmapKeys.height];
                     }
                 }
                 bounds.setTo(0, 0, width, height);
@@ -292,9 +292,9 @@ module swan {
          * 
          * @param context 
          */
-        $render(context:lark.sys.RenderContext):void {
+        $render(context:egret.sys.RenderContext):void {
             var values = this.$Bitmap;
-            var image = values[lark.sys.BitmapKeys.image];
+            var image = values[egret.sys.BitmapKeys.image];
             if (!image) {
                 return;
             }
@@ -306,11 +306,11 @@ module swan {
             }
             switch (this._fillMode) {
                 case "clip":
-                    if (width > values[lark.sys.BitmapKeys.width]) {
-                        width = values[lark.sys.BitmapKeys.width];
+                    if (width > values[egret.sys.BitmapKeys.width]) {
+                        width = values[egret.sys.BitmapKeys.width];
                     }
-                    if (height > values[lark.sys.BitmapKeys.height]) {
-                        height = values[lark.sys.BitmapKeys.height];
+                    if (height > values[egret.sys.BitmapKeys.height]) {
+                        height = values[egret.sys.BitmapKeys.height];
                     }
                     context.drawImage(image, 0, 0, width, height, 0, 0, width, height);
                     break;
@@ -322,7 +322,7 @@ module swan {
                     context.fill();
                     break;
                 default ://scale
-                    context.imageSmoothingEnabled = values[lark.sys.BitmapKeys.smoothing];
+                    context.imageSmoothingEnabled = values[egret.sys.BitmapKeys.smoothing];
                     if (this._scale9Grid) {
                         this.drawScale9GridImage(context, image, this._scale9Grid, width, height);
                     }
@@ -337,8 +337,8 @@ module swan {
          * @private
          * 绘制九宫格位图
          */
-        private drawScale9GridImage(context:lark.sys.RenderContext, image:lark.BitmapData,
-                                    scale9Grid:lark.Rectangle, surfaceWidth?:number, surfaceHeight?:number):void {
+        private drawScale9GridImage(context:egret.sys.RenderContext, image:egret.BitmapData,
+                                    scale9Grid:egret.Rectangle, surfaceWidth?:number, surfaceHeight?:number):void {
 
             var imageWidth = image.width;
             var imageHeight = image.height;
@@ -465,9 +465,9 @@ module swan {
          */
         protected measure():void {
             var values = this.$Bitmap;
-            var image = values[lark.sys.BitmapKeys.image];
+            var image = values[egret.sys.BitmapKeys.image];
             if (image) {
-                this.setMeasuredSize(values[lark.sys.BitmapKeys.width], values[lark.sys.BitmapKeys.height]);
+                this.setMeasuredSize(values[egret.sys.BitmapKeys.width], values[egret.sys.BitmapKeys.height]);
             }
             else {
                 this.setMeasuredSize(0, 0);
@@ -747,7 +747,7 @@ module swan {
          * @version Swan 1.0
          * @platform Web,Native
          */
-        public getLayoutBounds(bounds:lark.Rectangle):void {
+        public getLayoutBounds(bounds:egret.Rectangle):void {
         }
 
         /**
@@ -757,10 +757,10 @@ module swan {
          * @version Swan 1.0
          * @platform Web,Native
          */
-        public getPreferredBounds(bounds:lark.Rectangle):void {
+        public getPreferredBounds(bounds:egret.Rectangle):void {
         }
     }
 
-    sys.implementUIComponent(Image, lark.Bitmap);
-    registerProperty(Image, "scale9Grid", "lark.Rectangle");
+    sys.implementUIComponent(Image, egret.Bitmap);
+    registerProperty(Image, "scale9Grid", "egret.Rectangle");
 }

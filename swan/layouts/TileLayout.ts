@@ -827,7 +827,7 @@ module swan {
             var count = numElements;
             for (var index = 0; index < count; index++) {
                 var layoutElement = <UIComponent> (target.getElementAt(index));
-                if (!lark.is(layoutElement, UIComponentClass) || !layoutElement.$includeInLayout) {
+                if (!egret.is(layoutElement, UIComponentClass) || !layoutElement.$includeInLayout) {
                     numElements--;
                     continue;
                 }
@@ -945,12 +945,12 @@ module swan {
         private doUpdateMaxElementSize(startIndex:number, endIndex:number):void {
             var maxElementWidth = this.maxElementWidth;
             var maxElementHeight = this.maxElementHeight;
-            var bounds = lark.$TempRectangle;
+            var bounds = egret.$TempRectangle;
             var target = this.$target;
             if ((startIndex != -1) && (endIndex != -1)) {
                 for (var index = startIndex; index <= endIndex; index++) {
                     var elt = <UIComponent> target.getElementAt(index);
-                    if (!lark.is(elt, UIComponentClass) || !elt.$includeInLayout) {
+                    if (!egret.is(elt, UIComponentClass) || !elt.$includeInLayout) {
                         continue;
                     }
                     elt.getPreferredBounds(bounds);
@@ -1133,7 +1133,7 @@ module swan {
             var rowHeight = this._rowHeight;
             for (var i = this.startIndex; i <= endIndex; i++) {
                 elt = <UIComponent> target.getElementAt(i);
-                if (!lark.is(elt, UIComponentClass) || !elt.$includeInLayout) {
+                if (!egret.is(elt, UIComponentClass) || !elt.$includeInLayout) {
                     continue;
                 }
 
@@ -1185,23 +1185,23 @@ module swan {
             element.setLayoutBoundsSize(Math.round(elementWidth), Math.round(elementHeight));
 
             var x = cellX;
-            var bounds = lark.$TempRectangle;
+            var bounds = egret.$TempRectangle;
             element.getLayoutBounds(bounds);
             switch (this._horizontalAlign) {
-                case lark.HorizontalAlign.RIGHT:
+                case egret.HorizontalAlign.RIGHT:
                     x += cellWidth - bounds.width;
                     break;
-                case lark.HorizontalAlign.CENTER:
+                case egret.HorizontalAlign.CENTER:
                     x = cellX + (cellWidth - bounds.width) / 2;
                     break;
             }
 
             var y = cellY;
             switch (this._verticalAlign) {
-                case lark.VerticalAlign.BOTTOM:
+                case egret.VerticalAlign.BOTTOM:
                     y += cellHeight - bounds.height;
                     break;
-                case lark.VerticalAlign.MIDDLE:
+                case egret.VerticalAlign.MIDDLE:
                     y += (cellHeight - bounds.height) / 2;
                     break;
             }
@@ -1258,7 +1258,7 @@ module swan {
 
 
     if(DEBUG){
-        lark.$markReadOnly(TileLayout,"columnCount");
-        lark.$markReadOnly(TileLayout,"rowCount");
+        egret.$markReadOnly(TileLayout,"columnCount");
+        egret.$markReadOnly(TileLayout,"rowCount");
     }
 }
