@@ -28,6 +28,10 @@
 //////////////////////////////////////////////////////////////////////////////////////
 
 module swan.sys {
+
+    /**
+     * @private
+     */
     export const enum ComponentKeys {
         hostComponentKey,
         skinName,
@@ -67,7 +71,7 @@ module swan {
      * @version Swan 1.0
      * @platform Web,Native
      */
-    export class Component extends egret.DisplayObjectContainer implements UIComponent {
+    export class Component extends egret.Sprite implements UIComponent {
         /**
          * Constructor.
          *
@@ -98,7 +102,6 @@ module swan {
                 7: false,        //explicitTouchEnabled
                 8: null          //skin
             };
-            this.$touchEnabled = true;
         }
 
         $Component:Object;
@@ -179,13 +182,16 @@ module swan {
                     else if (text.substr(text.length - 5, 5).toLowerCase() == ".exml") {
                         clazz = parsedClasses[skinName];
                         if(!clazz){
-                            EXML.load(skinName,this.onExmlLoaded,this);
+                            EXML.load(skinName,this.addEventListenerExmlLoaded,this);
                             return;
                         }
-                        this.dispatchEventWith(egret.Event.COMPLETE);
+                        this.dispatchEventWidth(egret.Event.COMPLETE);
                     }
                     else{
                         clazz = egret.getDefinitionByName(skinName);
+                        if(!clazz) {
+                            DEBUG && egret.$error(2203,skinName);
+                        }
                     }
                     if (clazz) {
                         skin = new clazz();
@@ -210,7 +216,7 @@ module swan {
             }
             var skin = new clazz();
             this.setSkin(skin)
-            this.dispatchEventWith(egret.Event.COMPLETE);
+            this.dispatchEventWidth(egret.Event.COMPLETE);
         }
 
         /**

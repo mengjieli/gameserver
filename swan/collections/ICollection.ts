@@ -45,7 +45,7 @@ module swan {
 	 * @version Swan 1.0
 	 * @platform Web,Native
 	 */
-	export interface ICollection extends egret.IEventDispatcher{
+	export interface ICollection extends egret.IEventEmitter{
 		/**
 		 * @language en_US
 		 * The number of items in this view.
@@ -105,7 +105,7 @@ module swan {
 	}
 }
 
-interface ICollection extends egret.IEventDispatcher {
+interface ICollection extends egret.IEventEmitter {
 	/**
 	 *  此集合中的项目数。0 表示不包含项目。
 	 *  @readOnly

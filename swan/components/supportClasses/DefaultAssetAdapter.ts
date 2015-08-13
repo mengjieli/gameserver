@@ -30,7 +30,7 @@
 
 module swan {
 
-    var loaderPool:egret.URLLoader[] = [];
+    var loaderPool:egret.ImageLoader[] = [];
     var callBackMap:any = {};
     var loaderMap:any = {};
 
@@ -81,15 +81,14 @@ module swan {
             }
             var loader = loaderPool.pop();
             if (!loader) {
-                var loader:egret.URLLoader = new egret.URLLoader();
-                loader.dataFormat = egret.URLLoaderDataFormat.TEXTURE;
+                loader = new egret.ImageLoader();
             }
             callBackMap[source] = [[callBack, thisObject]];
             loaderMap[loader.$hashCode] = source;
 
-            loader.addEventListener(egret.Event.COMPLETE, this.onLoadFinish, this);
-            loader.addEventListener(egret.Event.IO_ERROR, this.onLoadFinish, this);
-            loader.load(new egret.URLRequest(source));
+            loader.addEventListener(egret.Event.COMPLETE, this.addEventListenerLoadFinish, this);
+            loader.addEventListener(egret.Event.IO_ERROR, this.addEventListenerLoadFinish, this);
+            loader.load(source);
         }
 
         /**
@@ -99,8 +98,8 @@ module swan {
          */
         private onLoadFinish(event:egret.Event):void {
             var loader = event.currentTarget;
-            loader.removeEventListener(egret.Event.COMPLETE, this.onLoadFinish, this);
-            loader.removeEventListener(egret.Event.IO_ERROR, this.onLoadFinish, this);
+            loader.removeEventListener(egret.Event.COMPLETE, this.addEventListenerLoadFinish, this);
+            loader.removeEventListener(egret.Event.IO_ERROR, this.addEventListenerLoadFinish, this);
             var data:egret.BitmapData;
             if (event.$type == egret.Event.COMPLETE) {
                 data = loader.data;

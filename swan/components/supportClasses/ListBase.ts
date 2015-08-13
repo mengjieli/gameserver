@@ -561,7 +561,7 @@ module swan {
 
 
             if (values[sys.ListBaseKeys.emitChangeAfterSelection]) {
-                var result = this.dispatchEventWith(egret.Event.CHANGING, false, true);
+                var result = this.dispatchEventWidth(egret.Event.CHANGING, false, true);
                 if (!result) {
                     this.itemSelected(values[sys.ListBaseKeys.proposedSelectedIndex], false);
                     values[sys.ListBaseKeys.proposedSelectedIndex] = ListBase.NO_PROPOSED_SELECTION;
@@ -582,7 +582,7 @@ module swan {
             //子类若需要自身抛出Change事件，而不是在此处抛出，可以设置emitChangedEvents为false
             if (emitChangedEvents) {
                 if (values[sys.ListBaseKeys.emitChangeAfterSelection]) {
-                    this.dispatchEventWith(egret.Event.CHANGE);
+                    this.dispatchEventWidth(egret.Event.CHANGE);
                     values[sys.ListBaseKeys.emitChangeAfterSelection] = false;
                 }
                 PropertyEvent.emitPropertyEvent(this,PropertyEvent.PROPERTY_CHANGE,"selectedIndex");
@@ -720,7 +720,7 @@ module swan {
          * @platform Web,Native
          */
         protected onCollectionChange(event:CollectionEvent):void {
-            super.onCollectionChange(event);
+            super.addEventListenerCollectionChange(event);
             if (event.kind == CollectionEventKind.RESET) {
                 if (this.$dataProvider.length == 0) {
                     this.setSelectedIndex(ListBase.NO_SELECTION, false);
@@ -770,8 +770,8 @@ module swan {
          * @platform Web,Native
          */
         protected rendererAdded(renderer:IItemRenderer, index:number, item:any):void {
-            renderer.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onRendererTouchBegin, this);
-            renderer.addEventListener(egret.TouchEvent.TOUCH_END, this.onRendererTouchEnd, this);
+            renderer.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.addEventListenerRendererTouchBegin, this);
+            renderer.addEventListener(egret.TouchEvent.TOUCH_END, this.addEventListenerRendererTouchEnd, this);
         }
 
         /**
@@ -795,8 +795,8 @@ module swan {
          * @platform Web,Native
          */
         protected rendererRemoved(renderer:IItemRenderer, index:number, item:any):void {
-            renderer.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onRendererTouchBegin, this);
-            renderer.removeEventListener(egret.TouchEvent.TOUCH_END, this.onRendererTouchEnd, this);
+            renderer.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.addEventListenerRendererTouchBegin, this);
+            renderer.removeEventListener(egret.TouchEvent.TOUCH_END, this.addEventListenerRendererTouchEnd, this);
         }
 
         /**

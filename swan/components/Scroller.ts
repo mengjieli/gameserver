@@ -74,6 +74,7 @@ module swan {
      * @event swan.UIEvent.CHANGE_START Emitted when the scroll position is going to change
      * @event swan.UIEvent.CHANGE_END Emitted when the scroll position changed complete
      *
+     * @defaultProperty viewport
      * @version Lark 1.0
      * @version Swan 1.0
      * @platform Web,Native
@@ -95,6 +96,8 @@ module swan {
      *
      * @event swan.UIEvent.CHANGE_START 滚动位置改变开始
      * @event swan.UIEvent.CHANGE_END 滚动位置改变结束
+     *
+     * @defaultProperty viewport
      * @version Lark 1.0
      * @version Swan 1.0
      * @platform Web,Native
@@ -159,7 +162,7 @@ module swan {
                 10: null,           //delayTouchTimer,
                 11: null,           //delayTouchEvent
                 12: null,           //viewport
-                13: false          //viewprotRemovedEvent
+                13: false,          //viewprotRemovedEvent
             };
         }
 
@@ -254,7 +257,7 @@ module swan {
         /**
          * @language en_US
          * Indicates under what conditions the vertical scroll bar is displayed.
-         * <p><code>ScrollPolicy.ON</code> - the scroll bar is always displayed.</p>
+         * <p><code>ScrollPolicy.addEventListener</code> - the scroll bar is always displayed.</p>
          * <p><code>ScrollPolicy.OFF</code> - the scroll bar is never displayed.</p>
          * <p><code>ScrollPolicy.AUTO</code> - the scroll bar is displayed when
          *  the viewport's contentHeight is larger than its height.
@@ -268,7 +271,7 @@ module swan {
         /**
          * @language zh_CN
          * 指示在哪些条件下会显示垂直滑动条。
-         * <p><code>ScrollPolicy.ON</code> - 始终显示滚动条。</p>
+         * <p><code>ScrollPolicy.addEventListener</code> - 始终显示滚动条。</p>
          * <p><code>ScrollPolicy.OFF</code> - 从不显示滚动条。</p>
          * <p><code>ScrollPolicy.AUTO</code> - 当视域的 contentHeight 大于其自身的高度时显示滚动条。</p>
          *
@@ -294,7 +297,7 @@ module swan {
         /**
          * @language en_US
          * Indicates under what conditions the horizontal scroll bar is displayed.
-         * <p><code>ScrollPolicy.ON</code> - the scroll bar is always displayed.</p>
+         * <p><code>ScrollPolicy.addEventListener</code> - the scroll bar is always displayed.</p>
          * <p><code>ScrollPolicy.OFF</code> - the scroll bar is never displayed.</p>
          * <p><code>ScrollPolicy.AUTO</code> - the scroll bar is displayed when
          *  the viewport's contentWidth is larger than its width.
@@ -308,7 +311,7 @@ module swan {
         /**
          * @language zh_CN
          * 指示在哪些条件下会显示水平滑动条。
-         * <p><code>ScrollPolicy.ON</code> - 始终显示滚动条。</p>
+         * <p><code>ScrollPolicy.addEventListener</code> - 始终显示滚动条。</p>
          * <p><code>ScrollPolicy.OFF</code> - 从不显示滚动条。</p>
          * <p><code>ScrollPolicy.AUTO</code> - 当视域的 contentWidth 大于其自身的宽度时显示滚动条。</p>
          *
@@ -370,9 +373,9 @@ module swan {
             if (viewport) {
                 this.addChildAt(viewport, 0);
                 viewport.scrollEnabled = true;
-                viewport.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBeginCapture, this, true);
-                viewport.addEventListener(egret.TouchEvent.TOUCH_END, this.onTouchEndCapture, this, true);
-                viewport.addEventListener(egret.Event.REMOVED,this.onViewPortRemove,this);
+                viewport.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.addEventListenerTouchBeginCapture, this, true);
+                viewport.addEventListener(egret.TouchEvent.TOUCH_END, this.addEventListenerTouchEndCapture, this, true);
+                viewport.addEventListener(egret.Event.REMOVED,this.addEventListenerViewPortRemove,this);
             }
             if (this.horizontalScrollBar) {
                 this.horizontalScrollBar.viewport = viewport;
@@ -396,9 +399,9 @@ module swan {
             var viewport = this.viewport;
             if (viewport) {
                 viewport.scrollEnabled = false;
-                viewport.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBeginCapture, this, true);
-                viewport.removeEventListener(egret.TouchEvent.TOUCH_END, this.onTouchEndCapture, this, true);
-                viewport.removeEventListener(egret.Event.REMOVED,this.onViewPortRemove,this);
+                viewport.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.addEventListenerTouchBeginCapture, this, true);
+                viewport.removeEventListener(egret.TouchEvent.TOUCH_END, this.addEventListenerTouchEndCapture, this, true);
+                viewport.removeEventListener(egret.Event.REMOVED,this.addEventListenerViewPortRemove,this);
                 if(this.$Scroller[Keys.viewprotRemovedEvent] == false) {
                     this.removeChild(viewport);
                 }
@@ -459,7 +462,7 @@ module swan {
                 target = target.$parent;
             }
             this.delayEmitEvent(event);
-            this.onTouchBegin(event);
+            this.addEventListenerTouchBegin(event);
         }
 
         /**
@@ -470,7 +473,7 @@ module swan {
         private delayEmitEvent(event:egret.TouchEvent):void {
             var values = this.$Scroller;
             if (values[Keys.delayTouchEvent]) {
-                this.onDelayTouchEventTimer();
+                this.addEventListenerDelayTouchEventTimer();
             }
             event.stopPropagation();
             var touchEvent = egret.Event.create(egret.TouchEvent, event.$type, event.$bubbles, event.$cancelable);
@@ -479,7 +482,7 @@ module swan {
             values[Keys.delayTouchEvent] = touchEvent;
             if (!values[Keys.delayTouchTimer]) {
                 values[Keys.delayTouchTimer] = new egret.Timer(100, 1);
-                values[Keys.delayTouchTimer].addEventListener(egret.TimerEvent.TIMER_COMPLETE, this.onDelayTouchEventTimer, this);
+                values[Keys.delayTouchTimer].addEventListener(egret.TimerEvent.TIMER_COMPLETE, this.addEventListenerDelayTouchEventTimer, this);
             }
             values[Keys.delayTouchTimer].start();
         }
@@ -596,8 +599,8 @@ module swan {
                     viewport.contentHeight - uiValues[sys.UIKeys.height]);
             }
             var stage = this.$stage;
-            stage.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.onTouchMove, this);
-            stage.addEventListener(egret.TouchEvent.TOUCH_END, this.onTouchEnd, this);
+            stage.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.addEventListenerTouchMove, this);
+            stage.addEventListener(egret.TouchEvent.TOUCH_END, this.addEventListenerTouchEnd, this);
             event.preventDefault();
         }
 
@@ -651,8 +654,8 @@ module swan {
             var values = this.$Scroller;
             values[Keys.touchMoved] = false;
             var stage:egret.Stage = event.$currentTarget;
-            stage.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.onTouchMove, this);
-            stage.removeEventListener(egret.TouchEvent.TOUCH_END, this.onTouchEnd, this);
+            stage.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.addEventListenerTouchMove, this);
+            stage.removeEventListener(egret.TouchEvent.TOUCH_END, this.addEventListenerTouchEnd, this);
 
             var viewport:IViewport = values[Keys.viewport];
             var uiValues = viewport.$UIComponent;
@@ -688,7 +691,7 @@ module swan {
          */
         private horizontalEndHandler():void {
             if (!this.$Scroller[Keys.touchScrollV].isPlaying()) {
-                this.onChangeEnd();
+                this.addEventListenerChangeEnd();
             }
         }
 
@@ -698,7 +701,7 @@ module swan {
          */
         private verticalEndHanlder():void {
             if (!this.$Scroller[Keys.touchScrollH].isPlaying()) {
-                this.onChangeEnd();
+                this.addEventListenerChangeEnd();
             }
         }
 
@@ -713,7 +716,7 @@ module swan {
             if (horizontalBar && horizontalBar.visible || verticalBar && verticalBar.visible) {
                 if (!values[Keys.autoHideTimer]) {
                     values[Keys.autoHideTimer] = new egret.Timer(200, 1);
-                    values[Keys.autoHideTimer].addEventListener(egret.TimerEvent.TIMER_COMPLETE, this.onAutoHideTimer, this);
+                    values[Keys.autoHideTimer].addEventListener(egret.TimerEvent.TIMER_COMPLETE, this.addEventListenerAutoHideTimer, this);
                 }
                 values[Keys.autoHideTimer].reset();
                 values[Keys.autoHideTimer].start();

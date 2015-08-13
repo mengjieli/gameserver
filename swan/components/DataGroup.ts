@@ -30,6 +30,9 @@
 
 module swan {
 
+    /**
+     * @private
+     */
     const enum Keys{
         useVirtualLayout,
         useVirtualLayoutChanged,
@@ -54,7 +57,7 @@ module swan {
      * to hold data items as children.
      *
      * @see swan.Group
-     *
+     * @defaultProperty dataProvider
      * @includeExample examples/Samples/src/extension/swan/components/DataGroupExample.ts
      * @version Lark 1.0
      * @version Swan 1.0
@@ -66,7 +69,7 @@ module swan {
      * 尽管此容器可以包含可视元素，但它通常仅用于包含作为子项的数据项目。
      *
      * @see swan.Group
-     *
+     * @defaultProperty dataProvider
      * @includeExample examples/Samples/src/extension/swan/components/DataGroupExample.ts
      * @version Lark 1.0
      * @version Swan 1.0
@@ -145,11 +148,11 @@ module swan {
 
             if (this.$layout) {
                 this.$layout.setTypicalSize(0, 0);
-                this.$layout.removeEventListener("useVirtualLayoutChanged", this.onUseVirtualLayoutChanged, this);
+                this.$layout.removeEventListener("useVirtualLayoutChanged", this.addEventListenerUseVirtualLayoutChanged, this);
             }
 
             if (this.$layout && value && (this.$layout.$useVirtualLayout != value.$useVirtualLayout))
-                this.onUseVirtualLayoutChanged();
+                this.addEventListenerUseVirtualLayoutChanged();
             super.$setLayout(value);
             if (value) {
                 var rect = this.$DataGroup[Keys.typicalLayoutRect];
@@ -157,7 +160,7 @@ module swan {
                     value.setTypicalSize(rect.width, rect.height);
                 }
                 value.useVirtualLayout = this.$DataGroup[Keys.useVirtualLayout];
-                value.addEventListener("useVirtualLayoutChanged", this.onUseVirtualLayoutChanged, this);
+                value.addEventListener("useVirtualLayoutChanged", this.addEventListenerUseVirtualLayoutChanged, this);
             }
         }
 
@@ -360,7 +363,7 @@ module swan {
          */
         private removeDataProviderListener():void {
             if (this.$dataProvider)
-                this.$dataProvider.removeEventListener(CollectionEvent.COLLECTION_CHANGE, this.onCollectionChange, this);
+                this.$dataProvider.removeEventListener(CollectionEvent.COLLECTION_CHANGE, this.addEventListenerCollectionChange, this);
         }
 
         /**
@@ -712,7 +715,7 @@ module swan {
                 values[Keys.useVirtualLayoutChanged] = false;
                 values[Keys.itemRendererChanged] = false;
                 if (this.$dataProvider)
-                    this.$dataProvider.addEventListener(CollectionEvent.COLLECTION_CHANGE, this.onCollectionChange, this);
+                    this.$dataProvider.addEventListener(CollectionEvent.COLLECTION_CHANGE, this.addEventListenerCollectionChange, this);
                 if (this.$layout && this.$layout.$useVirtualLayout) {
                     this.invalidateSize();
                     this.invalidateDisplayList();

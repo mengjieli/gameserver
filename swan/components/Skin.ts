@@ -46,6 +46,7 @@ module swan {
      *      </s:Skin>
      * </pre>
      *
+     * @defaultProperty elementsContent
      * @version Lark 1.0
      * @version Swan 1.0
      * @platform Web,Native
@@ -66,6 +67,7 @@ module swan {
      *      </s:Skin>
      * </pre>
      *
+     * @defaultProperty elementsContent
      * @version Lark 1.0
      * @version Swan 1.0
      * @platform Web,Native
@@ -257,7 +259,7 @@ module swan {
             if (this._hostComponent == value)
                 return;
             if(this._hostComponent){
-                this._hostComponent.removeEventListener(egret.Event.ADDED_TO_STAGE,this.onAddedToStage,this);
+                this._hostComponent.removeEventListener(egret.Event.ADDED_TO_STAGE,this.addEventListenerAddedToStage,this);
             }
             this._hostComponent = value;
             var values = this.$stateValues;
@@ -269,7 +271,7 @@ module swan {
                         this.initializeStates(value.$stage);
                     }
                     else{
-                        value.once(egret.Event.ADDED_TO_STAGE,this.onAddedToStage,this);
+                        value.addEventListenerce(egret.Event.ADDED_TO_STAGE,this.addEventListenerAddedToStage,this);
                     }
                 }
             }

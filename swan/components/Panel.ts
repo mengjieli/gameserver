@@ -38,6 +38,7 @@ module swan {
      * @event swan.UIEvent.CLOSING Emitted when the close button is taped
      * you can use <code>event.preventDefault()</code> to prevent close.
      *
+     * @defaultProperty elementsContent
      * @version Lark 1.0
      * @version Swan 1.0
      * @platform Web,Native
@@ -50,6 +51,7 @@ module swan {
      * @event swan.UIEvent.CLOSING 面板即将关闭事件，在关闭按钮被点击后抛出，
      * 监听此事件并调用<code>event.preventDefault()</code>能够阻止面板被关闭。
      *
+     * @defaultProperty elementsContent
      * @version Lark 1.0
      * @version Swan 1.0
      * @platform Web,Native
@@ -75,7 +77,7 @@ module swan {
          */
         public constructor() {
             super();
-            this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onWindowTouchBegin, this, false, 100);
+            this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.addEventListenerWindowTouchBegin, this, false, 100);
         }
 
         /**
@@ -225,10 +227,10 @@ module swan {
                 this.titleDisplay.text = this._title;
             }
             else if (instance == this.moveArea) {
-                this.moveArea.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
+                this.moveArea.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.addEventListenerTouchBegin, this);
             }
             else if (instance == this.closeButton) {
-                this.closeButton.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onCloseButtonClick, this);
+                this.closeButton.addEventListener(egret.TouchEvent.TOUCH_TAP, this.addEventListenerCloseButtonClick, this);
             }
         }
 
@@ -242,10 +244,10 @@ module swan {
         protected partRemoved(partName:string, instance:any):void {
             super.partRemoved(partName, instance);
             if (instance == this.moveArea) {
-                this.moveArea.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
+                this.moveArea.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.addEventListenerTouchBegin, this);
             }
             else if (instance == this.closeButton) {
-                this.closeButton.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.onCloseButtonClick, this);
+                this.closeButton.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.addEventListenerCloseButtonClick, this);
             }
         }
 
@@ -324,8 +326,8 @@ module swan {
             this.$includeInLayout = false;
             this.offsetPointX = this.x - event.$stageX;
             this.offsetPointY = this.y - event.$stageY;
-            this.$stage.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.onTouchMove, this);
-            this.$stage.addEventListener(egret.TouchEvent.TOUCH_END, this.onTouchEnd, this);
+            this.$stage.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.addEventListenerTouchMove, this);
+            this.$stage.addEventListener(egret.TouchEvent.TOUCH_END, this.addEventListenerTouchEnd, this);
         }
 
         /**
@@ -366,8 +368,8 @@ module swan {
          * @platform Web,Native
          */
         protected onTouchEnd(event:egret.TouchEvent):void {
-            this.$stage.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.onTouchMove, this);
-            this.$stage.removeEventListener(egret.TouchEvent.TOUCH_END, this.onTouchEnd, this);
+            this.$stage.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.addEventListenerTouchMove, this);
+            this.$stage.removeEventListener(egret.TouchEvent.TOUCH_END, this.addEventListenerTouchEnd, this);
         }
     }
 

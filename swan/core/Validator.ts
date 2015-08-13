@@ -34,7 +34,7 @@ module swan.sys {
      * @private
      * 失效验证管理器
      */
-    export class Validator extends egret.EventDispatcher {
+    export class Validator extends egret.EventEmitter {
         /**
          * @private
          * 创建一个Validator对象

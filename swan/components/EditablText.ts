@@ -48,7 +48,7 @@ module swan {
      * @version Swan 1.0
      * @platform Web,Native
      */
-    export class EditableText extends egret.TextField implements UIComponent,IDisplayText {
+    export class EditableText extends egret.TextInput implements UIComponent,IDisplayText {
 
         /**
          * @language en_US
@@ -66,9 +66,7 @@ module swan {
          */
         public constructor() {
             super();
-
             this.initializeUIValues();
-            this.type = egret.TextFieldType.INPUT;
         }
 
         /**
@@ -484,6 +482,6 @@ module swan {
         }
     }
 
-    sys.implementUIComponent(EditableText, egret.TextField);
+    sys.implementUIComponent(EditableText, egret.TextInput);
     registerBindable(EditableText.prototype, "text");
 }
