@@ -38,7 +38,6 @@ module swan {
      *
      * @event swan.CollectionEvent.COLLECTION_CHANGE Emited when the ArrayCollection has been updated in some way.
      *
-     * @defaultProperty source
      * @version Lark 1.0
      * @version Swan 1.0
      * @platform Web,Native
@@ -51,13 +50,12 @@ module swan {
      *
      * @event swan.CollectionEvent.COLLECTION_CHANGE 当 ArrayCollection 更新的的时候会派发此事件。
      *
-     * @defaultProperty source
      * @version Lark 1.0
      * @version Swan 1.0
      * @platform Web,Native
      * @includeExample examples/Samples/src/extension/swan/collections/ArrayCollectionExample.ts
      */
-    export class ArrayCollection extends egret.EventEmitter implements ICollection {
+    export class ArrayCollection extends egret.EventDispatcher implements ICollection {
         /**
          * @language en_US
          * Constructor. <p/>

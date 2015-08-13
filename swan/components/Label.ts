@@ -95,8 +95,9 @@ module swan {
          * @platform Web,Native
          */
         public constructor(text?:string) {
-            super(text);
+            super();
             this.initializeUIValues();
+            this.text = text;
         }
 
         /**

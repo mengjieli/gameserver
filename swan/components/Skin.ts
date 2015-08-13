@@ -46,7 +46,6 @@ module swan {
      *      </s:Skin>
      * </pre>
      *
-     * @defaultProperty elementsContent
      * @version Lark 1.0
      * @version Swan 1.0
      * @platform Web,Native
@@ -67,7 +66,6 @@ module swan {
      *      </s:Skin>
      * </pre>
      *
-     * @defaultProperty elementsContent
      * @version Lark 1.0
      * @version Swan 1.0
      * @platform Web,Native

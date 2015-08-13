@@ -31,9 +31,9 @@ module EXML {
 
     var parser = new swan.sys.EXMLParser();
 
-    var requestPool:egret.HttpRequest[] = [];
+    var loaderPool:egret.URLLoader[] = [];
     var callBackMap:any = {};
-    var requestMap:any = {};
+    var loaderMap:any = {};
 
     /**
      * @language en_US
@@ -105,16 +105,16 @@ module EXML {
             list.push([callBack, thisObject]);
             return;
         }
-        var request = requestPool.pop();
-        if (!request) {
-            request = new egret.HttpRequest();
+        var loader = loaderPool.pop();
+        if (!loader) {
+            var loader:egret.URLLoader = new egret.URLLoader();
+            loader.dataFormat = egret.URLLoaderDataFormat.TEXT;
         }
         callBackMap[url] = [[callBack, thisObject]];
-        requestMap[request.$hashCode] = url;
-        request.addEventListener(egret.Event.COMPLETE, onLoadFinish, null);
-        request.addEventListener(egret.Event.IO_ERROR, onLoadFinish, null);
-        request.open(url);
-        request.send();
+        loaderMap[loader.$hashCode] = url;
+        loader.addEventListener(egret.Event.COMPLETE, onLoadFinish, null);
+        loader.addEventListener(egret.Event.IO_ERROR, onLoadFinish, null);
+        loader.load(new egret.URLRequest(url));
     }
 
     /**
@@ -123,16 +123,17 @@ module EXML {
      * @param event 
      */
     function onLoadFinish(event:egret.Event):void {
-        var request:egret.HttpRequest = event.currentTarget;
-        request.removeEventListener(egret.Event.COMPLETE, onLoadFinish, null);
-        request.removeEventListener(egret.Event.IO_ERROR, onLoadFinish, null);
-        var text:string = event.type == egret.Event.COMPLETE ? request.response : "";
+        var loader:egret.URLLoader = <egret.URLLoader> (event.target);
+
+        loader.removeEventListener(egret.Event.COMPLETE, onLoadFinish, null);
+        loader.removeEventListener(egret.Event.IO_ERROR, onLoadFinish, null);
+        var text:string = event.type == egret.Event.COMPLETE ? loader.data : "";
         if (text) {
             var clazz = parse(text);
         }
-        requestPool.push(request);
-        var url = requestMap[request.$hashCode];
-        delete requestMap[request.$hashCode];
+        loaderPool.push(loader);
+        var url = loaderMap[loader.$hashCode];
+        delete loaderMap[loader.$hashCode];
         var list:any[] = callBackMap[url];
         delete callBackMap[url];
         var length = list.length;

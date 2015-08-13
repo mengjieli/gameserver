@@ -561,7 +561,7 @@ module swan {
 
 
             if (values[sys.ListBaseKeys.emitChangeAfterSelection]) {
-                var result = this.dispatchEventWidth(egret.Event.CHANGING, false, true);
+                var result = this.dispatchEventWith(egret.Event.CHANGING, false, true);
                 if (!result) {
                     this.itemSelected(values[sys.ListBaseKeys.proposedSelectedIndex], false);
                     values[sys.ListBaseKeys.proposedSelectedIndex] = ListBase.NO_PROPOSED_SELECTION;
@@ -582,7 +582,7 @@ module swan {
             //子类若需要自身抛出Change事件，而不是在此处抛出，可以设置emitChangedEvents为false
             if (emitChangedEvents) {
                 if (values[sys.ListBaseKeys.emitChangeAfterSelection]) {
-                    this.dispatchEventWidth(egret.Event.CHANGE);
+                    this.dispatchEventWith(egret.Event.CHANGE);
                     values[sys.ListBaseKeys.emitChangeAfterSelection] = false;
                 }
                 PropertyEvent.emitPropertyEvent(this,PropertyEvent.PROPERTY_CHANGE,"selectedIndex");
