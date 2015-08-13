@@ -36,7 +36,7 @@ module swan {
      * @private
      * 显示列表深度排序
      */
-    function breadthOrderCompare(a:lark.DisplayObject, b:lark.DisplayObject):number {
+    function breadthOrderCompare(a:egret.DisplayObject, b:egret.DisplayObject):number {
         var aParent = a.parent;
         var bParent = b.parent;
 
@@ -70,7 +70,7 @@ module swan {
      * that act as a single mutually exclusive component; therefore,
      * a user can select only one RadioButton component at a time.
      *
-     * @event lark.Event.CHANGE Emitted when the value of the selected RadioButton component in
+     * @event egret.Event.CHANGE Emitted when the value of the selected RadioButton component in
      * this group changes.
      *
      * @version Lark 1.0
@@ -82,14 +82,14 @@ module swan {
      * @language zh_CN
      * RadioButtonGroup 组件定义一组 RadioButton 组件，这些组件相互排斥；因此，用户每次只能选择一个 RadioButton 组件
      *
-     * @event lark.Event.CHANGE 此组中所选 RadioButton 组件的值更改时分派。
+     * @event egret.Event.CHANGE 此组中所选 RadioButton 组件的值更改时分派。
      *
      * @version Lark 1.0
      * @version Swan 1.0
      * @platform Web,Native
      * @includeExample examples/Samples/src/extension/swan/components/RadioButtonGroupExample.ts
      */
-    export class RadioButtonGroup extends lark.EventEmitter {
+    export class RadioButtonGroup extends egret.EventDispatcher {
 
         /**
          * @language en_US
@@ -332,7 +332,7 @@ module swan {
          * 添加单选按钮到组内
          */
         $addInstance(instance:RadioButton):void {
-            instance.on(lark.Event.REMOVED, this.removedHandler, this);
+            instance.addEventListener(egret.Event.REMOVED, this.removedHandler, this);
             var buttons = this.radioButtons;
             buttons.push(instance);
             buttons.sort(breadthOrderCompare);
@@ -365,7 +365,7 @@ module swan {
                     }
                     else if (rb == instance) {
                         if (addListener)
-                            instance.on(lark.Event.ADDED, this.addedHandler, this);
+                            instance.addEventListener(egret.Event.ADDED, this.addedHandler, this);
                         if (instance == this._selection)
                             this._selection = null;
                         instance.$radioButtonGroup = null;
@@ -392,7 +392,7 @@ module swan {
                     this._selection.selected = false;
                     this._selection = null;
                     if (fireChange)
-                        this.emitWith(lark.Event.CHANGE);
+                        this.dispatchEventWith(egret.Event.CHANGE);
                 }
             }
             else {
@@ -420,7 +420,7 @@ module swan {
                 this._selection = rb;
                 this._selection.selected = true;
                 if (fireChange)
-                    this.emitWith(lark.Event.CHANGE);
+                    this.dispatchEventWith(egret.Event.CHANGE);
             }
         }
 
@@ -429,10 +429,10 @@ module swan {
          * @private
          * 单选按钮添加到显示列表
          */
-        private addedHandler(event:lark.Event):void {
+        private addedHandler(event:egret.Event):void {
             var rb:RadioButton = event.target;
             if (rb) {
-                rb.removeListener(lark.Event.ADDED, this.addedHandler, this);
+                rb.removeEventListener(egret.Event.ADDED, this.addedHandler, this);
                 this.$addInstance(rb);
             }
         }
@@ -441,10 +441,10 @@ module swan {
          * @private
          * 单选按钮从显示列表移除
          */
-        private removedHandler(event:lark.Event):void {
+        private removedHandler(event:egret.Event):void {
             var rb:RadioButton = event.target;
             if (rb) {
-                rb.removeListener(lark.Event.REMOVED, this.removedHandler, this);
+                rb.removeEventListener(egret.Event.REMOVED, this.removedHandler, this);
                 this.$removeInstance(rb, true);
             }
         }
@@ -452,6 +452,6 @@ module swan {
     registerBindable(RadioButtonGroup.prototype,"selectedValue");
 
     if(DEBUG){
-        lark.$markReadOnly(RadioButtonGroup,"numRadioButtons");
+        egret.$markReadOnly(RadioButtonGroup,"numRadioButtons");
     }
 }

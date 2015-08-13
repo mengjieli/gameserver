@@ -127,9 +127,9 @@ module swan.sys {
         private start():void {
             this.isPlaying = false;
             this.currentValue = 0;
-            this.startTime = lark.getTimer();
+            this.startTime = egret.getTimer();
             this.doInterval(this.startTime);
-            lark.startTick(this.doInterval,this);
+            egret.startTick(this.doInterval,this);
         }
 
         /**
@@ -139,7 +139,7 @@ module swan.sys {
         public stop():void {
             this.isPlaying = false;
             this.startTime = 0;
-            lark.stopTick(this.doInterval,this);
+            egret.stopTick(this.doInterval,this);
         }
 
         /**
@@ -147,7 +147,7 @@ module swan.sys {
          * 计算当前值并返回动画是否结束
          */
         private doInterval(currentTime:number):boolean {
-            var runningTime = currentTime - this.startTime;
+            var runningTime = egret.getTimer() - this.startTime;
             if (!this.isPlaying) {
                 this.isPlaying = true;
             }

@@ -40,7 +40,7 @@ module swan.sys {
     var innerClassCount = 1;
 
     var DECLARATIONS = "Declarations";
-    var RECTANGLE = "lark.Rectangle";
+    var RECTANGLE = "egret.Rectangle";
     var TYPE_CLASS = "Class";
     var TYPE_ARRAY = "Array";
     var TYPE_STATE = "State[]";
@@ -72,7 +72,7 @@ module swan.sys {
          * @private
          * 获取重复的ID名
          */
-        public getRepeatedIds:(xml:lark.XML)=>string[];
+        public getRepeatedIds:(xml:egret.XML)=>string[];
         /**
          * @private
          */
@@ -84,7 +84,7 @@ module swan.sys {
         /**
          * @private
          */
-        private checkDeclarations:(declarations:lark.XML, list:string[])=>void;
+        private checkDeclarations:(declarations:egret.XML, list:string[])=>void;
 
         /**
          * @private
@@ -100,7 +100,7 @@ module swan.sys {
          * @private
          * 当前要编译的EXML文件
          */
-        private currentXML:lark.XML;
+        private currentXML:egret.XML;
         /**
          * @private
          * id缓存字典
@@ -156,15 +156,15 @@ module swan.sys {
         public parse(text:string):{new():any} {
             if (DEBUG) {
                 if (!text) {
-                    lark.$error(1003, "text");
+                    egret.$error(1003, "text");
                 }
             }
             try {
-                var xmlData = lark.XML.parse(text);
+                var xmlData = egret.XML.parse(text);
             }
             catch (e) {
                 if (DEBUG) {
-                    lark.$error(2002, text + "\n" + e.message);
+                    egret.$error(2002, text + "\n" + e.message);
                 }
             }
             var className:string = "";
@@ -184,12 +184,12 @@ module swan.sys {
             }
             catch (e) {
                 if (DEBUG) {
-                    lark.log(code);
+                    egret.log(code);
                 }
                 return null;
             }
             if (hasClass && clazz) {
-                lark.registerClass(clazz,className);
+                egret.registerClass(clazz,className);
                 var paths = className.split(".");
                 var length = paths.length;
                 var definition = __global;
@@ -199,7 +199,7 @@ module swan.sys {
                 }
                 if (definition[paths[length - 1]]) {
                     if (DEBUG&&!parsedClasses[className]) {
-                        lark.$warn(2101, className, toXMLString(xmlData));
+                        egret.$warn(2101, className, toXMLString(xmlData));
                     }
                 }
                 else {
@@ -216,7 +216,7 @@ module swan.sys {
          * @private
          * 编译指定的XML对象为CpClass对象。
          */
-        private parseClass(xmlData:lark.XML, className:string):EXClass {
+        private parseClass(xmlData:egret.XML, className:string):EXClass {
             if (!exmlConfig) {
                 exmlConfig = new EXMLConfig();
             }
@@ -254,7 +254,7 @@ module swan.sys {
             if (DEBUG) {
                 var result = this.getRepeatedIds(this.currentXML);
                 if (result.length > 0) {
-                    lark.$error(2004, this.currentClassName, result.join("\n"));
+                    egret.$error(2004, this.currentClassName, result.join("\n"));
                 }
             }
             this.currentClass.superClass = this.getClassNameOfNode(this.currentXML);
@@ -279,14 +279,14 @@ module swan.sys {
                 this.checkDeclarations(this.declarations, list);
 
                 if (list.length > 0) {
-                    lark.$error(2020, this.currentClassName, list.join("\n"));
+                    egret.$error(2020, this.currentClassName, list.join("\n"));
                 }
             }
 
 
             if (!this.currentXML.namespace) {
                 if (DEBUG) {
-                    lark.$error(2017, this.currentClassName, toXMLString(this.currentXML));
+                    egret.$error(2017, this.currentClassName, toXMLString(this.currentXML));
                 }
                 return;
             }
@@ -304,13 +304,13 @@ module swan.sys {
             }
             var length = items.length;
             for (var i = 0; i < length; i++) {
-                var node:lark.XML = items[i];
+                var node:egret.XML = items[i];
                 if (node.nodeType != 1) {
                     continue;
                 }
                 if (!node.namespace) {
                     if (DEBUG) {
-                        lark.$error(2017, this.currentClassName, toXMLString(node));
+                        egret.$error(2017, this.currentClassName, toXMLString(node));
                     }
                     continue;
                 }
@@ -327,7 +327,7 @@ module swan.sys {
                     if (index == -1 || !children || children.length == 0) {
                         continue;
                     }
-                    var firstChild:lark.XML = children[0];
+                    var firstChild:egret.XML = children[0];
                     this.stateIds.push(firstChild.attributes.id);
                 }
                 else if (node.nodeType === 1) {
@@ -355,7 +355,7 @@ module swan.sys {
          * @private
          * 是否为内部类。
          */
-        private isInnerClass(node:lark.XML):boolean {
+        private isInnerClass(node:egret.XML):boolean {
             if (node.hasOwnProperty("isInnerClass")) {
                 return node["isInnerClass"];
             }
@@ -391,7 +391,7 @@ module swan.sys {
          * @private
          * 检测指定节点的属性是否含有视图状态
          */
-        private containsState(node:lark.XML):boolean {
+        private containsState(node:egret.XML):boolean {
             var attributes = node.attributes;
             if (attributes["includeIn"]) {
                 return true;
@@ -411,7 +411,7 @@ module swan.sys {
          * @private
          * 为指定节点创建id属性
          */
-        private createIdForNode(node:lark.XML):void {
+        private createIdForNode(node:egret.XML):void {
             var idName = this.getNodeId(node);
             if (!this.idDic[idName])
                 this.idDic[idName] = 1;
@@ -425,7 +425,7 @@ module swan.sys {
          * @private
          * 获取节点ID
          */
-        private getNodeId(node:lark.XML):string {
+        private getNodeId(node:egret.XML):string {
             if (node.attributes["id"])
                 return node.attributes.id;
             return "_" + node.localName;
@@ -435,7 +435,7 @@ module swan.sys {
          * @private
          * 为指定节点创建变量
          */
-        private createVarForNode(node:lark.XML):void {
+        private createVarForNode(node:egret.XML):void {
             var moduleName = this.getClassNameOfNode(node);
             if (moduleName == "")
                 return;
@@ -447,7 +447,7 @@ module swan.sys {
          * @private
          * 为指定节点创建初始化函数,返回函数名引用
          */
-        private createFuncForNode(node:lark.XML):string {
+        private createFuncForNode(node:egret.XML):string {
             var className = node.localName;
             var isBasicType = this.isBasicTypeData(className);
             if (isBasicType)
@@ -500,14 +500,14 @@ module swan.sys {
          * @private
          * 为指定基本数据类型节点实例化,返回实例化后的值。
          */
-        private createBasicTypeForNode(node:lark.XML):string {
+        private createBasicTypeForNode(node:egret.XML):string {
             var className = node.localName;
             var returnValue = "";
             var varItem = this.currentClass.getVariableByName(node.attributes.id);
             var children:any[] = node.children;
             var text = "";
             if (children && children.length > 0) {
-                var firstChild:lark.XMLText = children[0];
+                var firstChild:egret.XMLText = children[0];
                 if (firstChild.nodeType == 3) {
                     text = firstChild.text.trim();
                 }
@@ -518,7 +518,7 @@ module swan.sys {
                     if (children) {
                         var length = children.length;
                         for (var i = 0; i < length; i++) {
-                            var child:lark.XML = children[i];
+                            var child:egret.XML = children[i];
                             if (child.nodeType == 1) {
                                 values.push(this.createFuncForNode(child));
                             }
@@ -547,7 +547,7 @@ module swan.sys {
          * @private
          * 将节点属性赋值语句添加到代码块
          */
-        private addAttributesToCodeBlock(cb:EXCodeBlock, varName:string, node:lark.XML):void {
+        private addAttributesToCodeBlock(cb:EXCodeBlock, varName:string, node:egret.XML):void {
             var key:string;
             var value:string;
             var attributes = node.attributes;
@@ -598,16 +598,16 @@ module swan.sys {
          * @private
          * 初始化子项
          */
-        private initlizeChildNode(node:lark.XML, cb:EXCodeBlock, varName:string):void {
+        private initlizeChildNode(node:egret.XML, cb:EXCodeBlock, varName:string):void {
             var children:Array<any> = node.children;
             if (!children || children.length == 0)
                 return;
             var className = exmlConfig.getClassNameById(node.localName, node.namespace);
-            var directChild:lark.XML[] = [];
+            var directChild:egret.XML[] = [];
             var length = children.length;
             var propList:string[] = [];
             for (var i = 0; i < length; i++) {
-                var child:lark.XML = children[i];
+                var child:egret.XML = children[i];
                 if (child.nodeType != 1 || child.namespace == NS_W) {
                     continue;
                 }
@@ -619,7 +619,7 @@ module swan.sys {
                             cb.addAssignment(varName, innerClassName, SKIN_NAME);
                         }
                         else{
-                            lark.$error(2005, this.currentClassName, SKIN_NAME, getPropertyStr(child));
+                            egret.$error(2005, this.currentClassName, SKIN_NAME, getPropertyStr(child));
                         }
                     }
                     continue;
@@ -633,13 +633,13 @@ module swan.sys {
                     var type = exmlConfig.getPropertyType(child.localName, className);
                     if (!type) {
                         if (DEBUG) {
-                            lark.$error(2005, this.currentClassName, child.localName, getPropertyStr(child));
+                            egret.$error(2005, this.currentClassName, child.localName, getPropertyStr(child));
                         }
                         continue;
                     }
                     if (!child.children || child.children.length == 0) {
                         if (DEBUG) {
-                            lark.$warn(2102, this.currentClassName, getPropertyStr(child));
+                            egret.$warn(2102, this.currentClassName, getPropertyStr(child));
                         }
                         continue;
                     }
@@ -662,7 +662,7 @@ module swan.sys {
             }
             if (!defaultProp || !defaultType) {
                 if (DEBUG) {
-                    lark.$error(2012, this.currentClassName, errorInfo);
+                    egret.$error(2012, this.currentClassName, errorInfo);
                 }
                 return;
             }
@@ -673,7 +673,7 @@ module swan.sys {
          * @private
          * 解析内部类节点，并返回类名。
          */
-        private parseInnerClass(node:lark.XML):string {
+        private parseInnerClass(node:egret.XML):string {
             var parser = exmlParserPool.pop();
             if (!parser) {
                 parser = new EXMLParser();
@@ -691,20 +691,20 @@ module swan.sys {
          */
         private addChildrenToProp(children:Array<any>, type:string, prop:string,
                                   cb:EXCodeBlock, varName:string, errorInfo:string,
-                                  propList:string[], node:lark.XML):void {
+                                  propList:string[], node:egret.XML):void {
             var childFunc = "";
             var childLength = children.length;
 
             if (childLength > 1) {
                 if (type != TYPE_ARRAY) {
                     if (DEBUG) {
-                        lark.$error(2011, this.currentClassName, prop, errorInfo);
+                        egret.$error(2011, this.currentClassName, prop, errorInfo);
                     }
                     return;
                 }
                 var values:string[] = [];
                 for (var j = 0; j < childLength; j++) {
-                    var item:lark.XML = children[j];
+                    var item:egret.XML = children[j];
                     if (item.nodeType != 1) {
                         continue;
                     }
@@ -717,7 +717,7 @@ module swan.sys {
                 childFunc = "[" + values.join(",") + "]";
             }
             else {
-                var firstChild:lark.XML = children[0];
+                var firstChild:egret.XML = children[0];
                 if (type == TYPE_ARRAY) {
                     if (firstChild.localName == TYPE_ARRAY) {
                         values = [];
@@ -751,7 +751,7 @@ module swan.sys {
                     if (type == TYPE_CLASS) {
                         if (childLength > 1) {
                             if (DEBUG) {
-                                lark.$error(2011, this.currentClassName, prop, errorInfo);
+                                egret.$error(2011, this.currentClassName, prop, errorInfo);
                             }
                             return;
                         }
@@ -763,7 +763,7 @@ module swan.sys {
                     }
                 }
                 else {
-                    childFunc = this.formatValue(prop, (<lark.XMLText><any>firstChild).text, node);
+                    childFunc = this.formatValue(prop, (<egret.XMLText><any>firstChild).text, node);
                 }
             }
             if (childFunc != "") {
@@ -773,7 +773,7 @@ module swan.sys {
                     propList.push(prop);
                 }
                 else if (DEBUG) {
-                    lark.$warn(2103, this.currentClassName, prop, errorInfo);
+                    egret.$warn(2103, this.currentClassName, prop, errorInfo);
                 }
                 cb.addAssignment(varName, childFunc, prop);
             }
@@ -783,7 +783,7 @@ module swan.sys {
          * @private
          * 指定节点是否是属性节点
          */
-        private isProperty(node:lark.XML):boolean {
+        private isProperty(node:egret.XML):boolean {
             if (node.hasOwnProperty("isProperty")) {
                 return node["isProperty"];
             }
@@ -834,7 +834,7 @@ module swan.sys {
          * @private
          * 格式化值
          */
-        private formatValue(key:string, value:string, node:lark.XML):string {
+        private formatValue(key:string, value:string, node:egret.XML):string {
             if (!value) {
                 value = "";
             }
@@ -843,7 +843,7 @@ module swan.sys {
             var className = this.getClassNameOfNode(node);
             var type:string = exmlConfig.getPropertyType(key, className);
             if (DEBUG && !type) {
-                lark.$error(2005, this.currentClassName, key, toXMLString(node));
+                egret.$error(2005, this.currentClassName, key, toXMLString(node));
             }
             if (value.charAt(0) == "{" && value.charAt(value.length - 1) == "}") {
                 value = value.substr(1, value.length - 2).trim();
@@ -859,7 +859,7 @@ module swan.sys {
                     var rect = value.split(",");
                     if (rect.length != 4 || isNaN(parseInt(rect[0])) || isNaN(parseInt(rect[1])) ||
                         isNaN(parseInt(rect[2])) || isNaN(parseInt(rect[3]))) {
-                        lark.$error(2016, this.currentClassName, toXMLString(node));
+                        egret.$error(2016, this.currentClassName, toXMLString(node));
                     }
                 }
                 value = "new " + RECTANGLE + "(" + value + ")";
@@ -868,9 +868,7 @@ module swan.sys {
                 var orgValue:string = value;
                 switch (type) {
                     case TYPE_CLASS:
-                        if(key==SKIN_NAME){
-                            value = this.formatString(stringValue);
-                        }
+
                         break;
                     case "number":
                         if (value.indexOf("#") == 0)
@@ -888,7 +886,7 @@ module swan.sys {
                         break;
                     default:
                         if (DEBUG) {
-                            lark.$error(2008, this.currentClassName, "string", key + ":" + type, toXMLString(node));
+                            egret.$error(2008, this.currentClassName, "string", key + ":" + type, toXMLString(node));
                         }
                         break;
                 }
@@ -942,7 +940,7 @@ module swan.sys {
                 if (children && children.length > 0) {
                     var length = children.length;
                     for (var i = 0; i < length; i++) {
-                        var decl:lark.XML = children[i];
+                        var decl:egret.XML = children[i];
                         if (decl.nodeType != 1) {
                             continue;
                         }
@@ -1059,7 +1057,7 @@ module swan.sys {
          * @private
          * 是否含有includeIn和excludeFrom属性
          */
-        private isStateNode(node:lark.XML):boolean {
+        private isStateNode(node:egret.XML):boolean {
             var attributes = node.attributes;
             return attributes.hasOwnProperty("includeIn") || attributes.hasOwnProperty("excludeFrom");
         }
@@ -1085,7 +1083,7 @@ module swan.sys {
             if (children) {
                 var length = children.length;
                 for (var i = 0; i < length; i++) {
-                    var item:lark.XML = children[i];
+                    var item:egret.XML = children[i];
                     if (item.nodeType == 1 &&
                         item.localName == "states") {
                         item.namespace = NS_W;
@@ -1101,10 +1099,10 @@ module swan.sys {
 
             if (DEBUG) {
                 if (stateChildren && stateChildren.length == 0) {
-                    lark.$warn(2102, this.currentClassName, getPropertyStr(item));
+                    egret.$warn(2102, this.currentClassName, getPropertyStr(item));
                 }
                 if (stateChildren && statesValue) {
-                    lark.$warn(2103, this.currentClassName, "states", getPropertyStr(item));
+                    egret.$warn(2103, this.currentClassName, "states", getPropertyStr(item));
                 }
             }
 
@@ -1127,7 +1125,7 @@ module swan.sys {
 
             length = stateChildren.length;
             for (i = 0; i < length; i++) {
-                var state:lark.XML = stateChildren[i];
+                var state:egret.XML = stateChildren[i];
                 if (state.nodeType != 1) {
                     continue;
                 }
@@ -1158,14 +1156,14 @@ module swan.sys {
          * @private
          * 解析视图状态代码
          */
-        private createStates(parentNode:lark.XML):void {
+        private createStates(parentNode:egret.XML):void {
             var items:Array<any> = parentNode.children;
             if (!items) {
                 return;
             }
             var length = items.length;
             for (var i = 0; i < length; i++) {
-                var node:lark.XML = items[i];
+                var node:egret.XML = items[i];
                 if (node.nodeType != 1 || this.isInnerClass(node)) {
                     continue;
                 }
@@ -1186,14 +1184,14 @@ module swan.sys {
                     var type = exmlConfig.getPropertyType(prop, className);
                     if (DEBUG) {
                         if (type == TYPE_ARRAY) {
-                            lark.$error(2013, this.currentClassName, getPropertyStr(node));
+                            egret.$error(2013, this.currentClassName, getPropertyStr(node));
                         }
                         if (children.length > 1) {
-                            lark.$error(2011, this.currentClassName, prop, getPropertyStr(node));
+                            egret.$error(2011, this.currentClassName, prop, getPropertyStr(node));
                         }
                     }
 
-                    var firstChild:lark.XML = children[0];
+                    var firstChild:egret.XML = children[0];
                     var value:string;
                     if (firstChild.nodeType == 1) {
                         this.createFuncForNode(firstChild);
@@ -1201,7 +1199,7 @@ module swan.sys {
                         value = "this." + firstChild.attributes.id;
                     }
                     else {
-                        value = this.formatValue(prop, (<lark.XMLText><any>firstChild).text, parentNode);
+                        value = this.formatValue(prop, (<egret.XMLText><any>firstChild).text, parentNode);
                     }
 
                     states = this.getStateByName(stateName, node);
@@ -1223,7 +1221,7 @@ module swan.sys {
                     var state:EXState;
                     if (this.isStateNode(node)) {
                         var propertyName = "";
-                        var parent:lark.XML = node.parent;
+                        var parent:egret.XML = node.parent;
                         if (parent.localName == TYPE_ARRAY)
                             parent = parent.parent;
                         if (parent && parent.parent) {
@@ -1306,7 +1304,7 @@ module swan.sys {
          * @private
          * 检查指定的ID是否创建了类成员变量，若没创建则为其创建。
          */
-        private checkIdForState(node:lark.XML):void {
+        private checkIdForState(node:egret.XML):void {
             if (!node || this.currentClass.getVariableByName(node.attributes.id)) {
                 return;
             }
@@ -1329,7 +1327,7 @@ module swan.sys {
          * @private
          * 通过视图状态名称获取对应的视图状态
          */
-        private getStateByName(name:string, node:lark.XML):EXState[] {
+        private getStateByName(name:string, node:egret.XML):EXState[] {
             var states:EXState[] = [];
             var stateCode = this.stateCode;
             var length = stateCode.length;
@@ -1356,7 +1354,7 @@ module swan.sys {
                 }
             }
             if (DEBUG && states.length == 0) {
-                lark.$error(2006, this.currentClassName, name, toXMLString(node));
+                egret.$error(2006, this.currentClassName, name, toXMLString(node));
             }
             return states;
         }
@@ -1365,13 +1363,13 @@ module swan.sys {
          * @private
          * 寻找节点的临近节点ID和位置
          */
-        private findNearNodeId(node:lark.XML):any {
-            var parentNode:lark.XML = node.parent;
+        private findNearNodeId(node:egret.XML):any {
+            var parentNode:egret.XML = node.parent;
             var targetId = "";
             var position:number;
             var index = -1;
-            var preItem:lark.XML;
-            var afterItem:lark.XML;
+            var preItem:egret.XML;
+            var afterItem:egret.XML;
             var found = false;
             var children:Array<any> = parentNode.children;
             var length = children.length;
@@ -1416,10 +1414,10 @@ module swan.sys {
          * @private
          * 获取节点的完整类名，包括模块名
          */
-        private getClassNameOfNode(node:lark.XML):string {
+        private getClassNameOfNode(node:egret.XML):string {
             var className = exmlConfig.getClassNameById(node.localName, node.namespace);
             if (DEBUG && !className) {
-                lark.$error(2003, this.currentClassName, toXMLString(node));
+                egret.$error(2003, this.currentClassName, toXMLString(node));
             }
             return className;
         }
@@ -1430,7 +1428,7 @@ module swan.sys {
         /**
          * 获取重复的ID名
          */
-        function getRepeatedIds(xml:lark.XML):string[] {
+        function getRepeatedIds(xml:egret.XML):string[] {
             var result:string[] = [];
             this.repeatedIdMap = {};
             this.getIds(xml, result);
@@ -1460,7 +1458,7 @@ module swan.sys {
             }
         }
 
-        function toXMLString(node:lark.XML):string {
+        function toXMLString(node:egret.XML):string {
             if (!node) {
                 return "";
             }
@@ -1488,7 +1486,7 @@ module swan.sys {
         /**
          * 清理声明节点里的状态标志
          */
-        function checkDeclarations(declarations:lark.XML, list:string[]):void {
+        function checkDeclarations(declarations:egret.XML, list:string[]):void {
             if (!declarations) {
                 return;
             }

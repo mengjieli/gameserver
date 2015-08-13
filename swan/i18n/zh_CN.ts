@@ -29,9 +29,9 @@
 
 module swan {
 
-    lark.$locale_strings = lark.$locale_strings || {};
-    lark.$locale_strings["zh_CN"] = lark.$locale_strings["zh_CN"] || {};
-    var locale_strings = lark.$locale_strings["zh_CN"];
+    egret.$locale_strings = egret.$locale_strings || {};
+    egret.$locale_strings["zh_CN"] = egret.$locale_strings["zh_CN"] || {};
+    var locale_strings = egret.$locale_strings["zh_CN"];
 
     //EXML报错信息
     locale_strings[2001] = "EXML解析错误 {0}: 找不到EXML文件";
@@ -64,7 +64,6 @@ module swan {
     //Swan 报错与警告信息
     locale_strings[2201] = "BasicLayout 不支持虚拟化。";
     locale_strings[2202] = "皮肤解析出错，属性 skinName 的值必须要能够解析为一个 swan.Skin 的实例。";
-    locale_strings[2203] = "找不到指定的皮肤类 '{0}'。";
 
     locale_strings[2301] = "素材解析失败，找不到URL：{0} 所对应的资源。";
 }

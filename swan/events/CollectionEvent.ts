@@ -47,7 +47,7 @@ module swan {
      * @platform Web,Native
      * @includeExample examples/Samples/src/extension/swan/events/CollectionEventExample.ts
      */
-    export class CollectionEvent extends lark.Event {
+    export class CollectionEvent extends egret.Event {
         /**
          * @language en_US
          * Emitted when a collection has changed.
@@ -247,7 +247,7 @@ module swan {
 
         /**
          * @language en_US
-         * Emit an event with specified EventEmitter. The emitted event will be cached in the object pool,
+         * Emit an event with specified EventDispatcher. The emitted event will be cached in the object pool,
          * for the next cycle of reuse.
          *
          * @param target the target of event emitter.
@@ -295,15 +295,15 @@ module swan {
          * @version Swan 1.0
          * @platform Web,Native
          */
-        public static emitCollectionEvent(target:lark.IEventEmitter, eventType:string, kind?:string, location?:number,
+        public static emitCollectionEvent(target:egret.IEventDispatcher, eventType:string, kind?:string, location?:number,
                                           oldLocation?:number, items?:any[], oldItems?:any[]):boolean {
-            if (!target.hasListener(eventType)) {
+            if (!target.hasEventListener(eventType)) {
                 return true;
             }
-            var event = lark.Event.create(CollectionEvent, eventType);
+            var event = egret.Event.create(CollectionEvent, eventType);
             event.$setTo(kind, location, oldLocation, items, oldItems);
-            var result = target.emit(event);
-            lark.Event.release(event);
+            var result = target.dispatchEvent(event);
+            egret.Event.release(event);
             return result;
         }
     }

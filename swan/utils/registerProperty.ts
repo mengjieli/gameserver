@@ -49,7 +49,7 @@ module swan {
      * @param property The property need to be registered. Note that the property
      * name cannot start with "_" or "$".
      * @param type The type need to be registered,
-     * such as “boolean","number","string","Array","lark.Rectangle" and so on.
+     * such as “boolean","number","string","Array","egret.Rectangle" and so on.
      * @param asDefault Whether register this property as a default property of component.
      * One component can register only on default property. And the default property can be spare in an EXML.
      *
@@ -82,7 +82,7 @@ module swan {
      *
      * @param classDefinition 要注册的类定义。
      * @param property 要注册的属性,注意属性名不能以 _ 或 $ 符开头。
-     * @param type 要注册的类型,例如：“boolean","number","string","Array","lark.Rectangle"
+     * @param type 要注册的类型,例如：“boolean","number","string","Array","egret.Rectangle"
      * @param asDefault 是否将此属性注册为组件的默认属性,一个组件只可以设置一个默认属性。注册了组件默认属性后，在EXML中可以使用省略属性节点的写法，
      * @example：
      * <pre>
@@ -105,16 +105,16 @@ module swan {
     export function registerProperty(classDefinition:any,property:string,type:string,asDefault?:boolean):void{
         if (DEBUG) {
             if(!classDefinition){
-                lark.$error(1003, "classDefinition");
+                egret.$error(1003, "classDefinition");
             }
             if(!classDefinition.prototype){
-                lark.$error(1012,"classDefinition")
+                egret.$error(1012,"classDefinition")
             }
             if(!property){
-                lark.$error(1003, "property");
+                egret.$error(1003, "property");
             }
             if(!type){
-                lark.$error(1003, "type");
+                egret.$error(1003, "type");
             }
         }
         var prototype: any = classDefinition.prototype;

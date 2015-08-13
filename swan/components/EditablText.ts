@@ -48,7 +48,7 @@ module swan {
      * @version Swan 1.0
      * @platform Web,Native
      */
-    export class EditableText extends lark.TextInput implements UIComponent,IDisplayText {
+    export class EditableText extends egret.TextField implements UIComponent,IDisplayText {
 
         /**
          * @language en_US
@@ -66,7 +66,9 @@ module swan {
          */
         public constructor() {
             super();
+
             this.initializeUIValues();
+            this.type = egret.TextFieldType.INPUT;
         }
 
         /**
@@ -164,7 +166,7 @@ module swan {
         protected measure():void {
             var values = this.$UIComponent;
             var textValues = this.$TextField;
-            var oldWidth = textValues[lark.sys.TextKeys.textFieldWidth];
+            var oldWidth = textValues[egret.sys.TextKeys.textFieldWidth];
             var availableWidth = NaN;
             if (!isNaN(this._widthConstraint)) {
                 availableWidth = this._widthConstraint;
@@ -468,7 +470,7 @@ module swan {
          * @version Swan 1.0
          * @platform Web,Native
          */
-        public getLayoutBounds(bounds:lark.Rectangle):void {
+        public getLayoutBounds(bounds:egret.Rectangle):void {
         }
 
         /**
@@ -478,10 +480,10 @@ module swan {
          * @version Swan 1.0
          * @platform Web,Native
          */
-        public getPreferredBounds(bounds:lark.Rectangle):void {
+        public getPreferredBounds(bounds:egret.Rectangle):void {
         }
     }
 
-    sys.implementUIComponent(EditableText, lark.TextInput);
+    sys.implementUIComponent(EditableText, egret.TextField);
     registerBindable(EditableText.prototype, "text");
 }

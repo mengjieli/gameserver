@@ -72,7 +72,7 @@ module swan {
      * @platform Web,Native
      * @includeExample examples/Samples/src/extension/swan/components/LabelExample.ts
      */
-    export class Label extends lark.TextField implements UIComponent,IDisplayText {
+    export class Label extends egret.TextField implements UIComponent,IDisplayText {
 
         /**
          * @language en_US
@@ -95,8 +95,9 @@ module swan {
          * @platform Web,Native
          */
         public constructor(text?:string) {
-            super(text);
+            super();
             this.initializeUIValues();
+            this.text = text;
         }
 
         /**
@@ -194,7 +195,7 @@ module swan {
         protected measure():void {
             var values = this.$UIComponent;
             var textValues = this.$TextField;
-            var oldWidth = textValues[lark.sys.TextKeys.textFieldWidth];
+            var oldWidth = textValues[egret.sys.TextKeys.textFieldWidth];
             var availableWidth = NaN;
             if (!isNaN(this._widthConstraint)) {
                 availableWidth = this._widthConstraint;
@@ -497,7 +498,7 @@ module swan {
          * @version Swan 1.0
          * @platform Web,Native
          */
-        public getLayoutBounds(bounds:lark.Rectangle):void {
+        public getLayoutBounds(bounds:egret.Rectangle):void {
         }
 
         /**
@@ -507,10 +508,10 @@ module swan {
          * @version Swan 1.0
          * @platform Web,Native
          */
-        public getPreferredBounds(bounds:lark.Rectangle):void {
+        public getPreferredBounds(bounds:egret.Rectangle):void {
         }
     }
 
-    sys.implementUIComponent(Label, lark.TextField);
+    sys.implementUIComponent(Label, egret.TextField);
     registerBindable(Label.prototype, "text");
 }

@@ -73,7 +73,7 @@ module swan {
 		 * @version Swan 1.0
 		 * @platform Web,Native
 		 */
-		apply(host:any,parent:lark.DisplayObjectContainer):void;
+		apply(host:any,parent:egret.DisplayObjectContainer):void;
 		/**
 		 * @language en_US
 		 * Removes the override. The value remembered in the <code>apply()</code>
@@ -96,6 +96,6 @@ module swan {
 		 * @version Swan 1.0
 		 * @platform Web,Native
 		 */
-		remove(host:any,parent:lark.DisplayObjectContainer):void;
+		remove(host:any,parent:egret.DisplayObjectContainer):void;
 	}
 }

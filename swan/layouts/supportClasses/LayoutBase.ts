@@ -56,7 +56,7 @@ module swan {
      * @version Swan 1.0
      * @platform Web,Native
      */
-    export class LayoutBase extends lark.EventEmitter {
+    export class LayoutBase extends egret.EventDispatcher {
 
         /**
          * @language en_US
@@ -152,7 +152,7 @@ module swan {
                 return;
 
             this.$useVirtualLayout = value;
-            this.emitWith("useVirtualLayoutChanged");
+            this.dispatchEventWith("useVirtualLayoutChanged");
 
             if (this.$useVirtualLayout && !value)
                 this.clearVirtualLayoutCache();

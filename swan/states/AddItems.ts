@@ -165,11 +165,11 @@ module swan {
          * @version Swan 1.0
          * @platform Web,Native
          */
-        public apply(host:any, parent:lark.DisplayObjectContainer):void {
+        public apply(host:any, parent:egret.DisplayObjectContainer):void {
             var index:number;
-            var relative:lark.DisplayObject = host[this.relativeTo];
-            var target:lark.DisplayObject = host[this.target];
-            var container:lark.DisplayObjectContainer = this.propertyName ? host[this.propertyName] : parent;
+            var relative:egret.DisplayObject = host[this.relativeTo];
+            var target:egret.DisplayObject = host[this.target];
+            var container:egret.DisplayObjectContainer = this.propertyName ? host[this.propertyName] : parent;
             if (!target || !container)
                 return;
             switch (this.position) {
@@ -198,9 +198,9 @@ module swan {
          * @version Swan 1.0
          * @platform Web,Native
          */
-        public remove(host:any,parent:lark.DisplayObjectContainer):void {
-            var container:lark.DisplayObjectContainer = this.propertyName ? host[this.propertyName] : parent;
-            var target:lark.DisplayObject = host[this.target];
+        public remove(host:any,parent:egret.DisplayObjectContainer):void {
+            var container:egret.DisplayObjectContainer = this.propertyName ? host[this.propertyName] : parent;
+            var target:egret.DisplayObject = host[this.target];
             if (!target || !container)
                 return;
             if (target.$parent === container) {

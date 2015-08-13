@@ -38,7 +38,7 @@ module swan {
      * Associate a skin class with a component class by setting the <code>skinClass</code> style property of the
      * component class.
      *
-     * @event lark.Event.RESIZE Emit when the component is resized.
+     * @event egret.Event.RESIZE Emit when the component is resized.
      * @event swan.UIEvent.MOVE Emit when the object has moved.
      * @event swan.UIEvent.CREATION_COMPLETE  Emit when the component has finished its construction,
      * property processing, measuring, layout, and drawing.
@@ -54,7 +54,7 @@ module swan {
      *
      * 通过设置 component 类的 skinClass 样式属性，将 skin 类与 component 类相关联。
      *
-     * @event lark.Event.RESIZE 当UI组件的尺寸发生改变时调度
+     * @event egret.Event.RESIZE 当UI组件的尺寸发生改变时调度
      * @event swan.UIEvent.MOVE 当UI组件在父级容器中的位置发生改变时调度
      * @event swan.UIEvent.CREATION_COMPLETE 当UI组件第一次被添加到舞台并完成初始化后调度
      *
@@ -63,7 +63,7 @@ module swan {
      * @platform Web,Native
      */
 
-    export interface UIComponent extends lark.DisplayObject {
+    export interface UIComponent extends egret.DisplayObject {
 
         ///**
         // * 创建子项,子类覆盖此方法以完成组件子项的初始化操作，
@@ -97,9 +97,6 @@ module swan {
         //$getHeight():number;
         //$setHeight(value:number):void;
 
-        /**
-         * @private
-         */
         $UIComponent:Object;
 
         /**
@@ -734,7 +731,7 @@ module swan {
          * Priority: layout > explicit > measure.<p/>
          * The result of this method is contains <code>scale</code> and <code>rotation</code>.
          *
-         * @param bounds the instance of <code>lark.Rectangle</code> can set result.
+         * @param bounds the instance of <code>egret.Rectangle</code> can set result.
          *
          * @version Lark 1.0
          * @version Swan 1.0
@@ -746,13 +743,13 @@ module swan {
          * 按照：布局尺寸>外部显式设置尺寸>测量尺寸 的优先级顺序返回尺寸。<p/>
          * 注意此方法返回值已经包含scale和rotation。
          *
-         * @param bounds 可以放置结果的<code>lark.Rectangle</code>实例。
+         * @param bounds 可以放置结果的<code>egret.Rectangle</code>实例。
          *
          * @version Lark 1.0
          * @version Swan 1.0
          * @platform Web,Native
          */
-        getLayoutBounds(bounds:lark.Rectangle):void;
+        getLayoutBounds(bounds:egret.Rectangle):void;
 
         /**
          * @language en_US
@@ -761,7 +758,7 @@ module swan {
          * Priority: explicit > measure.<p/>
          * The result of this method is contains <code>scale</code> and <code>rotation</code>.
          *
-         * @param bounds the instance of <code>lark.Rectangle</code> can set result.
+         * @param bounds the instance of <code>egret.Rectangle</code> can set result.
          *
          * @version Lark 1.0
          * @version Swan 1.0
@@ -773,22 +770,19 @@ module swan {
          * 按照：外部显式设置尺寸>测量尺寸 的优先级顺序返回尺寸。<p/>
          * 注意此方法返回值已经包含scale和rotation。
          *
-         * @param bounds 可以放置结果的<code>lark.Rectangle</code>实例。
+         * @param bounds 可以放置结果的<code>egret.Rectangle</code>实例。
          *
          * @version Lark 1.0
          * @version Swan 1.0
          * @platform Web,Native
          */
-        getPreferredBounds(bounds:lark.Rectangle):void;
+        getPreferredBounds(bounds:egret.Rectangle):void;
     }
 
 }
 
 module swan.sys {
 
-    /**
-     * @private
-     */
     export const enum UIKeys {
         left,
         right,
@@ -824,7 +818,7 @@ module swan.sys {
 
     var UIComponentClass = "swan.UIComponent";
 
-    function isDeltaIdentity(m:lark.Matrix):boolean {
+    function isDeltaIdentity(m:egret.Matrix):boolean {
         return (m.a === 1 && m.b === 0 && m.c === 0 && m.d === 1);
     }
 
@@ -835,7 +829,7 @@ module swan.sys {
      * Swan 显示对象基类模板。仅作为 UIComponent 的默认实现，为lark.sys.implemenetUIComponenet()方法提供代码模板。
      * 注意：在此类里不允许直接使用super关键字访问父类方法。一律使用this.$super属性访问。
      */
-    export class UIComponentImpl extends lark.DisplayObject implements swan.UIComponent {
+    export class UIComponentImpl extends egret.DisplayObject implements swan.UIComponent {
         /**
          * @private
          * 构造函数
@@ -883,6 +877,8 @@ module swan.sys {
                 29: false,          //initialized
             };
             this.$includeInLayout = true;
+
+            this.$touchEnabled = true;
         }
 
 
@@ -910,7 +906,7 @@ module swan.sys {
         protected commitProperties():void {
             var values = this.$UIComponent;
             if (values[UIKeys.oldWidth] != values[UIKeys.width] || values[UIKeys.oldHeight] != values[UIKeys.height]) {
-                this.emitWith(lark.Event.RESIZE);
+                this.dispatchEventWith(egret.Event.RESIZE);
             }
             if (values[UIKeys.oldX] != this.$getX() || values[UIKeys.oldY] != this.$getY()) {
                 UIEvent.emitUIEvent(this, UIEvent.MOVE);
@@ -960,9 +956,9 @@ module swan.sys {
          * @private
          *
          * @param stage
-         * @param nestLevel
+         * @param nestLevel 
          */
-        $onAddToStage(stage:lark.Stage, nestLevel:number):void {
+        $onAddToStage(stage:egret.Stage, nestLevel:number):void {
             this.$super.$onAddToStage.call(this, stage, nestLevel);
             this.checkInvalidateFlag();
             var values = this.$UIComponent;
@@ -1156,14 +1152,15 @@ module swan.sys {
 
         /**
          * @private
-         *
-         * @param value
+         * 
+         * @param value 
          */
         $setWidth(value:number) {
             value = +value;
             var values = this.$UIComponent;
             if (value < 0 || values[UIKeys.width] === value && values[UIKeys.explicitWidth] === value)
                 return;
+            values[UIKeys.width] = value;
             values[UIKeys.explicitWidth] = value;
             if (isNaN(value))
                 this.invalidateSize();
@@ -1192,14 +1189,15 @@ module swan.sys {
 
         /**
          * @private
-         *
-         * @param value
+         * 
+         * @param value 
          */
         $setHeight(value:number) {
             value = +value;
             var values = this.$UIComponent;
             if (value < 0 || values[UIKeys.height] === value && values[UIKeys.explicitHeight] === value)
                 return;
+            values[UIKeys.height] = value;
             values[UIKeys.explicitHeight] = value;
             if (isNaN(value))
                 this.invalidateSize();
@@ -1210,9 +1208,9 @@ module swan.sys {
 
         /**
          * @private
-         *
-         * @param value
-         * @returns
+         * 
+         * @param value 
+         * @returns 
          */
         $setScaleX(value:number):boolean {
             var change = this.$super.$setScaleX.call(this, value);
@@ -1224,9 +1222,9 @@ module swan.sys {
 
         /**
          * @private
-         *
-         * @param value
-         * @returns
+         * 
+         * @param value 
+         * @returns 
          */
         $setScaleY(value:number):boolean {
             var change = this.$super.$setScaleY.call(this, value);
@@ -1344,15 +1342,15 @@ module swan.sys {
             }
             if (change) {
                 this.invalidateDisplayList();
-                this.emitWith(lark.Event.RESIZE);
+                this.dispatchEventWith(egret.Event.RESIZE);
             }
         }
 
         /**
          * @private
-         *
-         * @param value
-         * @returns
+         * 
+         * @param value 
+         * @returns 
          */
         $setX(value:number):boolean {
             var change = this.$super.$setX.call(this, value);
@@ -1365,9 +1363,9 @@ module swan.sys {
 
         /**
          * @private
-         *
-         * @param value
-         * @returns
+         * 
+         * @param value 
+         * @returns 
          */
         $setY(value:number):boolean {
             var change = this.$super.$setY.call(this, value);
@@ -1428,7 +1426,7 @@ module swan.sys {
                     var length = children.length;
                     for (var i = 0; i < length; i++) {
                         var child = children[i];
-                        if (lark.is(child, UIComponentClass)) {
+                        if (egret.is(child, UIComponentClass)) {
                             (<swan.UIComponent>child).validateSize(true);
                         }
                     }
@@ -1551,7 +1549,7 @@ module swan.sys {
          */
         protected invalidateParentLayout():void {
             var parent = this.$parent;
-            if (!parent || !this.$includeInLayout || !lark.is(parent, UIComponentClass))
+            if (!parent || !this.$includeInLayout || !egret.is(parent, UIComponentClass))
                 return;
             (<swan.UIComponent><any>parent).invalidateSize();
             (<swan.UIComponent><any>parent).invalidateDisplayList();
@@ -1564,7 +1562,7 @@ module swan.sys {
         public setLayoutBoundsSize(layoutWidth:number, layoutHeight:number):void {
             layoutHeight = +layoutHeight;
             layoutWidth = +layoutWidth;
-            if (layoutHeight < 0 || layoutWidth < 0) {
+            if(layoutHeight<0||layoutWidth<0){
                 return;
             }
             var values = this.$UIComponent;
@@ -1601,10 +1599,10 @@ module swan.sys {
                 this.getPreferredUWidth(), this.getPreferredUHeight(),
                 minWidth, minHeight, maxWidth, maxHeight);
             if (!fitSize) {
-                fitSize = lark.Point.create(minWidth, minHeight);
+                fitSize = egret.Point.create(minWidth, minHeight);
             }
             this.setActualSize(fitSize.x, fitSize.y);
-            lark.Point.release(fitSize);
+            egret.Point.release(fitSize);
         }
 
         /**
@@ -1614,7 +1612,7 @@ module swan.sys {
         public setLayoutBoundsPosition(x:number, y:number):void {
             var matrix = this.$getMatrix();
             if (!isDeltaIdentity(matrix)) {
-                var bounds = lark.$TempRectangle;
+                var bounds = egret.$TempRectangle;
                 this.getLayoutBounds(bounds);
                 x += this.$getX() - bounds.x;
                 y += this.$getY() - bounds.y;
@@ -1631,7 +1629,7 @@ module swan.sys {
          * 按照：布局尺寸>外部显式设置尺寸>测量尺寸 的优先级顺序返回尺寸,
          * 注意此方法返回值已经包含scale和rotation。
          */
-        public getLayoutBounds(bounds:lark.Rectangle):void {
+        public getLayoutBounds(bounds:egret.Rectangle):void {
             var values = this.$UIComponent;
             var w:number;
             if (values[sys.UIKeys.layoutWidthExplicitlySet]) {
@@ -1659,8 +1657,8 @@ module swan.sys {
 
         /**
          * @private
-         *
-         * @returns
+         * 
+         * @returns 
          */
         private getPreferredUWidth():number {
             var values = this.$UIComponent;
@@ -1670,8 +1668,8 @@ module swan.sys {
 
         /**
          * @private
-         *
-         * @returns
+         * 
+         * @returns 
          */
         private getPreferredUHeight():number {
             var values = this.$UIComponent;
@@ -1685,7 +1683,7 @@ module swan.sys {
          * 按照：外部显式设置尺寸>测量尺寸 的优先级顺序返回尺寸，
          * 注意此方法返回值已经包含scale和rotation。
          */
-        public getPreferredBounds(bounds:lark.Rectangle):void {
+        public getPreferredBounds(bounds:egret.Rectangle):void {
             var w = this.getPreferredUWidth();
             var h = this.getPreferredUHeight();
             this.applyMatrix(bounds, w, h);
@@ -1694,12 +1692,12 @@ module swan.sys {
 
         /**
          * @private
-         *
-         * @param bounds
-         * @param w
-         * @param h
+         * 
+         * @param bounds 
+         * @param w 
+         * @param h 
          */
-        private applyMatrix(bounds:lark.Rectangle, w:number, h:number):void {
+        private applyMatrix(bounds:egret.Rectangle, w:number, h:number):void {
             var bounds = bounds.setTo(0, 0, w, h);
             var matrix = this.$getMatrix();
             if (isDeltaIdentity(matrix)) {
@@ -1770,23 +1768,23 @@ module swan.sys {
         prototype.$super = base.prototype;
 
         if (isContainer) {
-            prototype.$childAdded = function (child:lark.DisplayObject, index:number):void {
+            prototype.$childAdded = function (child:egret.DisplayObject, index:number):void {
                 this.invalidateSize();
                 this.invalidateDisplayList();
             };
-            prototype.$childRemoved = function (child:lark.DisplayObject, index:number):void {
+            prototype.$childRemoved = function (child:egret.DisplayObject, index:number):void {
                 this.invalidateSize();
                 this.invalidateDisplayList();
             };
         }
 
         if (DEBUG) {//用于调试时查看布局尺寸的便利属性，发行版时移除。
-            lark.$markReadOnly(descendant, "explicitWidth");
-            lark.$markReadOnly(descendant, "explicitHeight");
+            egret.$markReadOnly(descendant,"explicitWidth");
+            egret.$markReadOnly(descendant,"explicitHeight");
 
             Object.defineProperty(prototype, "preferredWidth", {
                 get: function () {
-                    var bounds = lark.$TempRectangle;
+                    var bounds = egret.$TempRectangle;
                     this.getPreferredBounds(bounds);
                     return bounds.width;
                 },
@@ -1795,7 +1793,7 @@ module swan.sys {
             });
             Object.defineProperty(prototype, "preferredHeight", {
                 get: function () {
-                    var bounds = lark.$TempRectangle;
+                    var bounds = egret.$TempRectangle;
                     this.getPreferredBounds(bounds);
                     return bounds.height;
                 },
@@ -1804,7 +1802,7 @@ module swan.sys {
             });
             Object.defineProperty(prototype, "preferredX", {
                 get: function () {
-                    var bounds = lark.$TempRectangle;
+                    var bounds = egret.$TempRectangle;
                     this.getPreferredBounds(bounds);
                     return bounds.x;
                 },
@@ -1813,7 +1811,7 @@ module swan.sys {
             });
             Object.defineProperty(prototype, "preferredY", {
                 get: function () {
-                    var bounds = lark.$TempRectangle;
+                    var bounds = egret.$TempRectangle;
                     this.getPreferredBounds(bounds);
                     return bounds.y;
                 },
@@ -1822,7 +1820,7 @@ module swan.sys {
             });
             Object.defineProperty(prototype, "layoutBoundsX", {
                 get: function () {
-                    var bounds = lark.$TempRectangle;
+                    var bounds = egret.$TempRectangle;
                     this.getLayoutBounds(bounds);
                     return bounds.x;
                 },
@@ -1831,7 +1829,7 @@ module swan.sys {
             });
             Object.defineProperty(prototype, "layoutBoundsY", {
                 get: function () {
-                    var bounds = lark.$TempRectangle;
+                    var bounds = egret.$TempRectangle;
                     this.getLayoutBounds(bounds);
                     return bounds.y;
                 },
@@ -1840,7 +1838,7 @@ module swan.sys {
             });
             Object.defineProperty(prototype, "layoutBoundsWidth", {
                 get: function () {
-                    var bounds = lark.$TempRectangle;
+                    var bounds = egret.$TempRectangle;
                     this.getLayoutBounds(bounds);
                     return bounds.width;
                 },
@@ -1849,7 +1847,7 @@ module swan.sys {
             });
             Object.defineProperty(prototype, "layoutBoundsHeight", {
                 get: function () {
-                    var bounds = lark.$TempRectangle;
+                    var bounds = egret.$TempRectangle;
                     this.getLayoutBounds(bounds);
                     return bounds.height;
                 },

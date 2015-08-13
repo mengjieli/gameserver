@@ -43,6 +43,7 @@ module swan {
      * @version Lark 1.0
      * @version Swan 1.0
      * @platform Web,Native
+     * @includeExample src/extension/swan/components/HScrollBar.ts
      */
     /**
      * @language zh_CN
@@ -55,6 +56,7 @@ module swan {
      * @version Lark 1.0
      * @version Swan 1.0
      * @platform Web,Native
+     * @includeExample src/extension/swan/components/HScrollBar.ts
      */
     export class ScrollBarBase extends Component {
         /**
@@ -152,14 +154,14 @@ module swan {
             var viewport = this.$viewport;
             if (viewport)
             {
-                viewport.removeListener(swan.PropertyEvent.PROPERTY_CHANGE, this.onPropertyChanged,this);
-                viewport.removeListener(lark.Event.RESIZE, this.onViewportResize,this);
+                viewport.removeEventListener(swan.PropertyEvent.PROPERTY_CHANGE, this.onPropertyChanged,this);
+                viewport.removeEventListener(egret.Event.RESIZE, this.onViewportResize,this);
             }
             this.$viewport = value;
             if (value)
             {
-                value.on(swan.PropertyEvent.PROPERTY_CHANGE, this.onPropertyChanged,this);
-                value.on(lark.Event.RESIZE, this.onViewportResize,this);
+                value.addEventListener(swan.PropertyEvent.PROPERTY_CHANGE, this.onPropertyChanged,this);
+                value.addEventListener(egret.Event.RESIZE, this.onViewportResize,this);
             }
             this.invalidateDisplayList();
         }
@@ -169,7 +171,7 @@ module swan {
          * 
          * @param event 
          */
-        private onViewportResize(event?:lark.Event):void{
+        private onViewportResize(event?:egret.Event):void{
             this.invalidateDisplayList();
         }
 

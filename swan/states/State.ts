@@ -52,7 +52,7 @@ module swan {
      * @version Swan 1.0
      * @platform Web,Native
      */
-    export class State extends lark.HashObject {
+    export class State extends egret.HashObject {
         /**
          * @language en_US
          * Constructor.
@@ -155,13 +155,13 @@ module swan {
          * @version Swan 1.0
          * @platform Web,Native
          */
-        public initialize(host:any, stage:lark.Stage):void {
+        public initialize(host:any, stage:egret.Stage):void {
             var overrides = this.overrides;
             var length = overrides.length;
             for (var i = 0; i < length; i++) {
                 var addItems:AddItems = <AddItems>overrides[i];
                 if (addItems instanceof swan.AddItems) {
-                    var target:lark.DisplayObject = host[addItems.target];
+                    var target:egret.DisplayObject = host[addItems.target];
                     if (target&&target instanceof swan.Image&&!target.$parent) {
                         stage.addChild(target);
                         stage.removeChild(target);
@@ -282,7 +282,7 @@ module swan.sys {
          * @private
          * 初始化所有视图状态
          */
-        private initializeStates(stage:lark.Stage):void {
+        private initializeStates(stage:egret.Stage):void {
             this.$stateValues.intialized = true;
             var states = this.states;
             var length = states.length;
@@ -330,7 +330,7 @@ module swan.sys {
         /**
          * @private
          */
-        public parent:lark.DisplayObjectContainer = null;
+        public parent:egret.DisplayObjectContainer = null;
 
         /**
          * @private

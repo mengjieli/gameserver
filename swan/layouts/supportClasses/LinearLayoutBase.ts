@@ -55,7 +55,7 @@ module swan {
         /**
          * @language en_US
          * The horizontal alignment of layout elements.
-         * <p>The <code>lark.HorizontalAlign</code> and <code>swan.JustifyAlign</code> class
+         * <p>The <code>egret.HorizontalAlign</code> and <code>swan.JustifyAlign</code> class
          * defines the possible values for this property.</p>
          *
          * @default "left"
@@ -67,7 +67,7 @@ module swan {
         /**
          * @language zh_CN
          * 布局元素的水平对齐策略。
-         * <p><code>lark.HorizontalAlign</code> 和
+         * <p><code>egret.HorizontalAlign</code> 和
          * <code>swan.JustifyAlign</code>类定义此属性的可能值。<p>
          *
          * @default "left"
@@ -96,7 +96,7 @@ module swan {
         /**
          * @language en_US
          * The vertical alignment of layout elements.
-         * <p>The <code>lark.VerticalAlign</code> and <code>swan.JustifyAlign</code> class
+         * <p>The <code>egret.VerticalAlign</code> and <code>swan.JustifyAlign</code> class
          * defines the possible values for this property.</p>
          *
          * @default "top"
@@ -108,7 +108,7 @@ module swan {
         /**
          * @language zh_CN
          * 布局元素的垂直对齐策略。请使用 VerticalAlign 定义的常量。
-         * <p><code>lark.VerticalAlign</code> 和
+         * <p><code>egret.VerticalAlign</code> 和
          * <code>swan.JustifyAlign</code>类定义此属性的可能值。<p>
          *
          * @default "top"

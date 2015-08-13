@@ -47,7 +47,7 @@ module swan {
      * @platform Web,Native
      * @includeExample examples/Samples/src/extension/swan/events/UIEventExample.ts
      */
-    export class UIEvent extends lark.Event{
+    export class UIEvent extends egret.Event{
 
         /**
          * @language en_US
@@ -160,7 +160,7 @@ module swan {
 
         /**
          * @language en_US
-         * Emit an event with specified EventEmitter. The emitted event will be cached in the object pool,
+         * Emit an event with specified EventDispatcher. The emitted event will be cached in the object pool,
          * for the next cycle of reuse.
          *
          * @param target the target of event emitter.
@@ -181,13 +181,13 @@ module swan {
          * @version Swan 1.0
          * @platform Web,Native
          */
-        public static emitUIEvent(target:lark.IEventEmitter, eventType:string):boolean {
-            if(!target.hasListener(eventType)){
+        public static emitUIEvent(target:egret.IEventDispatcher, eventType:string):boolean {
+            if(!target.hasEventListener(eventType)){
                 return true;
             }
-            var event = lark.Event.create(UIEvent, eventType);
-            var result = target.emit(event);
-            lark.Event.release(event);
+            var event = egret.Event.create(UIEvent, eventType);
+            var result = target.dispatchEvent(event);
+            egret.Event.release(event);
             return result;
         }
     }
