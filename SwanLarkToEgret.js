@@ -8,6 +8,7 @@ var files = global.File.readDir(swanFile, function (file) {
     return /.ts/.test(file);
 });
 
+
 function replaceAll(content, search, replace) {
     var slen = search.length;
     var rlen = replace.length;
@@ -15,6 +16,36 @@ function replaceAll(content, search, replace) {
         if (content.slice(i, i + slen) == search) {
             content = content.slice(0, i) + replace + content.slice(i + slen, content.length);
             i += rlen - slen;
+        }
+    }
+    return content;
+}
+
+function changeDefine(content,current,change) {
+    var cuIF = "//IF aaaa" + current;
+    var chIF = "//IF " + change;
+    for (var i = 0; i < content.length; i++) {
+        if(false && content.slice(i, i + cuIF.length) == cuIF) {
+            content = content.slice(0,i) + "/*" + content.slice(i,content.length);
+            i += 2;
+            for(; i < content.length; i++) {
+                if(content.slice(i,i + 2) == "*/"){
+                    i++;
+                    break;
+                }
+            }
+        }
+        else if(content.slice(i, i + chIF.length) == chIF) {
+            var before = content.slice(0,i - 2);
+            var end = content.slice(i,content.length);
+            content = before + end;
+            i += 2;
+            for(; i < content.length; i++) {
+                if(content.slice(i,i + 2) == "*/"){
+                    i++;
+                    break;
+                }
+            }
         }
     }
     return content;
@@ -46,6 +77,7 @@ for (var i = 0, len = files.length; i < len; i++) {
         }
         file = replaceAll(file, replaces[r][0], replaces[r][1]);
     }
+    file = changeDefine(file,"LARK","EGRET");
     global.File.addFileList([2, outFile + "/" + files[i], file, "utf-8"]);
 }
 
