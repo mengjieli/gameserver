@@ -14,7 +14,7 @@ for(var i = 0,len = files.length; i < len; i++)
 
 global.File.setFileListComplete(function()
 {
-    console.log("拷贝完成");
+    console.log("copy complete");
 });
 
 global.File.copyNextFile();
