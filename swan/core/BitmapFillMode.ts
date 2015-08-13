@@ -101,3 +101,5 @@ module swan {
          */
         public static SCALE: string = "scale";
 
+    }
+}

@@ -65,3 +65,5 @@ module swan {
          */
         text:string;
     }
+
+}

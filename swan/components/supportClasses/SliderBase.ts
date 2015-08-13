@@ -575,4 +575,15 @@ module swan {
                     animation.from = values[Keys.pendingValue];
                     animation.to = values[Keys.slideToValue];
                     UIEvent.emitUIEvent(this, UIEvent.CHANGE_START);
-   
+                    animation.play();
+                }
+                else {
+                    this.setValue(newValue);
+                    this.dispatchEventWith(egret.Event.CHANGE);
+                }
+            }
+        }
+
+    }
+
+}

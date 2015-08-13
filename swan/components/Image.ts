@@ -761,4 +761,6 @@ module swan {
         }
     }
 
-    sys.implementUIComponen
+    sys.implementUIComponent(Image, egret.Bitmap);
+    registerProperty(Image, "scale9Grid", "egret.Rectangle");
+}

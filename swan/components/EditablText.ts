@@ -483,4 +483,5 @@ module swan {
     }
 
     sys.implementUIComponent(EditableText, egret.TextField);
-    registerBin
+    registerBindable(EditableText.prototype, "text");
+}

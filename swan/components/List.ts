@@ -453,4 +453,7 @@ module swan {
             else {
                 super.onRendererTouchEnd(event);
             }
- 
+        }
+    }
+
+}

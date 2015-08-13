@@ -206,4 +206,8 @@ module swan {
             if (target.$parent === container) {
                 container.removeChild(target);
             }
- 
+        }
+    }
+
+}
+

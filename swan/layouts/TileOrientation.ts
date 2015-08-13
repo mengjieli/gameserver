@@ -84,4 +84,5 @@ module swan {
          * @platform Web,Native
          */
         public static COLUMNS:string = "columns";
-  
+    }
+}

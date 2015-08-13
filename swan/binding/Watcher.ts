@@ -358,4 +358,9 @@ module swan {
                 }
                 finally {
                     this.isExecuting = false;
-              
+                }
+            }
+        }
+    }
+
+}

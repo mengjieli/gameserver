@@ -369,4 +369,9 @@ module swan {
          */
         protected onTouchEnd(event:egret.TouchEvent):void {
             this.$stage.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.onTouchMove, this);
-            this.$stage.removeEventListener(egret.TouchEvent.TOUCH
+            this.$stage.removeEventListener(egret.TouchEvent.TOUCH_END, this.onTouchEnd, this);
+        }
+    }
+
+    registerProperty(Panel, "elementsContent", "Array", true);
+}

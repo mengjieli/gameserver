@@ -1259,4 +1259,6 @@ module swan {
 
     if(DEBUG){
         egret.$markReadOnly(TileLayout,"columnCount");
-        lark
+        egret.$markReadOnly(TileLayout,"rowCount");
+    }
+}

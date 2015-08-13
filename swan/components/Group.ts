@@ -897,4 +897,7 @@ module swan {
 
     if(DEBUG){
         egret.$markReadOnly(Group,"contentWidth");
-        egret.$mark
+        egret.$markReadOnly(Group,"contentHeight");
+        egret.$markReadOnly(Group,"numElements");
+    }
+}

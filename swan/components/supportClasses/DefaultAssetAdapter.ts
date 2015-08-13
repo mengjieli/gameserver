@@ -114,4 +114,7 @@ module swan {
             for(var i=0;i<length;i++){
                 var arr:any[] = list[i];
                 arr[0].call(arr[1],data,source);
- 
+            }
+        }
+    }
+}

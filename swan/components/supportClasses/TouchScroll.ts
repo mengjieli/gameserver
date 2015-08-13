@@ -343,4 +343,6 @@ module swan.sys {
         private onScrollingUpdate(animation:Animation):void {
             this.currentScrollPos = animation.currentValue;
             this.updateFunction.call(this.target, animation.currentValue);
-        
+        }
+    }
+}

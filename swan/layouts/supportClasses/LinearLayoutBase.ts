@@ -846,4 +846,8 @@ module swan.sys {
 
 
         /**
-         * @priva
+         * @private
+         */
+        public max:number = NaN;
+    }
+}

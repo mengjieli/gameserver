@@ -779,4 +779,10 @@ module swan {
                 this.verticalScrollBar.touchChildren = false;
                 this.verticalScrollBar.touchEnabled = false;
                 this.verticalScrollBar.viewport = this.viewport;
-    
+                this.verticalScrollBar.visible = false;
+            }
+        }
+    }
+
+    registerProperty(Scroller, "viewport", "swan.IViewport", true);
+}

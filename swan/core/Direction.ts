@@ -106,4 +106,6 @@ module swan {
 		 * @version Swan 1.0
 		 * @platform Web,Native
 		 */
-		public static BTT:string = "b
+		public static BTT:string = "btt";
+	}
+}

@@ -542,4 +542,8 @@ module swan {
             this.endIndex = this.findIndexAt(maxVisibleY, 0, numElements - 1);
             if (this.endIndex == -1)
                 this.endIndex = numElements - 1;
-            return oldStartIndex != this.startIndex || oldEndIndex != this.en
+            return oldStartIndex != this.startIndex || oldEndIndex != this.endIndex;
+        }
+    }
+
+}

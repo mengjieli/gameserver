@@ -131,3 +131,6 @@ module swan {
                 this.trackHighlight.width = Math.round(thumbPosTrackX);
             }
         }
+    }
+
+}

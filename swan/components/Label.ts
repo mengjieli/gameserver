@@ -512,4 +512,5 @@ module swan {
     }
 
     sys.implementUIComponent(Label, egret.TextField);
-    regi
+    registerBindable(Label.prototype, "text");
+}

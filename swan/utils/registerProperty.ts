@@ -123,4 +123,5 @@ module swan {
         if(asDefault){
             prototype.__defaultProperty__ = property;
         }
- 
+    }
+}

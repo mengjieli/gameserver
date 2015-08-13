@@ -96,4 +96,6 @@ module swan {
 		 * @version Swan 1.0
 		 * @platform Web,Native
 		 */
-		public static ON:string = "on
+		public static ON:string = "on";
+	}
+}

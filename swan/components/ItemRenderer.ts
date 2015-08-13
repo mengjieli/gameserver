@@ -239,4 +239,5 @@ module swan {
         }
     }
 
-    registerBindable(It
+    registerBindable(ItemRenderer.prototype, "data");
+}

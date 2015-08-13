@@ -371,4 +371,8 @@ module swan {
          * @version Swan 1.0
          * @platform Web,Native
          */
-        public updateDisplayList(width:number, height:number):vo
+        public updateDisplayList(width:number, height:number):void {
+        }
+    }
+
+}

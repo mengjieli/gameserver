@@ -189,4 +189,9 @@ module swan {
          * @version Swan 1.0
          * @platform Web,Native
          */
-        protected onPropertyChanged(event:swan.PropertyEv
+        protected onPropertyChanged(event:swan.PropertyEvent):void{
+
+        }
+    }
+
+}

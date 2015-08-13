@@ -150,4 +150,7 @@ module swan {
             var result = target.dispatchEvent(event);
             egret.Event.release(event);
             return result;
-   
+        }
+    }
+
+}

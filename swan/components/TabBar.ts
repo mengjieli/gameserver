@@ -153,4 +153,8 @@ module swan {
         private onViewStackIndexChange(event:PropertyEvent):void{
             if(event.property=="selectedIndex"&&!this.indexBeingUpdated){
                 this.setSelectedIndex((<ViewStack><any> (this.$dataProvider)).selectedIndex, false);
-       
+            }
+        }
+    }
+
+}

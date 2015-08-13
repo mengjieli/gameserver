@@ -133,3 +133,6 @@ module swan {
                 this.trackHighlight.height = Math.round(thumbRange - trackHighlightY);
             }
         }
+    }
+
+}

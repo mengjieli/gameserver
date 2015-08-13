@@ -91,4 +91,5 @@ module swan {
          * @platform Web,Native
          */
         public static CONTENT_JUSTIFY:string = "contentJustify";
-  
+    }
+}

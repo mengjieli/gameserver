@@ -572,4 +572,8 @@ module swan.sys {
             if (index >= 0) {
                 this.items.splice(index, 1);
                 this.map[client.$hashCode] = false;
-                this.length--
+                this.length--;
+            }
+        }
+    }
+}

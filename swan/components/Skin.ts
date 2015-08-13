@@ -358,4 +358,5 @@ module swan {
 
     sys.mixin(Skin, sys.StateClient);
     registerProperty(Skin, "elementsContent", "Array", true);
-    registerProperty(
+    registerProperty(Skin, "states", "State[]");
+}

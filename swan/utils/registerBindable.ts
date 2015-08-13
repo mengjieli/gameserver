@@ -75,3 +75,4 @@ module swan {
             instance[key] = list;
         }
     }
+}

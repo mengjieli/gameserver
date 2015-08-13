@@ -546,4 +546,7 @@ module swan.sys {
                          d:number,
                          mOverDet:number,
                          nOverDet:number):egret.Point {
-        return egret.Point.create(d * mOverDet - c * nOverDe
+        return egret.Point.create(d * mOverDet - c * nOverDet,
+            a * nOverDet - b * mOverDet);
+    }
+}

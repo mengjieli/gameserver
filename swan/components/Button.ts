@@ -261,4 +261,8 @@ module swan {
          * @version Swan 1.0
          * @platform Web,Native
          */
-        protected 
+        protected buttonReleased():void {
+        }
+    }
+
+}

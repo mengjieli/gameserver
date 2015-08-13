@@ -535,4 +535,5 @@ module swan {
         }
     }
 
-    registerBindable(Range.
+    registerBindable(Range.prototype,"value");
+}

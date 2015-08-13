@@ -246,4 +246,8 @@ module swan {
                     egret.$error(1003, "skinName");
                 }
             }
-            this.skinMap[hostComponentKey] 
+            this.skinMap[hostComponentKey] = skinName;
+        }
+    }
+
+}

@@ -162,4 +162,5 @@ module swan {
 			this.dispatchEventWith(egret.Event.CHANGE);
 		}
 	}
-	registerBindable(ToggleButton.prototype,"select
+	registerBindable(ToggleButton.prototype,"selected");
+}

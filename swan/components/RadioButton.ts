@@ -329,4 +329,7 @@ module swan {
             if (g)
                 g.$addInstance(this);
             return g;
-    
+        }
+    }
+
+}

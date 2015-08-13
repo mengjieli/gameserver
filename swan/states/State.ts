@@ -335,4 +335,6 @@ module swan.sys {
         /**
          * @private
          */
-        public stateIsDirty:boolean = f
+        public stateIsDirty:boolean = false;
+    }
+}

@@ -304,4 +304,8 @@ module swan {
             event.$setTo(kind, location, oldLocation, items, oldItems);
             var result = target.dispatchEvent(event);
             egret.Event.release(event);
-            return re
+            return result;
+        }
+    }
+
+}

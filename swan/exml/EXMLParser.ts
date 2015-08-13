@@ -1514,4 +1514,8 @@ module swan.sys {
         function getPropertyStr(child:any):string {
             var parentStr = toXMLString(child.parent);
             var childStr = toXMLString(child).substring(5);
-   
+            return parentStr + "\n      \t" + childStr;
+        }
+
+    }
+}

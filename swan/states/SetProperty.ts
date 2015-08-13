@@ -206,4 +206,7 @@ module swan {
                 return value.toLowerCase() == "true";
 
             return value != false;
-      
+        }
+    }
+
+}

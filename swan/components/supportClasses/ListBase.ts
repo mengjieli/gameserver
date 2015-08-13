@@ -860,4 +860,7 @@ module swan {
         }
     }
 
- 
+    registerBindable(ListBase.prototype,"selectedIndex");
+
+    registerBindable(ListBase.prototype,"selectedItem");
+}

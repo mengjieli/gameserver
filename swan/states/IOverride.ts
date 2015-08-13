@@ -96,4 +96,6 @@ module swan {
 		 * @version Swan 1.0
 		 * @platform Web,Native
 		 */
-		remove(host:any,parent:egret.DisplayObjectContainer):void
+		remove(host:any,parent:egret.DisplayObjectContainer):void;
+	}
+}

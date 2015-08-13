@@ -288,4 +288,6 @@ module swan.sys {
             maxX = Math.max(maxX, childX + elementWidth);
             maxY = Math.max(maxY, childY + elementHeight);
         }
-        return egret.$TempPoint.setTo(maxX,m
+        return egret.$TempPoint.setTo(maxX,maxY);
+    }
+}

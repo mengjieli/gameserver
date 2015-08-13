@@ -406,4 +406,7 @@ module swan {
             }
             if (this.labelDisplay) {
                 this.labelDisplay.text = this.valueToLabel(currentValue, maxValue);
-          
+            }
+        }
+    }
+}

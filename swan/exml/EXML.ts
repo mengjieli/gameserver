@@ -139,4 +139,8 @@ module EXML {
         for (var i = 0; i < length; i++) {
             var arr = list[i];
             if (arr[0] && arr[1])
-                arr[0].call(arr[
+                arr[0].call(arr[1], clazz, url);
+        }
+    }
+
+}

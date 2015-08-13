@@ -62,4 +62,6 @@ module swan {
     locale_strings[2202] = "parse skinName error，the parsing result of skinName must be a instance of swan.Skin.";
     locale_strings[2203] = "Could not find the skin class '{0}'。";
 
-    locale_strings[2301] = "parse source failed，could not find asset from URL：{0} .";
+    locale_strings[2301] = "parse source failed，could not find asset from URL：{0} .";
+
+}

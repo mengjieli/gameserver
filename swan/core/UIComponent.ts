@@ -1902,4 +1902,9 @@ module swan.sys {
                 get: function () {
                     return this.$UIComponent[UIKeys.invalidateDisplayListFlag];
                 },
-   
+                enumerable: true,
+                configurable: true
+            });
+        }
+    }
+}

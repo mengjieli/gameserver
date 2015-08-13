@@ -239,3 +239,5 @@ module swan.sys {
         }
         return instance;
     }
+
+}

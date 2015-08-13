@@ -386,4 +386,6 @@ module swan {
     registerProperty(ArrayCollection,"source","Array",true);
 
     if(DEBUG){
-        egret.$markReadOnly(ArrayC
+        egret.$markReadOnly(ArrayCollection,"length");
+    }
+}

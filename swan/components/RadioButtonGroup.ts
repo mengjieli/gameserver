@@ -452,4 +452,6 @@ module swan {
     registerBindable(RadioButtonGroup.prototype,"selectedValue");
 
     if(DEBUG){
-        egret.$mar
+        egret.$markReadOnly(RadioButtonGroup,"numRadioButtons");
+    }
+}

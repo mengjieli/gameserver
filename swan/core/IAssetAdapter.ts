@@ -77,4 +77,5 @@ module swan {
          * @platform Web,Native
          */
         getAsset(source: string, callBack: (content: any, source: string) => void, thisObject: any): void;
-    
+    }
+}

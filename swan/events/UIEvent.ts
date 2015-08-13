@@ -188,4 +188,7 @@ module swan {
             var event = egret.Event.create(UIEvent, eventType);
             var result = target.dispatchEvent(event);
             egret.Event.release(event);
-            return resu
+            return result;
+        }
+    }
+}

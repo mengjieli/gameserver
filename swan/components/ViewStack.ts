@@ -346,4 +346,6 @@ module swan {
 
     if(DEBUG){
         egret.$markReadOnly(ViewStack,"length");
-        egret.$markReadOnly(ViewS
+        egret.$markReadOnly(ViewStack,"layout");
+    }
+}

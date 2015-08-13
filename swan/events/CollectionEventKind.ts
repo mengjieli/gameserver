@@ -143,4 +143,6 @@ module swan {
          * @version Swan 1.0
          * @platform Web,Native
          */
-        public static UPDATE:string = "upd
+        public static UPDATE:string = "update";
+    }
+}

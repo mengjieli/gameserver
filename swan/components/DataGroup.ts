@@ -1037,4 +1037,6 @@ module swan {
     registerProperty(DataGroup, "itemRenderer", "Class");
     registerProperty(DataGroup, "dataProvider", "swan.ICollection", true);
     if(DEBUG){
-    
+        egret.$markReadOnly(DataGroup,"numElements");
+    }
+}

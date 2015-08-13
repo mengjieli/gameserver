@@ -11,9 +11,9 @@ var files = global.File.readDir(swanFile, function (file) {
 function replaceAll(content, search, replace) {
     var slen = search.length;
     var rlen = replace.length;
-    for (var i = 0, len = content.length; i < len; i++) {
+    for (var i = 0; i < content.length; i++) {
         if (content.slice(i, i + slen) == search) {
-            content = content.slice(0, i) + replace + content.slice(i + slen, len);
+            content = content.slice(0, i) + replace + content.slice(i + slen, content.length);
             i += rlen - slen;
         }
     }
@@ -21,24 +21,24 @@ function replaceAll(content, search, replace) {
 }
 
 var replaces = [
-    ["Lark 1.0","Egret 2.4"],
-    ["lark.","egret."],
-    ["IEventEmitter","IEventDispatcher"],
-    ["EventEmitter","EventDispatcher"],
-    [".on(",".addEventListener("],
-    [".removeListener(",".removeEventListener("],
-    [".emit(",".dispatchEvent("],
-    [".emitWith(",".dispatchEventWith("],
-    [".hasListener(",".hasEventListener("],
-    [".BitmapData",".Texture"],
-    [".Sprite",".DisplayObjectContainer"],
-    [".TextInput",".TextField"],
+    ["Lark 1.0", "Egret 2.4"],
+    ["lark.", "egret."],
+    ["IEventEmitter", "IEventDispatcher"],
+    ["EventEmitter", "EventDispatcher"],
+    [".on(", ".addEventListener("],
+    [".removeListener(", ".removeEventListener("],
+    [".emit(", ".dispatchEvent("],
+    [".emitWith(", ".dispatchEventWith("],
+    [".hasListener(", ".hasEventListener("],
+    [".BitmapData", ".Texture"],
+    [".Sprite", ".DisplayObjectContainer"],
+    [".TextInput", ".TextField"],
 ];
 
 for (var i = 0, len = files.length; i < len; i++) {
     var file = global.File.readUTF8File(swanFile + "/" + files[i]);
-    for(var r = 0; r < replaces.length; r++) {
-        file = replaceAll(file,replaces[r][0],replaces[r][1]);
+    for (var r = 0; r < replaces.length; r++) {
+        file = replaceAll(file, replaces[r][0], replaces[r][1]);
     }
     global.File.addFileList([2, outFile + "/" + files[i], file, "utf-8"]);
 }
