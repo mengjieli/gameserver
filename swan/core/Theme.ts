@@ -94,7 +94,7 @@ module swan {
             var request = new egret.URLLoader();
             request.addEventListener(egret.Event.COMPLETE, this.onConfigLoaded, this);
             request.addEventListener(egret.Event.IO_ERROR, this.onConfigLoaded, this);
-            //IF LARK
+            /*//IF LARK
             request.open(url);
             request.send();
             //*/
@@ -112,7 +112,7 @@ module swan {
         private onConfigLoaded(event:egret.Event):void {
             var request:egret.URLLoader = event.target;
             try {
-                //IF LARK
+                /*//IF LARK
                 var data = JSON.parse(request.response);
                 //*/
                 //IF EGRET

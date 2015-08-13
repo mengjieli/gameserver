@@ -91,7 +91,7 @@ module swan {
 
             loader.addEventListener(egret.Event.COMPLETE, this.onLoadFinish, this);
             loader.addEventListener(egret.Event.IO_ERROR, this.onLoadFinish, this);
-            //IF LARK
+            /*//IF LARK
             loader.load(source);
             //*/
             //IF EGRET

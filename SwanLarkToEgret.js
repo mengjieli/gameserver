@@ -22,10 +22,10 @@ function replaceAll(content, search, replace) {
 }
 
 function changeDefine(content,current,change) {
-    var cuIF = "//IF aaaa" + current;
+    var cuIF = "//IF " + current;
     var chIF = "//IF " + change;
     for (var i = 0; i < content.length; i++) {
-        if(false && content.slice(i, i + cuIF.length) == cuIF) {
+        if(content.slice(i, i + cuIF.length) == cuIF) {
             content = content.slice(0,i) + "/*" + content.slice(i,content.length);
             i += 2;
             for(; i < content.length; i++) {

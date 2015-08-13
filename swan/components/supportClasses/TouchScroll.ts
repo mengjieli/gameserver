@@ -287,7 +287,7 @@ module swan.sys {
          * @returns
          */
         private onTick(timeStamp:number):boolean {
-            //IF LARK
+            /*//IF LARK
             var timeOffset = timeStamp - this.previousTime;
             //*/
             //IF EGRET

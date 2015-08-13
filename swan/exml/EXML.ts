@@ -116,7 +116,7 @@ module EXML {
         requestMap[request.$hashCode] = url;
         request.addEventListener(egret.Event.COMPLETE, onLoadFinish, null);
         request.addEventListener(egret.Event.IO_ERROR, onLoadFinish, null);
-        //IF LARK
+        /*//IF LARK
         request.open(url);
         request.send();
         //*/
@@ -134,7 +134,7 @@ module EXML {
         var request:egret.URLLoader = event.currentTarget;
         request.removeEventListener(egret.Event.COMPLETE, onLoadFinish, null);
         request.removeEventListener(egret.Event.IO_ERROR, onLoadFinish, null);
-        //IF LARK
+        /*//IF LARK
         var text:string = event.type == egret.Event.COMPLETE ? request.response : "";
         //*/
         //IF EGRET
