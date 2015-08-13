@@ -1,3 +1,13 @@
+/**
+ * 参数说明
+ * 例如：
+ * node SwanLarkToEgret.js lark/src/extension/swan egret/src/extension/swan
+ *
+ * 第三个参数 lark/src/extension/swan 是lark目录下的swan，记得把lark改成自己机器上的绝对路径。
+ * 第四个参数 egret/src/extension/swan 是egret目录下的swan，记得把egret改成自己机器上的绝对路径。
+ *
+ * */
+
 var File = require("./File.js");
 var path = require("path");
 var swanFile = path.resolve(process.cwd(), decodeURI(process.argv[2]));
