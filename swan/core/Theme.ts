@@ -91,7 +91,7 @@ module swan {
          * @param url 
          */
         private load(url:string):void {
-            var request = new egret.HttpRequest();
+            var request = new egret.URLLoader();
             request.addEventListener(egret.Event.COMPLETE, this.onConfigLoaded, this);
             request.addEventListener(egret.Event.IO_ERROR, this.onConfigLoaded, this);
             request.open(url);
@@ -104,7 +104,7 @@ module swan {
          * @param event 
          */
         private onConfigLoaded(event:egret.Event):void {
-            var request:egret.HttpRequest = event.target;
+            var request:egret.URLLoader = event.target;
             try {
                 var data = JSON.parse(request.response);
             }

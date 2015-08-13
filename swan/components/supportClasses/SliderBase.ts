@@ -491,7 +491,7 @@ module swan {
             var values = this.$SliderBase;
             event.$currentTarget.removeEventListener(egret.TouchEvent.TOUCH_END, this.stageTouchEndHandler, this);
             if (values[Keys.touchDownTarget] != target && this.contains(<egret.DisplayObject> (target))) {
-                egret.TouchEvent.emitTouchEvent(this, egret.TouchEvent.TOUCH_TAP, true, true,
+                egret.TouchEvent.dispatchTouchEvent(this, egret.TouchEvent.TOUCH_TAP, true, true,
                     event.$stageX, event.$stageY, event.touchPointID);
             }
             values[Keys.touchDownTarget] = null;

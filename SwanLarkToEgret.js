@@ -30,15 +30,20 @@ var replaces = [
     [".emit(", ".dispatchEvent("],
     [".emitWith(", ".dispatchEventWith("],
     [".hasListener(", ".hasEventListener("],
+    [".emitTouchEvent(",".dispatchTouchEvent("],
     [".BitmapData", ".Texture"],
     [".Sprite", ".DisplayObjectContainer"],
     [".TextInput", ".TextField"],
     [".ImageLoader",".URLLoader"],
+    [".HttpRequest",".URLLoader"],
 ];
 
 for (var i = 0, len = files.length; i < len; i++) {
     var file = global.File.readUTF8File(swanFile + "/" + files[i]);
     for (var r = 0; r < replaces.length; r++) {
+        if(!replaces[r]) {
+            console.log("r = ",r);
+        }
         file = replaceAll(file, replaces[r][0], replaces[r][1]);
     }
     global.File.addFileList([2, outFile + "/" + files[i], file, "utf-8"]);

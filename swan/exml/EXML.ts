@@ -31,7 +31,7 @@ module EXML {
 
     var parser = new swan.sys.EXMLParser();
 
-    var requestPool:egret.HttpRequest[] = [];
+    var requestPool:egret.URLLoader[] = [];
     var callBackMap:any = {};
     var requestMap:any = {};
 
@@ -107,7 +107,7 @@ module EXML {
         }
         var request = requestPool.pop();
         if (!request) {
-            request = new egret.HttpRequest();
+            request = new egret.URLLoader();
         }
         callBackMap[url] = [[callBack, thisObject]];
         requestMap[request.$hashCode] = url;
@@ -123,7 +123,7 @@ module EXML {
      * @param event 
      */
     function onLoadFinish(event:egret.Event):void {
-        var request:egret.HttpRequest = event.currentTarget;
+        var request:egret.URLLoader = event.currentTarget;
         request.removeEventListener(egret.Event.COMPLETE, onLoadFinish, null);
         request.removeEventListener(egret.Event.IO_ERROR, onLoadFinish, null);
         var text:string = event.type == egret.Event.COMPLETE ? request.response : "";
