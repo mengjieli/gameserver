@@ -868,9 +868,7 @@ module swan.sys {
                 var orgValue:string = value;
                 switch (type) {
                     case TYPE_CLASS:
-                        if(key==SKIN_NAME){
-                            value = this.formatString(stringValue);
-                        }
+
                         break;
                     case "number":
                         if (value.indexOf("#") == 0)

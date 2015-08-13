@@ -288,7 +288,7 @@ module swan {
 
             if (emitChangedEvents && retVal) {
                 if (values[sys.ListBaseKeys.emitChangeAfterSelection]) {
-                    this.dispatchEventWidth(egret.Event.CHANGE)
+                    this.dispatchEventWith(egret.Event.CHANGE)
                     values[sys.ListBaseKeys.emitChangeAfterSelection] = false;
                 }
                 PropertyEvent.emitPropertyEvent(this,PropertyEvent.PROPERTY_CHANGE,"selectedIndex");
@@ -451,7 +451,7 @@ module swan {
                 ItemTapEvent.emitItemTapEvent(this, ItemTapEvent.ITEM_TAP, itemRenderer);
             }
             else {
-                super.addEventListenerRendererTouchEnd(event);
+                super.onRendererTouchEnd(event);
             }
         }
     }

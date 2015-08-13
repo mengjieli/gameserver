@@ -328,7 +328,7 @@ module swan {
         protected partAdded(partName:string, instance:any):void {
             super.partAdded(partName, instance);
             if (instance === this.thumb) {
-                this.thumb.addEventListener(egret.Event.RESIZE, this.addEventListenerThumbResize, this);
+                this.thumb.addEventListener(egret.Event.RESIZE, this.onThumbResize, this);
             }
         }
 
@@ -342,7 +342,7 @@ module swan {
         protected partRemoved(partName:string, instance:any):void {
             super.partRemoved(partName, instance);
             if (instance === this.thumb) {
-                this.thumb.removeEventListener(egret.Event.RESIZE, this.addEventListenerThumbResize, this);
+                this.thumb.removeEventListener(egret.Event.RESIZE, this.onThumbResize, this);
             }
         }
 

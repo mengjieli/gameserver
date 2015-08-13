@@ -89,14 +89,14 @@ module swan.sys {
          * 创建一个 TouchScroll 实例
          * @param updateFunction 滚动位置更新回调函数
          */
-        public constructor(updateFunction:(scrollPos:number)=>void, endFunction:()=>void, target:egret.IEventEmitter) {
+        public constructor(updateFunction:(scrollPos:number)=>void, endFunction:()=>void, target:egret.IEventDispatcher) {
             if (DEBUG && !updateFunction) {
                 egret.$error(1003, "updateFunction");
             }
             this.updateFunction = updateFunction;
             this.endFunction = endFunction;
             this.target = target;
-            this.animation = new sys.Animation(this.addEventListenerScrollingUpdate, this);
+            this.animation = new sys.Animation(this.onScrollingUpdate, this);
             this.animation.endFunction = this.finishScrolling;
             this.animation.easerFunction = easeOut;
         }
@@ -110,7 +110,7 @@ module swan.sys {
         /**
          * @private
          */
-        private target:egret.IEventEmitter;
+        private target:egret.IEventDispatcher;
         /**
          * @private
          */
@@ -120,10 +120,6 @@ module swan.sys {
          */
         private endFunction:()=>void;
 
-        /**
-         * @private
-         */
-        private previousTime:number = 0;
         /**
          * @private
          */
@@ -173,7 +169,7 @@ module swan.sys {
          */
         public stop():void {
             this.animation.stop();
-            egret.stopTick(this.addEventListenerTick, this);
+            egret.stopTick(this.onTick, this);
             this.started = false;
         }
 
@@ -196,10 +192,9 @@ module swan.sys {
             this.started = true;
             this.velocity = 0;
             this.previousVelocity.length = 0;
-            this.previousTime = egret.getTimer();
             this.previousPosition = this.currentPosition = touchPoint;
             this.offsetPoint = scrollValue + touchPoint;
-            egret.startTick(this.addEventListenerTick, this);
+            egret.startTick(this.onTick, this);
         }
 
         /**
@@ -229,7 +224,7 @@ module swan.sys {
          * @param maxScrollPos 容器可以滚动的最大值。当目标值不在 0~maxValue之间时，将会应用更大的摩擦力，从而影响缓动时间的长度。
          */
         public finish(currentScrollPos:number, maxScrollPos:number):void {
-            egret.stopTick(this.addEventListenerTick, this);
+            egret.stopTick(this.onTick, this);
             this.started = false;
             var sum = this.velocity * CURRENT_VELOCITY_WEIGHT;
             var previousVelocityX = this.previousVelocity;
@@ -287,7 +282,7 @@ module swan.sys {
          * @returns
          */
         private onTick(timeStamp:number):boolean {
-            var timeOffset = timeStamp - this.previousTime;
+            var timeOffset = timeStamp;
             if (timeOffset > 0) {
                 var previousVelocity = this.previousVelocity;
                 previousVelocity.push(this.velocity);
@@ -295,7 +290,6 @@ module swan.sys {
                     previousVelocity.shift();
                 }
                 this.velocity = (this.currentPosition - this.previousPosition) / timeOffset;
-                this.previousTime = timeStamp;
                 this.previousPosition = this.currentPosition;
             }
             return true;

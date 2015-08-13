@@ -34,9 +34,6 @@ module swan {
      * The Button component is a commonly used rectangular button.
      * The Button component looks like it can be pressed.
      * The default skin has a text label and a icon display object.
-     * @state up Button up state
-     * @state down Button down state
-     * @state disabled Button disabled state
      * @version Lark 1.0
      * @version Swan 1.0
      * @platform Web,Native
@@ -45,9 +42,6 @@ module swan {
     /**
      * @language zh_CN
      * Button 组件是常用的矩形按钮。Button 组件看起来可以按压。默认外观具有一个文本标签和图标显示对象。
-     * @state up 按钮弹起状态
-     * @state down 按钮按下状态
-     * @state disabled 按钮禁用状态
      * @version Lark 1.0
      * @version Swan 1.0
      * @platform Web,Native
@@ -71,7 +65,7 @@ module swan {
         public constructor() {
             super();
             this.touchChildren = false;
-            this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.addEventListenerTouchBegin, this);
+            this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
         }
 
         /**
@@ -142,7 +136,7 @@ module swan {
         /**
          * @private
          */
-        private _icon:string|egret.BitmapData = null;
+        private _icon:string|egret.Texture = null;
         /**
          * @language en_US
          * Icon to appear on the Button control.
@@ -157,11 +151,11 @@ module swan {
          * @version Swan 1.0
          * @platform Web,Native
          */
-        public get icon():string|egret.BitmapData {
+        public get icon():string|egret.Texture {
             return this._icon;
         }
 
-        public set icon(value:string|egret.BitmapData) {
+        public set icon(value:string|egret.Texture) {
             this._icon = value;
             if (this.iconDisplay) {
                 this.iconDisplay.source = value;
@@ -191,7 +185,7 @@ module swan {
          * @platform Web,Native
          */
         protected onTouchBegin(event:egret.TouchEvent):void {
-            this.$stage.addEventListener(egret.TouchEvent.TOUCH_END, this.addEventListenerStageTouchEnd, this);
+            this.$stage.addEventListener(egret.TouchEvent.TOUCH_END, this.onStageTouchEnd, this);
             this.touchCaptured = true;
             this.invalidateState();
             event.updateAfterEvent();
@@ -203,7 +197,7 @@ module swan {
          */
         private onStageTouchEnd(event:egret.Event):void {
             var stage = event.$currentTarget;
-            stage.removeEventListener(egret.TouchEvent.TOUCH_END, this.addEventListenerStageTouchEnd, this);
+            stage.removeEventListener(egret.TouchEvent.TOUCH_END, this.onStageTouchEnd, this);
             if (this.contains(event.target)){
                 this.buttonReleased();
             }

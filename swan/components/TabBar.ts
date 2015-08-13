@@ -121,13 +121,13 @@ module swan {
         $setDataProvider(value:ICollection){
             var dp = this.$dataProvider;
             if(dp&&dp instanceof swan.ViewStack){
-                dp.removeEventListener(PropertyEvent.PROPERTY_CHANGE,this.addEventListenerViewStackIndexChange,this);
-                this.removeEventListener(egret.Event.CHANGE,this.addEventListenerIndexChanged,this);
+                dp.removeEventListener(PropertyEvent.PROPERTY_CHANGE,this.onViewStackIndexChange,this);
+                this.removeEventListener(egret.Event.CHANGE,this.onIndexChanged,this);
             }
 
             if(value&&value instanceof swan.ViewStack){
-                value.addEventListener(PropertyEvent.PROPERTY_CHANGE,this.addEventListenerViewStackIndexChange,this);
-                this.addEventListener(egret.Event.CHANGE,this.addEventListenerIndexChanged,this);
+                value.addEventListener(PropertyEvent.PROPERTY_CHANGE,this.onViewStackIndexChange,this);
+                this.addEventListener(egret.Event.CHANGE,this.onIndexChanged,this);
             }
             super.$setDataProvider(value);
         }

@@ -29,9 +29,6 @@
 
 module swan {
 
-    /**
-     * @private
-     */
     export const enum Keys {
         clickOffsetX,
         clickOffsetY,
@@ -101,10 +98,10 @@ module swan {
                 6: 300,      //slideDuration,
                 7: 0,        //pendingValue
                 8: 0,        //slideToValue,
-                9: true,     //liveDragging
+                9: true     //liveDragging
             };
             this.maximum = 10;
-            this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.addEventListenerTouchBegin, this);
+            this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
         }
 
         /**
@@ -315,12 +312,12 @@ module swan {
             super.partAdded(partName, instance);
 
             if (instance == this.thumb) {
-                this.thumb.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.addEventListenerThumbTouchBegin, this);
-                this.thumb.addEventListener(egret.Event.RESIZE, this.addEventListenerTrackOrThumbResize, this);
+                this.thumb.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onThumbTouchBegin, this);
+                this.thumb.addEventListener(egret.Event.RESIZE, this.onTrackOrThumbResize, this);
             }
             else if (instance == this.track) {
-                this.track.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.addEventListenerTrackTouchBegin, this);
-                this.track.addEventListener(egret.Event.RESIZE, this.addEventListenerTrackOrThumbResize, this);
+                this.track.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTrackTouchBegin, this);
+                this.track.addEventListener(egret.Event.RESIZE, this.onTrackOrThumbResize, this);
             }
             else if (instance === this.trackHighlight) {
                 this.trackHighlight.touchEnabled = false;
@@ -341,12 +338,12 @@ module swan {
             super.partRemoved(partName, instance);
 
             if (instance == this.thumb) {
-                this.thumb.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.addEventListenerThumbTouchBegin, this);
-                this.thumb.removeEventListener(egret.Event.RESIZE, this.addEventListenerTrackOrThumbResize, this);
+                this.thumb.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onThumbTouchBegin, this);
+                this.thumb.removeEventListener(egret.Event.RESIZE, this.onTrackOrThumbResize, this);
             }
             else if (instance == this.track) {
-                this.track.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.addEventListenerTrackTouchBegin, this);
-                this.track.removeEventListener(egret.Event.RESIZE, this.addEventListenerTrackOrThumbResize, this);
+                this.track.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTrackTouchBegin, this);
+                this.track.removeEventListener(egret.Event.RESIZE, this.onTrackOrThumbResize, this);
             }
         }
 
@@ -385,8 +382,8 @@ module swan {
                 this.stopAnimation();
 
             var stage = this.$stage;
-            stage.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.addEventListenerStageTouchMove, this);
-            stage.addEventListener(egret.TouchEvent.TOUCH_END, this.addEventListenerStageTouchEnd, this);
+            stage.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.onStageTouchMove, this);
+            stage.addEventListener(egret.TouchEvent.TOUCH_END, this.onStageTouchEnd, this);
 
             var clickOffset = this.thumb.globalToLocal(event.stageX, event.stageY, egret.$TempPoint);
 
@@ -433,7 +430,7 @@ module swan {
             if (newValue != this.$SliderBase[Keys.pendingValue]) {
                 if (this.liveDragging) {
                     this.setValue(newValue);
-                    this.dispatchEventWidth(egret.Event.CHANGE);
+                    this.dispatchEventWith(egret.Event.CHANGE);
                 }
                 else {
                     this.pendingValue = newValue;
@@ -463,13 +460,13 @@ module swan {
          */
         protected onStageTouchEnd(event:egret.Event):void {
             var stage:egret.Stage = event.$currentTarget;
-            stage.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.addEventListenerStageTouchMove, this);
-            stage.removeEventListener(egret.TouchEvent.TOUCH_END, this.addEventListenerStageTouchEnd, this);
+            stage.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.onStageTouchMove, this);
+            stage.removeEventListener(egret.TouchEvent.TOUCH_END, this.onStageTouchEnd, this);
             UIEvent.emitUIEvent(this, UIEvent.CHANGE_END);
             var values = this.$SliderBase;
             if (!this.liveDragging && this.value != values[Keys.pendingValue]) {
                 this.setValue(values[Keys.pendingValue]);
-                this.dispatchEventWidth(egret.Event.CHANGE);
+                this.dispatchEventWith(egret.Event.CHANGE);
             }
         }
 
@@ -491,7 +488,7 @@ module swan {
             var values = this.$SliderBase;
             event.$currentTarget.removeEventListener(egret.TouchEvent.TOUCH_END, this.stageTouchEndHandler, this);
             if (values[Keys.touchDownTarget] != target && this.contains(<egret.DisplayObject> (target))) {
-                egret.TouchEvent.emitTouchEvent(this, egret.TouchEvent.TOUCH_TAP, true, true,
+                egret.TouchEvent.dispatchTouchEvent(this, egret.TouchEvent.TOUCH_TAP, true, true,
                     event.$stageX, event.$stageY, event.touchPointID);
             }
             values[Keys.touchDownTarget] = null;
@@ -512,7 +509,7 @@ module swan {
          */
         private animationEndHandler(animation:sys.Animation):void {
             this.setValue(this.$SliderBase[Keys.slideToValue]);
-            this.dispatchEventWidth(egret.Event.CHANGE);
+            this.dispatchEventWith(egret.Event.CHANGE);
             UIEvent.emitUIEvent(this, UIEvent.CHANGE_END);
         }
 
@@ -523,7 +520,7 @@ module swan {
         private stopAnimation():void {
             this.$SliderBase[Keys.animation].stop();
             this.setValue(this.nearestValidValue(this.pendingValue, this.snapInterval));
-            this.dispatchEventWidth(egret.Event.CHANGE);
+            this.dispatchEventWith(egret.Event.CHANGE);
             UIEvent.emitUIEvent(this, UIEvent.CHANGE_END);
         }
 
@@ -579,7 +576,7 @@ module swan {
                 }
                 else {
                     this.setValue(newValue);
-                    this.dispatchEventWidth(egret.Event.CHANGE);
+                    this.dispatchEventWith(egret.Event.CHANGE);
                 }
             }
         }

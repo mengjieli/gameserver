@@ -89,7 +89,7 @@ module swan {
      * @platform Web,Native
      * @includeExample examples/Samples/src/extension/swan/components/RadioButtonGroupExample.ts
      */
-    export class RadioButtonGroup extends egret.EventEmitter {
+    export class RadioButtonGroup extends egret.EventDispatcher {
 
         /**
          * @language en_US
@@ -392,7 +392,7 @@ module swan {
                     this._selection.selected = false;
                     this._selection = null;
                     if (fireChange)
-                        this.dispatchEventWidth(egret.Event.CHANGE);
+                        this.dispatchEventWith(egret.Event.CHANGE);
                 }
             }
             else {
@@ -420,7 +420,7 @@ module swan {
                 this._selection = rb;
                 this._selection.selected = true;
                 if (fireChange)
-                    this.dispatchEventWidth(egret.Event.CHANGE);
+                    this.dispatchEventWith(egret.Event.CHANGE);
             }
         }
 
