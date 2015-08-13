@@ -288,7 +288,7 @@ module swan {
 
             if (emitChangedEvents && retVal) {
                 if (values[sys.ListBaseKeys.emitChangeAfterSelection]) {
-                    this.dispatchEventWith(egret.Event.CHANGE)
+                    this.dispatchEventWidth(egret.Event.CHANGE)
                     values[sys.ListBaseKeys.emitChangeAfterSelection] = false;
                 }
                 PropertyEvent.emitPropertyEvent(this,PropertyEvent.PROPERTY_CHANGE,"selectedIndex");

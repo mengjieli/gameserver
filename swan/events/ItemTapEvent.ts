@@ -124,7 +124,7 @@ module swan {
 
         /**
          * @language en_US
-         * Emit an event with specified EventDispatcher. The emitted event will be cached in the object pool,
+         * Emit an event with specified EventEmitter. The emitted event will be cached in the object pool,
          * for the next cycle of reuse.
          *
          * @param target the target of event emitter.
@@ -137,7 +137,7 @@ module swan {
          */
         /**
          * @language zh_CN
-         * 使用指定的 EventDispatcher 对象来抛出事件对象。抛出的对象将会缓存在对象池上，供下次循环复用。
+         * 使用指定的 EventEmitter 对象来抛出事件对象。抛出的对象将会缓存在对象池上，供下次循环复用。
          *
          * @param target 事件派发目标
          * @param eventType 事件类型；指示触发事件的动作。
@@ -148,14 +148,14 @@ module swan {
          * @platform Web,Native
          */
         public static emitItemTapEvent(target:egret.IEventDispatcher, eventType:string, itemRenderer?:IItemRenderer):boolean {
-            if (!target.hasEventListener(eventType)) {
+            if (!target.hasListener(eventType)) {
                 return true;
             }
             var event = egret.Event.create(ItemTapEvent, eventType);
             event.item = itemRenderer.data;
             event.itemIndex = itemRenderer.itemIndex;
             event.itemRenderer = itemRenderer;
-            var result = target.dispatchEvent(event);
+            var result = target.emit(event);
             egret.Event.release(event);
             return result;
         }

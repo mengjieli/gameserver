@@ -160,7 +160,7 @@ module swan {
 
         /**
          * @language en_US
-         * Emit an event with specified EventDispatcher. The emitted event will be cached in the object pool,
+         * Emit an event with specified EventEmitter. The emitted event will be cached in the object pool,
          * for the next cycle of reuse.
          *
          * @param target the target of event emitter.
@@ -182,11 +182,11 @@ module swan {
          * @platform Web,Native
          */
         public static emitUIEvent(target:egret.IEventDispatcher, eventType:string):boolean {
-            if(!target.hasEventListener(eventType)){
+            if(!target.hasListener(eventType)){
                 return true;
             }
             var event = egret.Event.create(UIEvent, eventType);
-            var result = target.dispatchEvent(event);
+            var result = target.emit(event);
             egret.Event.release(event);
             return result;
         }
