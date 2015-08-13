@@ -48,6 +48,7 @@ module swan {
      * group (Give the instance of Group to <code>viewport</code> property of Scroller component).
      * The scroller component can adds a scrolling touch operation for the Group.
      *
+     * @defaultProperty elementsContent
      * @includeExample examples/Samples/src/extension/swan/components/GroupExample.ts
      * @version Lark 1.0
      * @version Swan 1.0
@@ -58,12 +59,13 @@ module swan {
      * Group 是自动布局的容器基类。如果包含的子项内容太大需要滚动显示，可以在在 Group 外部包裹一层 Scroller 组件
      * (将 Group 实例赋值给 Scroller 组件的 viewport 属性)。Scroller 会为 Group 添加滚动的触摸操作功能，并显示垂直或水平的滚动条。
      *
+     * @defaultProperty elementsContent
      * @includeExample examples/Samples/src/extension/swan/components/GroupExample.ts
      * @version Lark 1.0
      * @version Swan 1.0
      * @platform Web,Native
      */
-    export class Group extends egret.DisplayObjectContainer implements IViewport {
+    export class Group extends lark.Sprite implements IViewport {
 
         /**
          * @language en_US
@@ -93,7 +95,6 @@ module swan {
                 5: false,    //touchThrough
             };
             this.$stateValues.parent = this;
-            this.$touchEnabled = true;
         }
 
         $Group:Object;
@@ -113,7 +114,7 @@ module swan {
          * @version Swan 1.0
          * @platform Web,Native
          */
-        public set elementsContent(value:egret.DisplayObject[]) {
+        public set elementsContent(value:lark.DisplayObject[]) {
             if (value) {
                 var length = value.length;
                 for (var i = 0; i < length; i++) {
@@ -321,7 +322,7 @@ module swan {
             var hasClip = values[Keys.scrollEnabled];
             if (hasClip) {
                 var uiValues = this.$UIComponent;
-                this.scrollRect = egret.$TempRectangle.setTo(values[Keys.scrollH],
+                this.scrollRect = lark.$TempRectangle.setTo(values[Keys.scrollH],
                     values[Keys.scrollV],
                     uiValues[sys.UIKeys.width], uiValues[sys.UIKeys.height]);
             }
@@ -367,7 +368,7 @@ module swan {
          * @version Swan 1.0
          * @platform Web,Native
          */
-        public getElementAt(index:number):egret.DisplayObject {
+        public getElementAt(index:number):lark.DisplayObject {
             return this.$children[index];
         }
 
@@ -429,7 +430,7 @@ module swan {
         /**
          * @private
          */
-        $hitTest(stageX:number, stageY:number):egret.DisplayObject {
+        $hitTest(stageX:number, stageY:number):lark.DisplayObject {
             var target = super.$hitTest(stageX, stageY);
             if (target || this.$Group[Keys.touchThrough]) {
                 return target;
@@ -437,9 +438,9 @@ module swan {
             if (!this.$visible || !this.touchEnabled) {
                 return null;
             }
-            var point = this.globalToLocal(stageX, stageY, egret.$TempPoint);
+            var point = this.globalToLocal(stageX, stageY, lark.$TempPoint);
             var values = this.$UIComponent;
-            var bounds = egret.$TempRectangle.setTo(0, 0, values[sys.UIKeys.width], values[sys.UIKeys.height]);
+            var bounds = lark.$TempRectangle.setTo(0, 0, values[sys.UIKeys.width], values[sys.UIKeys.height]);
             var scrollRect = this.$scrollRect;
             if(scrollRect){
                 bounds.x = scrollRect.x;
@@ -496,7 +497,7 @@ module swan {
          * @private
          * 初始化所有视图状态
          */
-        private initializeStates:(stage:egret.Stage)=>void;
+        private initializeStates:(stage:lark.Stage)=>void;
         /**
          * @private
          * 应用当前的视图状态。子类覆盖此方法在视图状态发生改变时执行相应更新操作。
@@ -875,7 +876,7 @@ module swan {
          * @version Swan 1.0
          * @platform Web,Native
          */
-        public getLayoutBounds(bounds:egret.Rectangle):void {
+        public getLayoutBounds(bounds:lark.Rectangle):void {
         }
 
         /**
@@ -885,18 +886,18 @@ module swan {
          * @version Swan 1.0
          * @platform Web,Native
          */
-        public getPreferredBounds(bounds:egret.Rectangle):void {
+        public getPreferredBounds(bounds:lark.Rectangle):void {
         }
     }
 
-    sys.implementUIComponent(Group, egret.Sprite, true);
+    sys.implementUIComponent(Group, lark.Sprite, true);
     sys.mixin(Group, sys.StateClient);
     registerProperty(Group, "elementsContent", "Array", true);
     registerProperty(Group, "states", "State[]");
 
     if(DEBUG){
-        egret.$markReadOnly(Group,"contentWidth");
-        egret.$markReadOnly(Group,"contentHeight");
-        egret.$markReadOnly(Group,"numElements");
+        lark.$markReadOnly(Group,"contentWidth");
+        lark.$markReadOnly(Group,"contentHeight");
+        lark.$markReadOnly(Group,"numElements");
     }
 }

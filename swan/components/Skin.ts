@@ -46,6 +46,7 @@ module swan {
      *      </s:Skin>
      * </pre>
      *
+     * @defaultProperty elementsContent
      * @version Lark 1.0
      * @version Swan 1.0
      * @platform Web,Native
@@ -66,12 +67,13 @@ module swan {
      *      </s:Skin>
      * </pre>
      *
+     * @defaultProperty elementsContent
      * @version Lark 1.0
      * @version Swan 1.0
      * @platform Web,Native
      * @includeExample examples/Samples/src/extension/swan/components/SkinExample.ts
      */
-    export class Skin extends egret.HashObject {
+    export class Skin extends lark.HashObject {
 
         /**
          * @language en_US
@@ -224,9 +226,9 @@ module swan {
         /**
          * @private
          */
-        $elementsContent:egret.DisplayObject[] = [];
+        $elementsContent:lark.DisplayObject[] = [];
 
-        public set elementsContent(value:egret.DisplayObject[]) {
+        public set elementsContent(value:lark.DisplayObject[]) {
             this.$elementsContent = value;
         }
 
@@ -257,7 +259,7 @@ module swan {
             if (this._hostComponent == value)
                 return;
             if(this._hostComponent){
-                this._hostComponent.removeEventListener(egret.Event.ADDED_TO_STAGE,this.onAddedToStage,this);
+                this._hostComponent.removeListener(lark.Event.ADDED_TO_STAGE,this.onAddedToStage,this);
             }
             this._hostComponent = value;
             var values = this.$stateValues;
@@ -269,7 +271,7 @@ module swan {
                         this.initializeStates(value.$stage);
                     }
                     else{
-                        value.once(egret.Event.ADDED_TO_STAGE,this.onAddedToStage,this);
+                        value.once(lark.Event.ADDED_TO_STAGE,this.onAddedToStage,this);
                     }
                 }
             }
@@ -280,7 +282,7 @@ module swan {
          * 
          * @param event 
          */
-        private onAddedToStage(event?:egret.Event):void{
+        private onAddedToStage(event?:lark.Event):void{
             this.initializeStates(this._hostComponent.$stage);
         }
 
@@ -345,7 +347,7 @@ module swan {
          * @private
          * 初始化所有视图状态
          */
-        private initializeStates:(stage:egret.Stage)=>void;
+        private initializeStates:(stage:lark.Stage)=>void;
 
         /**
          * @private

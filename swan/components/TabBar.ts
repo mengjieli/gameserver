@@ -121,13 +121,13 @@ module swan {
         $setDataProvider(value:ICollection){
             var dp = this.$dataProvider;
             if(dp&&dp instanceof swan.ViewStack){
-                dp.removeEventListener(PropertyEvent.PROPERTY_CHANGE,this.onViewStackIndexChange,this);
-                this.removeEventListener(egret.Event.CHANGE,this.onIndexChanged,this);
+                dp.removeListener(PropertyEvent.PROPERTY_CHANGE,this.onViewStackIndexChange,this);
+                this.removeListener(lark.Event.CHANGE,this.onIndexChanged,this);
             }
 
             if(value&&value instanceof swan.ViewStack){
-                value.addEventListener(PropertyEvent.PROPERTY_CHANGE,this.onViewStackIndexChange,this);
-                this.addEventListener(egret.Event.CHANGE,this.onIndexChanged,this);
+                value.on(PropertyEvent.PROPERTY_CHANGE,this.onViewStackIndexChange,this);
+                this.on(lark.Event.CHANGE,this.onIndexChanged,this);
             }
             super.$setDataProvider(value);
         }
@@ -140,7 +140,7 @@ module swan {
          * @private
          * 触摸点击的选中项改变
          */
-        private onIndexChanged(event:egret.Event):void{
+        private onIndexChanged(event:lark.Event):void{
             this.indexBeingUpdated = true;
             (<ViewStack><any> (this.$dataProvider)).selectedIndex = this.selectedIndex;
             this.indexBeingUpdated = false;

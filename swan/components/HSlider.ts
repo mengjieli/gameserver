@@ -96,7 +96,7 @@ module swan {
          * @returns 
          */
         private getThumbRange():number {
-            var bounds = egret.$TempRectangle;
+            var bounds = lark.$TempRectangle;
             this.track.getLayoutBounds(bounds);
             var thumbRange = bounds.width;
             this.thumb.getLayoutBounds(bounds);
@@ -117,16 +117,16 @@ module swan {
             var thumbRange = this.getThumbRange();
             var range = values[sys.RangeKeys.maximum] - values[sys.RangeKeys.minimum];
             var thumbPosTrackX = (range > 0) ? ((this.pendingValue - values[sys.RangeKeys.minimum]) / range) * thumbRange : 0;
-            var thumbPos = this.track.localToGlobal(thumbPosTrackX, 0, egret.$TempPoint);
+            var thumbPos = this.track.localToGlobal(thumbPosTrackX, 0, lark.$TempPoint);
             var thumbPosX = thumbPos.x;
             var thumbPosY = thumbPos.y;
-            var thumbPosParentX = this.thumb.$parent.globalToLocal(thumbPosX, thumbPosY, egret.$TempPoint).x;
+            var thumbPosParentX = this.thumb.$parent.globalToLocal(thumbPosX, thumbPosY, lark.$TempPoint).x;
 
-            var bounds = egret.$TempRectangle;
+            var bounds = lark.$TempRectangle;
             this.thumb.getLayoutBounds(bounds);
             this.thumb.setLayoutBoundsPosition(Math.round(thumbPosParentX), bounds.y);
             if (this.trackHighlight && this.trackHighlight.$parent) {
-                var trackHighlightX = this.trackHighlight.$parent.globalToLocal(thumbPosX, thumbPosY, egret.$TempPoint).x - thumbPosTrackX;
+                var trackHighlightX = this.trackHighlight.$parent.globalToLocal(thumbPosX, thumbPosY, lark.$TempPoint).x - thumbPosTrackX;
                 this.trackHighlight.x = Math.round(trackHighlightX);
                 this.trackHighlight.width = Math.round(thumbPosTrackX);
             }

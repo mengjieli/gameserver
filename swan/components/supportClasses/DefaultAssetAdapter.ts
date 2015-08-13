@@ -30,7 +30,7 @@
 
 module swan {
 
-    var loaderPool:egret.URLLoader[] = [];
+    var loaderPool:lark.ImageLoader[] = [];
     var callBackMap:any = {};
     var loaderMap:any = {};
 
@@ -81,15 +81,14 @@ module swan {
             }
             var loader = loaderPool.pop();
             if (!loader) {
-                var loader:egret.URLLoader = new egret.URLLoader();
-                loader.dataFormat = egret.URLLoaderDataFormat.TEXTURE;
+                loader = new lark.ImageLoader();
             }
             callBackMap[source] = [[callBack, thisObject]];
             loaderMap[loader.$hashCode] = source;
 
-            loader.addEventListener(egret.Event.COMPLETE, this.onLoadFinish, this);
-            loader.addEventListener(egret.Event.IO_ERROR, this.onLoadFinish, this);
-            loader.load(new egret.URLRequest(source));
+            loader.on(lark.Event.COMPLETE, this.onLoadFinish, this);
+            loader.on(lark.Event.IO_ERROR, this.onLoadFinish, this);
+            loader.load(source);
         }
 
         /**
@@ -97,12 +96,12 @@ module swan {
          * 
          * @param event 
          */
-        private onLoadFinish(event:egret.Event):void {
+        private onLoadFinish(event:lark.Event):void {
             var loader = event.currentTarget;
-            loader.removeEventListener(egret.Event.COMPLETE, this.onLoadFinish, this);
-            loader.removeEventListener(egret.Event.IO_ERROR, this.onLoadFinish, this);
-            var data:egret.BitmapData;
-            if (event.$type == egret.Event.COMPLETE) {
+            loader.removeListener(lark.Event.COMPLETE, this.onLoadFinish, this);
+            loader.removeListener(lark.Event.IO_ERROR, this.onLoadFinish, this);
+            var data:lark.BitmapData;
+            if (event.$type == lark.Event.COMPLETE) {
                 data = loader.data;
                 loader.data = null;
             }

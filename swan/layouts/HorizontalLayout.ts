@@ -66,10 +66,10 @@ module swan {
             var numElements = count;
             var measuredWidth = 0;
             var measuredHeight = 0;
-            var bounds = egret.$TempRectangle;
+            var bounds = lark.$TempRectangle;
             for (var i = 0; i < count; i++) {
                 var layoutElement = <UIComponent> (target.getElementAt(i));
-                if (!egret.is(layoutElement, UIComponentClass) || !layoutElement.$includeInLayout) {
+                if (!lark.is(layoutElement, UIComponentClass) || !layoutElement.$includeInLayout) {
                     numElements--;
                     continue;
                 }
@@ -95,12 +95,12 @@ module swan {
             var typicalWidth = this.$typicalWidth;
             var measuredWidth = this.getElementTotalSize();
             var measuredHeight = Math.max(this.maxElementSize, this.$typicalHeight);
-            var bounds = egret.$TempRectangle;
+            var bounds = lark.$TempRectangle;
             var endIndex = this.endIndex;
             var elementSizeTable = this.elementSizeTable;
             for (var index = this.startIndex; index < endIndex; index++) {
                 var layoutElement = <UIComponent> (target.getElementAt(index));
-                if (!egret.is(layoutElement, UIComponentClass) || !layoutElement.$includeInLayout) {
+                if (!lark.is(layoutElement, UIComponentClass) || !layoutElement.$includeInLayout) {
                     continue;
                 }
                 layoutElement.getPreferredBounds(bounds);
@@ -134,10 +134,10 @@ module swan {
             var vJustify = this.$verticalAlign == JustifyAlign.JUSTIFY || this.$verticalAlign == JustifyAlign.CONTENT_JUSTIFY;
             var vAlign = 0;
             if (!vJustify) {
-                if (this.$verticalAlign == egret.VerticalAlign.MIDDLE) {
+                if (this.$verticalAlign == lark.VerticalAlign.MIDDLE) {
                     vAlign = 0.5;
                 }
-                else if (this.$verticalAlign == egret.VerticalAlign.BOTTOM) {
+                else if (this.$verticalAlign == lark.VerticalAlign.BOTTOM) {
                     vAlign = 1;
                 }
             }
@@ -155,10 +155,10 @@ module swan {
             var childInfo:sys.ChildInfo;
             var widthToDistribute = targetWidth;
             var maxElementHeight = this.maxElementSize;
-            var bounds = egret.$TempRectangle;
+            var bounds = lark.$TempRectangle;
             for (i = 0; i < count; i++) {
                 var layoutElement = <UIComponent> (target.getElementAt(i));
-                if (!egret.is(layoutElement, UIComponentClass) || !layoutElement.$includeInLayout) {
+                if (!lark.is(layoutElement, UIComponentClass) || !layoutElement.$includeInLayout) {
                     numElements--;
                     continue;
                 }
@@ -197,7 +197,7 @@ module swan {
                     averageWidth = widthToDistribute / numElements;
                     for (i = 0; i < count; i++) {
                         layoutElement = <UIComponent> (target.getElementAt(i));
-                        if (!egret.is(layoutElement, UIComponentClass) || !layoutElement.$includeInLayout) {
+                        if (!lark.is(layoutElement, UIComponentClass) || !layoutElement.$includeInLayout) {
                             continue;
                         }
 
@@ -229,10 +229,10 @@ module swan {
                 }
             }
 
-            if (this.$horizontalAlign == egret.HorizontalAlign.CENTER) {
+            if (this.$horizontalAlign == lark.HorizontalAlign.CENTER) {
                 x = paddingL + widthToDistribute * 0.5;
             }
-            else if (this.$horizontalAlign == egret.HorizontalAlign.RIGHT) {
+            else if (this.$horizontalAlign == lark.HorizontalAlign.RIGHT) {
                 x = paddingL + widthToDistribute;
             }
 
@@ -249,7 +249,7 @@ module swan {
             for (i = 0; i < count; i++) {
                 var exceesHeight = 0;
                 layoutElement = <UIComponent> (target.getElementAt(i));
-                if (!egret.is(layoutElement, UIComponentClass) || !layoutElement.$includeInLayout) {
+                if (!lark.is(layoutElement, UIComponentClass) || !layoutElement.$includeInLayout) {
                     continue;
                 }
                 layoutElement.getPreferredBounds(bounds);
@@ -331,15 +331,15 @@ module swan {
             var contentJustify = this.$verticalAlign == JustifyAlign.CONTENT_JUSTIFY;
             var vAlign = 0;
             if (!justify) {
-                if (this.$verticalAlign == egret.VerticalAlign.MIDDLE) {
+                if (this.$verticalAlign == lark.VerticalAlign.MIDDLE) {
                     vAlign = 0.5;
                 }
-                else if (this.$verticalAlign == egret.VerticalAlign.BOTTOM) {
+                else if (this.$verticalAlign == lark.VerticalAlign.BOTTOM) {
                     vAlign = 1;
                 }
             }
 
-            var bounds = egret.$TempRectangle;
+            var bounds = lark.$TempRectangle;
             var targetHeight = Math.max(0, height - paddingT - paddingB);
             var justifyHeight = Math.ceil(targetHeight);
             var layoutElement:UIComponent;
@@ -350,7 +350,7 @@ module swan {
             if (contentJustify) {
                 for (var index = this.startIndex; index <= endIndex; index++) {
                     layoutElement = <UIComponent> (target.getElementAt(index));
-                    if (!egret.is(layoutElement, UIComponentClass) || !layoutElement.$includeInLayout) {
+                    if (!lark.is(layoutElement, UIComponentClass) || !layoutElement.$includeInLayout) {
                         continue;
                     }
                     layoutElement.getPreferredBounds(bounds);
@@ -369,7 +369,7 @@ module swan {
             for (var i = this.startIndex; i <= endIndex; i++) {
                 var exceesHeight = 0;
                 layoutElement = <UIComponent> (target.getElementAt(i));
-                if (!egret.is(layoutElement, UIComponentClass) || !layoutElement.$includeInLayout) {
+                if (!lark.is(layoutElement, UIComponentClass) || !layoutElement.$includeInLayout) {
                     continue;
                 }
                 layoutElement.getPreferredBounds(bounds);

@@ -40,20 +40,20 @@ module swan.sys {
         /**
          * @private
          */
-        public static fitBounds(width:number, height:number, matrix:egret.Matrix,
+        public static fitBounds(width:number, height:number, matrix:lark.Matrix,
                                 explicitWidth:number, explicitHeight:number,
                                 preferredWidth:number, preferredHeight:number,
                                 minWidth:number, minHeight:number,
-                                maxWidth:number, maxHeight:number):egret.Point {
+                                maxWidth:number, maxHeight:number):lark.Point {
             if (isNaN(width) && isNaN(height))
-                return egret.Point.create(preferredWidth, preferredHeight);
+                return lark.Point.create(preferredWidth, preferredHeight);
 
             var newMinWidth = (minWidth < MIN_MAX_TOLERANCE) ? 0 : minWidth - MIN_MAX_TOLERANCE;
             var newMinHeight = (minHeight < MIN_MAX_TOLERANCE) ? 0 : minHeight - MIN_MAX_TOLERANCE;
             var newMaxWidth = maxWidth + MIN_MAX_TOLERANCE;
             var newMaxHeight = maxHeight + MIN_MAX_TOLERANCE;
 
-            var actualSize:egret.Point;
+            var actualSize:lark.Point;
 
             if (!isNaN(width) && !isNaN(height)) {
                 actualSize = calcUBoundsToFitTBounds(width, height, matrix,
@@ -61,7 +61,7 @@ module swan.sys {
                     newMaxWidth, newMaxHeight);
 
                 if (!actualSize) {
-                    var actualSize1:egret.Point;
+                    var actualSize1:lark.Point;
                     actualSize1 = fitTBoundsWidth(width, matrix,
                         explicitWidth, explicitHeight,
                         preferredWidth, preferredHeight,
@@ -72,12 +72,12 @@ module swan.sys {
                         var fitHeight = transformSize(actualSize1.x, actualSize1.y, matrix).height;
                         if (fitHeight - SOLUTION_TOLERANCE > height)
                         {
-                            egret.Point.release(actualSize1);
+                            lark.Point.release(actualSize1);
                             actualSize1 = null;
                         }
                     }
 
-                    var actualSize2:egret.Point
+                    var actualSize2:lark.Point
                     actualSize2 = fitTBoundsHeight(height, matrix,
                         explicitWidth, explicitHeight,
                         preferredWidth, preferredHeight,
@@ -88,7 +88,7 @@ module swan.sys {
                         var fitWidth = transformSize(actualSize2.x, actualSize2.y, matrix).width;
                         if (fitWidth - SOLUTION_TOLERANCE > width)
                         {
-                            egret.Point.release(actualSize2);
+                            lark.Point.release(actualSize2);
                             actualSize2 = null;
                         }
                     }
@@ -102,8 +102,8 @@ module swan.sys {
                     else {
                         actualSize = actualSize2;
                     }
-                    egret.Point.release(actualSize1);
-                    egret.Point.release(actualSize2);
+                    lark.Point.release(actualSize1);
+                    lark.Point.release(actualSize2);
                 }
                 return actualSize;
             }
@@ -127,12 +127,12 @@ module swan.sys {
     /**
      * @private
      */
-    function fitTBoundsWidth(width:number, matrix:egret.Matrix,
+    function fitTBoundsWidth(width:number, matrix:lark.Matrix,
                              explicitWidth:number, explicitHeight:number,
                              preferredWidth:number, preferredHeight:number,
                              minWidth:number, minHeight:number,
-                             maxWidth:number, maxHeight:number):egret.Point {
-        var actualSize:egret.Point;
+                             maxWidth:number, maxHeight:number):lark.Point {
+        var actualSize:lark.Point;
 
         if (!isNaN(explicitWidth) && isNaN(explicitHeight)) {
             actualSize = calcUBoundsToFitTBoundsWidth(width, matrix,
@@ -163,12 +163,12 @@ module swan.sys {
     /**
      * @private
      */
-    function fitTBoundsHeight(height:number, matrix:egret.Matrix,
+    function fitTBoundsHeight(height:number, matrix:lark.Matrix,
                               explicitWidth:number, explicitHeight:number,
                               preferredWidth:number, preferredHeight:number,
                               minWidth:number, minHeight:number,
-                              maxWidth:number, maxHeight:number):egret.Point {
-        var actualSize:egret.Point;
+                              maxWidth:number, maxHeight:number):lark.Point {
+        var actualSize:lark.Point;
 
         if (!isNaN(explicitWidth) && isNaN(explicitHeight)) {
             actualSize = calcUBoundsToFitTBoundsHeight(height, matrix,
@@ -201,13 +201,13 @@ module swan.sys {
      * @private
      */
     function calcUBoundsToFitTBoundsHeight(h:number,
-                                           matrix:egret.Matrix,
+                                           matrix:lark.Matrix,
                                            preferredX:number,
                                            preferredY:number,
                                            minX:number,
                                            minY:number,
                                            maxX:number,
-                                           maxY:number):egret.Point {
+                                           maxY:number):lark.Point {
         var b = matrix.b;
         var d = matrix.d;
 
@@ -223,13 +223,13 @@ module swan.sys {
             return null;
 
         if (b == 0)
-            return egret.Point.create(preferredX, h / Math.abs(d));
+            return lark.Point.create(preferredX, h / Math.abs(d));
         else if (d == 0)
-            return egret.Point.create(h / Math.abs(b), preferredY);
+            return lark.Point.create(h / Math.abs(b), preferredY);
 
         var d1 = (b * d >= 0) ? d : -d;
 
-        var s:egret.Point;
+        var s:lark.Point;
         var x:number;
         var y:number;
 
@@ -241,7 +241,7 @@ module swan.sys {
             y = (h - b * x) * invD1;
             if (minY <= y && y <= maxY &&
                 b * x + d1 * y >= 0) {
-                s = egret.Point.create(x, y);
+                s = lark.Point.create(x, y);
             }
 
             y = (-h - b * x) * invD1;
@@ -249,8 +249,8 @@ module swan.sys {
                 b * x + d1 * y < 0) {
                 if (!s || transformSize(s.x, s.y, matrix).width > transformSize(x, y, matrix).width)
                 {
-                    egret.Point.release(s);
-                    s = egret.Point.create(x, y);
+                    lark.Point.release(s);
+                    s = lark.Point.create(x, y);
                 }
             }
         }
@@ -264,7 +264,7 @@ module swan.sys {
             if (minX <= x && x <= maxX &&
                 b * x + d1 * y >= 0) {
                 if (!s || transformSize(s.x, s.y, matrix).width > transformSize(x, y, matrix).width)
-                    s = egret.Point.create(x, y);
+                    s = lark.Point.create(x, y);
             }
 
             x = ( -h - d1 * y ) * invB;
@@ -272,8 +272,8 @@ module swan.sys {
                 b * x + d1 * y < 0) {
                 if (!s || transformSize(s.x, s.y, matrix).width > transformSize(x, y, matrix).width)
                 {
-                    egret.Point.release(s);
-                    s = egret.Point.create(x, y);
+                    lark.Point.release(s);
+                    s = lark.Point.create(x, y);
                 }
             }
         }
@@ -291,13 +291,13 @@ module swan.sys {
      * @private
      */
     function calcUBoundsToFitTBoundsWidth(w:number,
-                                          matrix:egret.Matrix,
+                                          matrix:lark.Matrix,
                                           preferredX:number,
                                           preferredY:number,
                                           minX:number,
                                           minY:number,
                                           maxX:number,
-                                          maxY:number):egret.Point {
+                                          maxY:number):lark.Point {
 
         var a = matrix.a;
         var c = matrix.c;
@@ -311,13 +311,13 @@ module swan.sys {
             return null;
 
         if (a == 0)
-            return egret.Point.create(preferredX, w / Math.abs(c));
+            return lark.Point.create(preferredX, w / Math.abs(c));
         else if (c == 0)
-            return egret.Point.create(w / Math.abs(a), preferredY);
+            return lark.Point.create(w / Math.abs(a), preferredY);
 
         var c1 = ( a * c >= 0 ) ? c : -c;
 
-        var s:egret.Point;
+        var s:lark.Point;
         var x:number;
         var y:number;
 
@@ -329,7 +329,7 @@ module swan.sys {
             y = (w - a * x) * invC1;
             if (minY <= y && y <= maxY &&
                 a * x + c1 * y >= 0) {
-                s = egret.Point.create(x, y);
+                s = lark.Point.create(x, y);
             }
 
             y = (-w - a * x) * invC1;
@@ -337,8 +337,8 @@ module swan.sys {
                 a * x + c1 * y < 0) {
                 if (!s || transformSize(s.x, s.y, matrix).height > transformSize(x, y, matrix).height)
                 {
-                    egret.Point.release(s);
-                    s = egret.Point.create(x, y);
+                    lark.Point.release(s);
+                    s = lark.Point.create(x, y);
                 }
             }
         }
@@ -353,8 +353,8 @@ module swan.sys {
                 a * x + c1 * y >= 0) {
                 if (!s || transformSize(s.x, s.y, matrix).height > transformSize(x, y, matrix).height)
                 {
-                    egret.Point.release(s);
-                    s = egret.Point.create(x, y);
+                    lark.Point.release(s);
+                    s = lark.Point.create(x, y);
                 }
             }
 
@@ -363,8 +363,8 @@ module swan.sys {
                 a * x + c1 * y < 0) {
                 if (!s || transformSize(s.x, s.y, matrix).height > transformSize(x, y, matrix).height)
                 {
-                    egret.Point.release(s);
-                    s = egret.Point.create(x, y);
+                    lark.Point.release(s);
+                    s = lark.Point.create(x, y);
                 }
             }
         }
@@ -389,7 +389,7 @@ module swan.sys {
                            maxX:number,
                            maxY:number,
                            b:number,
-                           d:number):egret.Point {
+                           d:number):lark.Point {
         if (a == 0 || c == 0)
             return null;
 
@@ -413,7 +413,7 @@ module swan.sys {
             y = Math.max(rangeMinY, Math.min(y, rangeMaxY));
 
             x = (w - c * y) / a;
-            return egret.Point.create(x, y);
+            return lark.Point.create(x, y);
         }
 
         A = -(minX * a + w) / c;
@@ -431,7 +431,7 @@ module swan.sys {
 
             y = Math.max(rangeMinY, Math.min(y, rangeMaxY));
             x = (-w - c * y) / a;
-            return egret.Point.create(x, y);
+            return lark.Point.create(x, y);
 
         }
         return null;
@@ -442,11 +442,11 @@ module swan.sys {
      */
     function calcUBoundsToFitTBounds(w:number,
                                      h:number,
-                                     matrix:egret.Matrix,
+                                     matrix:lark.Matrix,
                                      minX:number,
                                      minY:number,
                                      maxX:number,
-                                     maxY:number):egret.Point {
+                                     maxY:number):lark.Point {
 
         var a = matrix.a;
         var b = matrix.b;
@@ -466,14 +466,14 @@ module swan.sys {
             if (a == 0 || d == 0)
                 return null;
 
-            return egret.Point.create(w / Math.abs(a), h / Math.abs(d));
+            return lark.Point.create(w / Math.abs(a), h / Math.abs(d));
         }
 
         if (a == 0 && d == 0) {
             if (b == 0 || c == 0)
                 return null;
 
-            return egret.Point.create(h / Math.abs(b), w / Math.abs(c));
+            return lark.Point.create(h / Math.abs(b), w / Math.abs(c));
         }
 
         var c1 = ( a * c >= 0 ) ? c : -c;
@@ -494,7 +494,7 @@ module swan.sys {
         w *= invDet;
         h *= invDet;
 
-        var s:egret.Point;
+        var s:lark.Point;
         s = solveSystem(a, c1, b, d1, w, h);
         if (s &&
             minX <= s.x && s.x <= maxX && minY <= s.y && s.y <= maxY &&
@@ -523,16 +523,16 @@ module swan.sys {
             b * s.x + d1 * s.y < 0)
             return s;
 
-        egret.Point.release(s);
+        lark.Point.release(s);
         return null;
     }
 
     /**
      * @private
      */
-    function transformSize(width:number, height:number, matrix:egret.Matrix):egret.Rectangle {
+    function transformSize(width:number, height:number, matrix:lark.Matrix):lark.Rectangle {
 
-        var bounds = egret.$TempRectangle.setTo(0, 0, width, height);
+        var bounds = lark.$TempRectangle.setTo(0, 0, width, height);
         matrix.$transformBounds(bounds);
         return bounds;
     }
@@ -545,8 +545,8 @@ module swan.sys {
                          b:number,
                          d:number,
                          mOverDet:number,
-                         nOverDet:number):egret.Point {
-        return egret.Point.create(d * mOverDet - c * nOverDet,
+                         nOverDet:number):lark.Point {
+        return lark.Point.create(d * mOverDet - c * nOverDet,
             a * nOverDet - b * mOverDet);
     }
 }

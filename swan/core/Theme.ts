@@ -46,7 +46,7 @@ module swan {
      * @platform Web,Native
      * @includeExample examples/Samples/src/extension/swan/core/ThemeExample.ts
      */
-    export class Theme extends egret.EventDispatcher {
+    export class Theme extends lark.EventEmitter {
 
         /**
          * @language en_US
@@ -71,7 +71,7 @@ module swan {
          * @version Swan 1.0
          * @platform Web,Native
          */
-        public constructor(configURL:string, stage:egret.Stage) {
+        public constructor(configURL:string, stage:lark.Stage) {
             super();
             this.initialized = !configURL;
             if (stage) {
@@ -91,11 +91,11 @@ module swan {
          * @param url 
          */
         private load(url:string):void {
-            var loader:egret.URLLoader = new egret.URLLoader();
-            loader.addEventListener(egret.Event.COMPLETE,this.onConfigLoaded,this);
-            loader.addEventListener(egret.IOErrorEvent.IO_ERROR,this.onConfigLoaded,this);
-            loader.dataFormat = egret.URLLoaderDataFormat.TEXT;
-            loader.load(new egret.URLRequest(url));
+            var request = new lark.HttpRequest();
+            request.on(lark.Event.COMPLETE, this.onConfigLoaded, this);
+            request.on(lark.Event.IO_ERROR, this.onConfigLoaded, this);
+            request.open(url);
+            request.send();
         }
 
         /**
@@ -103,15 +103,14 @@ module swan {
          * 
          * @param event 
          */
-        private onConfigLoaded(event:egret.Event):void {
-            var loader:egret.URLLoader = <egret.URLLoader> (event.target);
-            try{
-                var str:string = <string> loader.data;
-                var data:any = JSON.parse(str);
+        private onConfigLoaded(event:lark.Event):void {
+            var request:lark.HttpRequest = event.target;
+            try {
+                var data = JSON.parse(request.response);
             }
-            catch (e){
+            catch (e) {
                 if (DEBUG) {
-                    egret.error(e.message);
+                    lark.error(e.message);
                 }
             }
 
@@ -192,7 +191,7 @@ module swan {
                 if (this.delayList.indexOf(client) == -1) {
                     this.delayList.push(client);
                 }
-                return;
+                return "";
             }
             var skinMap = this.skinMap;
             var skinName:string = skinMap[client.hostComponentKey];
@@ -241,10 +240,10 @@ module swan {
         public mapSkin(hostComponentKey:string, skinName:string):void {
             if (DEBUG) {
                 if (!hostComponentKey) {
-                    egret.$error(1003, "hostComponentKey");
+                    lark.$error(1003, "hostComponentKey");
                 }
                 if (!skinName) {
-                    egret.$error(1003, "skinName");
+                    lark.$error(1003, "skinName");
                 }
             }
             this.skinMap[hostComponentKey] = skinName;

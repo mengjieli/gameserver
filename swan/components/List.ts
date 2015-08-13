@@ -288,7 +288,7 @@ module swan {
 
             if (emitChangedEvents && retVal) {
                 if (values[sys.ListBaseKeys.emitChangeAfterSelection]) {
-                    this.dispatchEventWith(egret.Event.CHANGE)
+                    this.emitWith(lark.Event.CHANGE)
                     values[sys.ListBaseKeys.emitChangeAfterSelection] = false;
                 }
                 PropertyEvent.emitPropertyEvent(this,PropertyEvent.PROPERTY_CHANGE,"selectedIndex");
@@ -441,7 +441,7 @@ module swan {
          * @version Swan 1.0
          * @platform Web,Native
          */
-        protected onRendererTouchEnd(event:egret.TouchEvent):void {
+        protected onRendererTouchEnd(event:lark.TouchEvent):void {
             if (this.allowMultipleSelection) {
                 var itemRenderer = <IItemRenderer> (event.currentTarget);
                 var touchDownItemRenderer = this.$ListBase[sys.ListBaseKeys.touchDownItemRenderer];

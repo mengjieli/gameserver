@@ -38,6 +38,7 @@ module swan {
      *
      * @event swan.CollectionEvent.COLLECTION_CHANGE Emited when the ArrayCollection has been updated in some way.
      *
+     * @defaultProperty source
      * @version Lark 1.0
      * @version Swan 1.0
      * @platform Web,Native
@@ -50,12 +51,13 @@ module swan {
      *
      * @event swan.CollectionEvent.COLLECTION_CHANGE 当 ArrayCollection 更新的的时候会派发此事件。
      *
+     * @defaultProperty source
      * @version Lark 1.0
      * @version Swan 1.0
      * @platform Web,Native
      * @includeExample examples/Samples/src/extension/swan/collections/ArrayCollectionExample.ts
      */
-    export class ArrayCollection extends egret.EventDispatcher implements ICollection {
+    export class ArrayCollection extends lark.EventEmitter implements ICollection {
         /**
          * @language en_US
          * Constructor. <p/>
@@ -202,7 +204,7 @@ module swan {
          */
         public addItemAt(item:any, index:number):void {
             if (index < 0 || index > this._source.length) {
-                DEBUG && egret.$error(1007);
+                DEBUG && lark.$error(1007);
             }
             this._source.splice(index, 0, item);
             this.emitCoEvent(CollectionEventKind.ADD, index, -1, [item]);
@@ -300,7 +302,7 @@ module swan {
          */
         public removeItemAt(index:number):any {
             if (index < 0 || index >= this._source.length) {
-                DEBUG && egret.$error(1007);
+                DEBUG && lark.$error(1007);
                 return;
             }
             var item:any = this._source.splice(index, 1)[0];
@@ -330,7 +332,7 @@ module swan {
          */
         public replaceItemAt(item:any, index:number):any {
             if (index < 0 || index >= this._source.length) {
-                DEBUG && egret.$error(1007);
+                DEBUG && lark.$error(1007);
                 return;
             }
             var oldItem:any = this._source.splice(index, 1, item)[0];
@@ -384,6 +386,6 @@ module swan {
     registerProperty(ArrayCollection,"source","Array",true);
 
     if(DEBUG){
-        egret.$markReadOnly(ArrayCollection,"length");
+        lark.$markReadOnly(ArrayCollection,"length");
     }
 }

@@ -158,7 +158,7 @@ module swan {
          * @version Swan 1.0
          * @platform Web,Native
          */
-        public apply(host:Skin, parent:egret.DisplayObjectContainer):void {
+        public apply(host:Skin, parent:lark.DisplayObjectContainer):void {
             var obj:any = this.target ? host[this.target] : host;
             if (!obj)
                 return;
@@ -173,7 +173,7 @@ module swan {
          * @version Swan 1.0
          * @platform Web,Native
          */
-        public remove(host:Skin, parent:egret.DisplayObjectContainer):void {
+        public remove(host:Skin, parent:lark.DisplayObjectContainer):void {
             var obj:any = this.target ? host[this.target] : host;
             if (!obj)
                 return;

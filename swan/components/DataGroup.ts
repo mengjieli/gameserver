@@ -30,6 +30,9 @@
 
 module swan {
 
+    /**
+     * @private
+     */
     const enum Keys{
         useVirtualLayout,
         useVirtualLayoutChanged,
@@ -54,7 +57,7 @@ module swan {
      * to hold data items as children.
      *
      * @see swan.Group
-     *
+     * @defaultProperty dataProvider
      * @includeExample examples/Samples/src/extension/swan/components/DataGroupExample.ts
      * @version Lark 1.0
      * @version Swan 1.0
@@ -66,7 +69,7 @@ module swan {
      * 尽管此容器可以包含可视元素，但它通常仅用于包含作为子项的数据项目。
      *
      * @see swan.Group
-     *
+     * @defaultProperty dataProvider
      * @includeExample examples/Samples/src/extension/swan/components/DataGroupExample.ts
      * @version Lark 1.0
      * @version Swan 1.0
@@ -145,7 +148,7 @@ module swan {
 
             if (this.$layout) {
                 this.$layout.setTypicalSize(0, 0);
-                this.$layout.removeEventListener("useVirtualLayoutChanged", this.onUseVirtualLayoutChanged, this);
+                this.$layout.removeListener("useVirtualLayoutChanged", this.onUseVirtualLayoutChanged, this);
             }
 
             if (this.$layout && value && (this.$layout.$useVirtualLayout != value.$useVirtualLayout))
@@ -157,7 +160,7 @@ module swan {
                     value.setTypicalSize(rect.width, rect.height);
                 }
                 value.useVirtualLayout = this.$DataGroup[Keys.useVirtualLayout];
-                value.addEventListener("useVirtualLayoutChanged", this.onUseVirtualLayoutChanged, this);
+                value.on("useVirtualLayoutChanged", this.onUseVirtualLayoutChanged, this);
             }
         }
 
@@ -165,7 +168,7 @@ module swan {
          * @private
          * 是否使用虚拟布局标记改变
          */
-        private onUseVirtualLayoutChanged(event?:egret.Event):void {
+        private onUseVirtualLayoutChanged(event?:lark.Event):void {
             var values = this.$DataGroup;
             values[Keys.useVirtualLayoutChanged] = true;
             values[Keys.cleanFreeRenderer] = true;
@@ -202,7 +205,7 @@ module swan {
          * @version Swan 1.0
          * @platform Web,Native
          */
-        public getElementAt(index:number):egret.DisplayObject {
+        public getElementAt(index:number):lark.DisplayObject {
             index = +index | 0;
             if (index < 0 || index >= this.$dataProvider.length)
                 return null;
@@ -289,7 +292,7 @@ module swan {
         private createOneRenderer(rendererClass:any):IItemRenderer {
             var renderer = <IItemRenderer> (new rendererClass());
             this.$DataGroup[Keys.rendererToClassMap][renderer.$hashCode] = rendererClass;
-            if (!egret.is(renderer, "swan.IItemRenderer")) {
+            if (!lark.is(renderer, "swan.IItemRenderer")) {
                 return null;
             }
             this.addChild(renderer);
@@ -360,7 +363,7 @@ module swan {
          */
         private removeDataProviderListener():void {
             if (this.$dataProvider)
-                this.$dataProvider.removeEventListener(CollectionEvent.COLLECTION_CHANGE, this.onCollectionChange, this);
+                this.$dataProvider.removeListener(CollectionEvent.COLLECTION_CHANGE, this.onCollectionChange, this);
         }
 
         /**
@@ -672,7 +675,7 @@ module swan {
                 rendererClass = ItemRenderer;
             }
             if (!rendererClass.$hashCode) {
-                rendererClass.$hashCode = egret.$hashCount++;
+                rendererClass.$hashCode = lark.$hashCount++;
             }
             return rendererClass;
         }
@@ -712,7 +715,7 @@ module swan {
                 values[Keys.useVirtualLayoutChanged] = false;
                 values[Keys.itemRendererChanged] = false;
                 if (this.$dataProvider)
-                    this.$dataProvider.addEventListener(CollectionEvent.COLLECTION_CHANGE, this.onCollectionChange, this);
+                    this.$dataProvider.on(CollectionEvent.COLLECTION_CHANGE, this.onCollectionChange, this);
                 if (this.$layout && this.$layout.$useVirtualLayout) {
                     this.invalidateSize();
                     this.invalidateDisplayList();
@@ -772,7 +775,7 @@ module swan {
                 if (rect) {
                     var renderer = this.$indexToRenderer[0];
                     if (renderer) {
-                        var bounds = egret.$TempRectangle;
+                        var bounds = lark.$TempRectangle;
                         renderer.getPreferredBounds(bounds);
                         if (bounds.width != rect.width || bounds.height != rect.height) {
                             values[Keys.typicalLayoutRect] = null;
@@ -813,9 +816,9 @@ module swan {
             }
             this.updateRenderer(typicalRenderer, 0, values[Keys.typicalItem]);
             typicalRenderer.validateNow();
-            var bounds = egret.$TempRectangle;
+            var bounds = lark.$TempRectangle;
             typicalRenderer.getPreferredBounds(bounds);
-            var rect = new egret.Rectangle(0, 0, bounds.width, bounds.height);
+            var rect = new lark.Rectangle(0, 0, bounds.width, bounds.height);
             if (this.$layout && this.$layout.$useVirtualLayout) {
                 if (values[Keys.createNewRendererFlag]) {
                     this.rendererAdded(typicalRenderer, 0, values[Keys.typicalItem]);
@@ -833,7 +836,7 @@ module swan {
          * @private
          * 设置项目默认大小
          */
-        private setTypicalLayoutRect(rect:egret.Rectangle):void {
+        private setTypicalLayoutRect(rect:lark.Rectangle):void {
             this.$DataGroup[Keys.typicalLayoutRect] = rect;
             if (this.$layout) {
                 if (rect) {
@@ -1034,6 +1037,6 @@ module swan {
     registerProperty(DataGroup, "itemRenderer", "Class");
     registerProperty(DataGroup, "dataProvider", "swan.ICollection", true);
     if(DEBUG){
-        egret.$markReadOnly(DataGroup,"numElements");
+        lark.$markReadOnly(DataGroup,"numElements");
     }
 }

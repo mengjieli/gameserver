@@ -34,7 +34,7 @@ module swan.sys {
      * @private
      * 失效验证管理器
      */
-    export class Validator extends egret.EventDispatcher {
+    export class Validator extends lark.EventEmitter {
         /**
          * @private
          * 创建一个Validator对象
@@ -186,7 +186,7 @@ module swan.sys {
         /**
          * @private
          */
-        private eventDisplay:egret.Bitmap = new egret.Bitmap();
+        private eventDisplay:lark.Bitmap = new lark.Bitmap();
         /**
          * @private
          * 是否已经添加了事件监听
@@ -198,9 +198,9 @@ module swan.sys {
          * 添加事件监听
          */
         private attachListeners():void {
-            this.eventDisplay.addEventListener(egret.Event.ENTER_FRAME, this.doPhasedInstantiationCallBack, this);
-            this.eventDisplay.addEventListener(egret.Event.RENDER, this.doPhasedInstantiationCallBack, this);
-            egret.sys.$invalidateRenderFlag = true;
+            this.eventDisplay.on(lark.Event.ENTER_FRAME, this.doPhasedInstantiationCallBack, this);
+            this.eventDisplay.on(lark.Event.RENDER, this.doPhasedInstantiationCallBack, this);
+            lark.sys.$invalidateRenderFlag = true;
             this.listenersAttached = true;
         }
 
@@ -208,9 +208,9 @@ module swan.sys {
          * @private
          * 执行属性应用
          */
-        private doPhasedInstantiationCallBack(event?:egret.Event):void {
-            this.eventDisplay.removeEventListener(egret.Event.ENTER_FRAME, this.doPhasedInstantiationCallBack, this);
-            this.eventDisplay.removeEventListener(egret.Event.RENDER, this.doPhasedInstantiationCallBack, this);
+        private doPhasedInstantiationCallBack(event?:lark.Event):void {
+            this.eventDisplay.removeListener(lark.Event.ENTER_FRAME, this.doPhasedInstantiationCallBack, this);
+            this.eventDisplay.removeListener(lark.Event.RENDER, this.doPhasedInstantiationCallBack, this);
             this.doPhasedInstantiation();
         }
 
@@ -456,13 +456,13 @@ module swan.sys {
                             return client;
                         }
                     }
-                    else if(egret.is(client,"egret.DisplayObjectContainer")){
+                    else if(lark.is(client,"lark.DisplayObjectContainer")){
 
                         var items = bin.items;
                         var length = bin.length;
                         for (var i = 0; i < length; i++) {
                             var value = items[i];
-                            if ((<egret.DisplayObjectContainer><any> client).contains(value)) {
+                            if ((<lark.DisplayObjectContainer><any> client).contains(value)) {
                                 bin.remove(value);
                                 return value;
                             }
@@ -503,12 +503,12 @@ module swan.sys {
                             return client;
                         }
                     }
-                    else if(egret.is(client,"egret.DisplayObjectContainer")){
+                    else if(lark.is(client,"lark.DisplayObjectContainer")){
                         var items = bin.items;
                         var length = bin.length;
                         for (var i = 0; i < length; i++) {
                             var value = items[i];
-                            if ((<egret.DisplayObjectContainer><any> client).contains(value)) {
+                            if ((<lark.DisplayObjectContainer><any> client).contains(value)) {
                                 bin.remove(value);
                                 return value;
                             }

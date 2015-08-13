@@ -109,7 +109,7 @@ module swan {
         /**
          * @private
          */
-        private _selectedChild:egret.DisplayObject = null;
+        private _selectedChild:lark.DisplayObject = null;
         /**
          * @language en_US
          * A reference to the currently visible child container.
@@ -128,14 +128,14 @@ module swan {
          * @version Swan 1.0
          * @platform Web,Native
          */
-        public get selectedChild():egret.DisplayObject {
+        public get selectedChild():lark.DisplayObject {
             var index = this.selectedIndex;
             if (index >= 0 && index < this.numChildren)
                 return this.getChildAt(index);
             return null;
         }
 
-        public set selectedChild(value:egret.DisplayObject) {
+        public set selectedChild(value:lark.DisplayObject) {
             var index = this.getChildIndex(value);
             if (index >= 0 && index < this.numChildren)
                 this.setSelectedIndex(index);
@@ -199,7 +199,7 @@ module swan {
          * 一个子项被添加到容器内，此方法不仅在操作addChild()时会被回调，在操作setChildIndex()或swapChildren时也会回调。
          * 当子项索引发生改变时，会先触发$childRemoved()方法，然后触发$childAdded()方法。
          */
-        $childAdded(child:egret.DisplayObject, index:number):void {
+        $childAdded(child:lark.DisplayObject, index:number):void {
             super.$childAdded(child, index);
             this.showOrHide(child, false);
             var selectedIndex = this.selectedIndex;
@@ -218,7 +218,7 @@ module swan {
          * 一个子项从容器内移除，此方法不仅在操作removeChild()时会被回调，在操作setChildIndex()或swapChildren时也会回调。
          * 当子项索引发生改变时，会先触发$childRemoved()方法，然后触发$childAdded()方法。
          */
-        $childRemoved(child:egret.DisplayObject, index:number):void {
+        $childRemoved(child:lark.DisplayObject, index:number):void {
             super.$childRemoved(child, index);
             this.showOrHide(child, true);
             var selectedIndex = this.selectedIndex;
@@ -284,8 +284,8 @@ module swan {
          * @param child 
          * @param visible 
          */
-        private showOrHide(child:egret.DisplayObject, visible:boolean):void {
-            if (egret.is(child, "swan.UIComponent")) {
+        private showOrHide(child:lark.DisplayObject, visible:boolean):void {
+            if (lark.is(child, "swan.UIComponent")) {
                 (<swan.UIComponent><any>child).includeInLayout = visible;
             }
             child.visible = visible;
@@ -319,7 +319,7 @@ module swan {
          * @platform Web,Native
          */
         public getItemAt(index:number):any {
-            var element:egret.DisplayObject = this.$children[index];
+            var element:lark.DisplayObject = this.$children[index];
             return element ? element.name : "";
         }
 
@@ -345,7 +345,7 @@ module swan {
     registerBindable(ViewStack.prototype,"selectedIndex");
 
     if(DEBUG){
-        egret.$markReadOnly(ViewStack,"length");
-        egret.$markReadOnly(ViewStack,"layout");
+        lark.$markReadOnly(ViewStack,"length");
+        lark.$markReadOnly(ViewStack,"layout");
     }
 }

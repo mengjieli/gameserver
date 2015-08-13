@@ -74,6 +74,7 @@ module swan {
      * @event swan.UIEvent.CHANGE_START Emitted when the scroll position is going to change
      * @event swan.UIEvent.CHANGE_END Emitted when the scroll position changed complete
      *
+     * @defaultProperty viewport
      * @version Lark 1.0
      * @version Swan 1.0
      * @platform Web,Native
@@ -95,6 +96,8 @@ module swan {
      *
      * @event swan.UIEvent.CHANGE_START 滚动位置改变开始
      * @event swan.UIEvent.CHANGE_END 滚动位置改变结束
+     *
+     * @defaultProperty viewport
      * @version Lark 1.0
      * @version Swan 1.0
      * @platform Web,Native
@@ -159,7 +162,7 @@ module swan {
                 10: null,           //delayTouchTimer,
                 11: null,           //delayTouchEvent
                 12: null,           //viewport
-                13: false          //viewprotRemovedEvent
+                13: false,          //viewprotRemovedEvent
             };
         }
 
@@ -370,9 +373,9 @@ module swan {
             if (viewport) {
                 this.addChildAt(viewport, 0);
                 viewport.scrollEnabled = true;
-                viewport.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBeginCapture, this, true);
-                viewport.addEventListener(egret.TouchEvent.TOUCH_END, this.onTouchEndCapture, this, true);
-                viewport.addEventListener(egret.Event.REMOVED,this.onViewPortRemove,this);
+                viewport.on(lark.TouchEvent.TOUCH_BEGIN, this.onTouchBeginCapture, this, true);
+                viewport.on(lark.TouchEvent.TOUCH_END, this.onTouchEndCapture, this, true);
+                viewport.on(lark.Event.REMOVED,this.onViewPortRemove,this);
             }
             if (this.horizontalScrollBar) {
                 this.horizontalScrollBar.viewport = viewport;
@@ -396,16 +399,16 @@ module swan {
             var viewport = this.viewport;
             if (viewport) {
                 viewport.scrollEnabled = false;
-                viewport.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBeginCapture, this, true);
-                viewport.removeEventListener(egret.TouchEvent.TOUCH_END, this.onTouchEndCapture, this, true);
-                viewport.removeEventListener(egret.Event.REMOVED,this.onViewPortRemove,this);
+                viewport.removeListener(lark.TouchEvent.TOUCH_BEGIN, this.onTouchBeginCapture, this, true);
+                viewport.removeListener(lark.TouchEvent.TOUCH_END, this.onTouchEndCapture, this, true);
+                viewport.removeListener(lark.Event.REMOVED,this.onViewPortRemove,this);
                 if(this.$Scroller[Keys.viewprotRemovedEvent] == false) {
                     this.removeChild(viewport);
                 }
             }
         }
 
-        private onViewPortRemove(event:egret.Event):void {
+        private onViewPortRemove(event:lark.Event):void {
             if(event.target == this.viewport) {
                 this.$Scroller[Keys.viewprotRemovedEvent] = true;
                 this.viewport = null;
@@ -432,7 +435,7 @@ module swan {
          *
          * @param event
          */
-        private onTouchEndCapture(event:egret.TouchEvent):void {
+        private onTouchEndCapture(event:lark.TouchEvent):void {
             if (this.$Scroller[Keys.delayTouchEvent]) {
                 this.delayEmitEvent(event);
             }
@@ -442,13 +445,13 @@ module swan {
          * @private
          * 若这个Scroller可以滚动，阻止当前事件，延迟100ms再抛出。
          */
-        private onTouchBeginCapture(event:egret.TouchEvent):void {
+        private onTouchBeginCapture(event:lark.TouchEvent):void {
             var canScroll:boolean = this.checkScrollPolicy();
             if (!canScroll) {
                 return;
             }
 
-            var target:egret.DisplayObject = event.target;
+            var target:lark.DisplayObject = event.target;
             while (target && target != this) {
                 if (target instanceof Scroller) {
                     canScroll = (<Scroller><any> target).checkScrollPolicy();
@@ -467,19 +470,19 @@ module swan {
          *
          * @param event
          */
-        private delayEmitEvent(event:egret.TouchEvent):void {
+        private delayEmitEvent(event:lark.TouchEvent):void {
             var values = this.$Scroller;
             if (values[Keys.delayTouchEvent]) {
                 this.onDelayTouchEventTimer();
             }
             event.stopPropagation();
-            var touchEvent = egret.Event.create(egret.TouchEvent, event.$type, event.$bubbles, event.$cancelable);
+            var touchEvent = lark.Event.create(lark.TouchEvent, event.$type, event.$bubbles, event.$cancelable);
             touchEvent.$setTo(event.$stageX, event.$stageY, event.touchPointID);
             touchEvent.$target = event.$target;
             values[Keys.delayTouchEvent] = touchEvent;
             if (!values[Keys.delayTouchTimer]) {
-                values[Keys.delayTouchTimer] = new egret.Timer(100, 1);
-                values[Keys.delayTouchTimer].addEventListener(egret.TimerEvent.TIMER_COMPLETE, this.onDelayTouchEventTimer, this);
+                values[Keys.delayTouchTimer] = new lark.Timer(100, 1);
+                values[Keys.delayTouchTimer].on(lark.TimerEvent.TIMER_COMPLETE, this.onDelayTouchEventTimer, this);
             }
             values[Keys.delayTouchTimer].start();
         }
@@ -489,7 +492,7 @@ module swan {
          *
          * @param e
          */
-        private onDelayTouchEventTimer(e?:egret.TimerEvent):void {
+        private onDelayTouchEventTimer(e?:lark.TimerEvent):void {
             var values = this.$Scroller;
             values[Keys.delayTouchTimer].stop();
             var event = values[Keys.delayTouchEvent];
@@ -498,7 +501,7 @@ module swan {
             if (!viewport) {
                 return;
             }
-            var target:egret.DisplayObject = event.$target;
+            var target:lark.DisplayObject = event.$target;
             var list = this.$getPropagationList(target);
             var length = list.length;
             var targetIndex = list.length * 0.5;
@@ -512,7 +515,7 @@ module swan {
             list.splice(0, startIndex + 1);
             targetIndex -= startIndex + 1;
             this.$emitPropagationEvent(event, list, targetIndex);
-            egret.Event.release(event);
+            lark.Event.release(event);
         }
 
         /**
@@ -571,7 +574,7 @@ module swan {
          *
          * @param event
          */
-        private onTouchBegin(event:egret.TouchEvent):void {
+        private onTouchBegin(event:lark.TouchEvent):void {
             if (event.isDefaultPrevented()) {
                 return;
             }
@@ -596,8 +599,8 @@ module swan {
                     viewport.contentHeight - uiValues[sys.UIKeys.height]);
             }
             var stage = this.$stage;
-            stage.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.onTouchMove, this);
-            stage.addEventListener(egret.TouchEvent.TOUCH_END, this.onTouchEnd, this);
+            stage.on(lark.TouchEvent.TOUCH_MOVE, this.onTouchMove, this);
+            stage.on(lark.TouchEvent.TOUCH_END, this.onTouchEnd, this);
             event.preventDefault();
         }
 
@@ -606,7 +609,7 @@ module swan {
          *
          * @param event
          */
-        private onTouchMove(event:egret.TouchEvent):void {
+        private onTouchMove(event:lark.TouchEvent):void {
             var values = this.$Scroller;
             if (!values[Keys.touchMoved]) {
                 if (Math.abs(values[Keys.touchStartX] - event.$stageX) < Scroller.scrollThreshold &&
@@ -647,12 +650,12 @@ module swan {
          *
          * @param event
          */
-        private onTouchEnd(event:egret.Event):void {
+        private onTouchEnd(event:lark.Event):void {
             var values = this.$Scroller;
             values[Keys.touchMoved] = false;
-            var stage:egret.Stage = event.$currentTarget;
-            stage.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.onTouchMove, this);
-            stage.removeEventListener(egret.TouchEvent.TOUCH_END, this.onTouchEnd, this);
+            var stage:lark.Stage = event.$currentTarget;
+            stage.removeListener(lark.TouchEvent.TOUCH_MOVE, this.onTouchMove, this);
+            stage.removeListener(lark.TouchEvent.TOUCH_END, this.onTouchEnd, this);
 
             var viewport:IViewport = values[Keys.viewport];
             var uiValues = viewport.$UIComponent;
@@ -712,8 +715,8 @@ module swan {
             var verticalBar = this.verticalScrollBar;
             if (horizontalBar && horizontalBar.visible || verticalBar && verticalBar.visible) {
                 if (!values[Keys.autoHideTimer]) {
-                    values[Keys.autoHideTimer] = new egret.Timer(200, 1);
-                    values[Keys.autoHideTimer].addEventListener(egret.TimerEvent.TIMER_COMPLETE, this.onAutoHideTimer, this);
+                    values[Keys.autoHideTimer] = new lark.Timer(200, 1);
+                    values[Keys.autoHideTimer].on(lark.TimerEvent.TIMER_COMPLETE, this.onAutoHideTimer, this);
                 }
                 values[Keys.autoHideTimer].reset();
                 values[Keys.autoHideTimer].start();
@@ -728,7 +731,7 @@ module swan {
          *
          * @param event
          */
-        private onAutoHideTimer(event:egret.TimerEvent):void {
+        private onAutoHideTimer(event:lark.TimerEvent):void {
             var horizontalBar = this.horizontalScrollBar;
             var verticalBar = this.verticalScrollBar;
             if (horizontalBar) {

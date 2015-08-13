@@ -328,7 +328,7 @@ module swan {
         protected partAdded(partName:string, instance:any):void {
             super.partAdded(partName, instance);
             if (instance === this.thumb) {
-                this.thumb.addEventListener(egret.Event.RESIZE, this.onThumbResize, this);
+                this.thumb.on(lark.Event.RESIZE, this.onThumbResize, this);
             }
         }
 
@@ -342,7 +342,7 @@ module swan {
         protected partRemoved(partName:string, instance:any):void {
             super.partRemoved(partName, instance);
             if (instance === this.thumb) {
-                this.thumb.removeEventListener(egret.Event.RESIZE, this.onThumbResize, this);
+                this.thumb.removeListener(lark.Event.RESIZE, this.onThumbResize, this);
             }
         }
 
@@ -350,7 +350,7 @@ module swan {
          * @private
          * thumb的位置或尺寸发生改变
          */
-        private onThumbResize(event:egret.Event):void {
+        private onThumbResize(event:lark.Event):void {
             this.updateSkinDisplayList();
         }
 
@@ -377,7 +377,7 @@ module swan {
 
                 var rect = thumb.$scrollRect;
                 if (!rect) {
-                    rect = egret.$TempRectangle;
+                    rect = lark.$TempRectangle;
                 }
                 rect.setTo(0,0,thumbWidth,thumbHeight);
                 var thumbPosX = thumb.x - rect.x;

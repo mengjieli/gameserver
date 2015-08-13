@@ -28,9 +28,9 @@
 //////////////////////////////////////////////////////////////////////////////////////
 module swan {
 
-    egret.$locale_strings = egret.$locale_strings || {};
-    egret.$locale_strings["en_US"] = egret.$locale_strings["en_US"] || {};
-    var locale_strings = egret.$locale_strings["en_US"];
+    lark.$locale_strings = lark.$locale_strings || {};
+    lark.$locale_strings["en_US"] = lark.$locale_strings["en_US"] || {};
+    var locale_strings = lark.$locale_strings["en_US"];
 
     locale_strings[2001] = "EXML parsing error {0}: EXML file can't be found ";
     locale_strings[2002] = "EXML parsing error : invalid XML file:\n{0}";
@@ -60,6 +60,7 @@ module swan {
     
     locale_strings[2201] = "BasicLayout doesn't support virtualization.";
     locale_strings[2202] = "parse skinName error，the parsing result of skinName must be a instance of swan.Skin.";
+    locale_strings[2203] = "Could not find the skin class '{0}'。";
 
     locale_strings[2301] = "parse source failed，could not find asset from URL：{0} .";
 

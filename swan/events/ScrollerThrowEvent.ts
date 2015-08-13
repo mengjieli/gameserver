@@ -3,7 +3,7 @@ module swan {
     /**
      * @private
      */
-    export class ScrollerThrowEvent extends egret.Event {
+    export class ScrollerThrowEvent extends lark.Event {
 
         public static THROW:string = "throw";
 

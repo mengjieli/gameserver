@@ -33,6 +33,10 @@ module swan {
      * @language en_US
      * The ItemRenderer class is the base class for item renderers.
      *
+     * @state up Up state
+     * @state down Down state
+     * @state upAndSelected Up state when the button is selected
+     * @state downAndSelected Down state when the button is selected
      * @version Lark 1.0
      * @version Swan 1.0
      * @platform Web,Native
@@ -42,6 +46,10 @@ module swan {
      * @language zh_CN
      * ItemRenderer 类是项呈示器的基类。
      *
+     * @state up 弹起状态
+     * @state down 按下状态
+     * @state upAndSelected 选择时的弹起状态
+     * @state downAndSelected 选择时的按下状态
      * @version Lark 1.0
      * @version Swan 1.0
      * @platform Web,Native
@@ -67,7 +75,7 @@ module swan {
          */
         public constructor() {
             super();
-            this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
+            this.on(lark.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
         }
 
         /**
@@ -193,8 +201,8 @@ module swan {
          * @version Swan 1.0
          * @platform Web,Native
          */
-        protected onTouchBegin(event:egret.TouchEvent):void {
-            this.$stage.addEventListener(egret.TouchEvent.TOUCH_END, this.onStageTouchEnd, this);
+        protected onTouchBegin(event:lark.TouchEvent):void {
+            this.$stage.on(lark.TouchEvent.TOUCH_END, this.onStageTouchEnd, this);
             this.touchCaptured = true;
             this.invalidateState();
             event.updateAfterEvent();
@@ -204,9 +212,9 @@ module swan {
          * @private
          * 舞台上触摸弹起事件
          */
-        private onStageTouchEnd(event:egret.Event):void {
+        private onStageTouchEnd(event:lark.Event):void {
             var stage = event.$currentTarget;
-            stage.removeEventListener(egret.TouchEvent.TOUCH_END, this.onStageTouchEnd, this);
+            stage.removeListener(lark.TouchEvent.TOUCH_END, this.onStageTouchEnd, this);
             this.touchCaptured = false;
             this.invalidateState();
         }

@@ -28,6 +28,10 @@
 //////////////////////////////////////////////////////////////////////////////////////
 
 module swan.sys {
+
+    /**
+     * @private
+     */
     export const enum ComponentKeys {
         hostComponentKey,
         skinName,
@@ -49,7 +53,7 @@ module swan {
      * @language en_US
      *
      * @copy swan.UIComponents
-     * @event egret.Event.COMPLETE Emit when <code>skinName</code> property is set the path of external EXML file and the EXML file is resolved.
+     * @event lark.Event.COMPLETE Emit when <code>skinName</code> property is set the path of external EXML file and the EXML file is resolved.
      *
      * @includeExample examples/Samples/src/extension/swan/components/ComponentExample.ts
      * @version Lark 1.0
@@ -60,14 +64,14 @@ module swan {
      * @language zh_CN
      *
      * @copy swan.UIComponents
-     * @event egret.Event.COMPLETE 当设置skinName为外部exml文件路径时，加载并完成EXML解析后调度。
+     * @event lark.Event.COMPLETE 当设置skinName为外部exml文件路径时，加载并完成EXML解析后调度。
      *
      * @includeExample examples/Samples/src/extension/swan/components/ComponentExample.ts
      * @version Lark 1.0
      * @version Swan 1.0
      * @platform Web,Native
      */
-    export class Component extends egret.DisplayObjectContainer implements UIComponent {
+    export class Component extends lark.Sprite implements UIComponent {
         /**
          * Constructor.
          *
@@ -98,7 +102,6 @@ module swan {
                 7: false,        //explicitTouchEnabled
                 8: null          //skin
             };
-            this.$touchEnabled = true;
         }
 
         $Component:Object;
@@ -182,10 +185,13 @@ module swan {
                             EXML.load(skinName,this.onExmlLoaded,this);
                             return;
                         }
-                        this.dispatchEventWith(egret.Event.COMPLETE);
+                        this.emitWith(lark.Event.COMPLETE);
                     }
                     else{
-                        clazz = egret.getDefinitionByName(skinName);
+                        clazz = lark.getDefinitionByName(skinName);
+                        if(!clazz) {
+                            DEBUG && lark.$error(2203,skinName);
+                        }
                     }
                     if (clazz) {
                         skin = new clazz();
@@ -210,7 +216,7 @@ module swan {
             }
             var skin = new clazz();
             this.setSkin(skin)
-            this.dispatchEventWith(egret.Event.COMPLETE);
+            this.emitWith(lark.Event.COMPLETE);
         }
 
         /**
@@ -248,7 +254,7 @@ module swan {
         protected setSkin(skin:Skin):void {
             if (skin&&!(skin instanceof swan.Skin)) {
                 skin = null;
-                DEBUG && egret.$error(2202);
+                DEBUG && lark.$error(2202);
             }
             var values = this.$Component;
             var oldSkin:Skin = values[sys.ComponentKeys.skin];
@@ -981,7 +987,7 @@ module swan {
          * @version Swan 1.0
          * @platform Web,Native
          */
-        public getLayoutBounds(bounds:egret.Rectangle):void {
+        public getLayoutBounds(bounds:lark.Rectangle):void {
         }
 
         /**
@@ -991,12 +997,12 @@ module swan {
          * @version Swan 1.0
          * @platform Web,Native
          */
-        public getPreferredBounds(bounds:egret.Rectangle):void {
+        public getPreferredBounds(bounds:lark.Rectangle):void {
         }
     }
     registerProperty(Component, "skinName", "Class");
-    sys.implementUIComponent(Component, egret.Sprite, true);
+    sys.implementUIComponent(Component, lark.Sprite, true);
     if(DEBUG){
-        egret.$markReadOnly(Component,"skin");
+        lark.$markReadOnly(Component,"skin");
     }
 }
