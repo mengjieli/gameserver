@@ -33,6 +33,7 @@ var replaces = [
     [".BitmapData", ".Texture"],
     [".Sprite", ".DisplayObjectContainer"],
     [".TextInput", ".TextField"],
+    [".ImageLoader",".URLLoader"],
 ];
 
 for (var i = 0, len = files.length; i < len; i++) {

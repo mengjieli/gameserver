@@ -30,7 +30,7 @@
 
 module swan {
 
-    var loaderPool:egret.ImageLoader[] = [];
+    var loaderPool:egret.URLLoader[] = [];
     var callBackMap:any = {};
     var loaderMap:any = {};
 
@@ -81,7 +81,7 @@ module swan {
             }
             var loader = loaderPool.pop();
             if (!loader) {
-                loader = new egret.ImageLoader();
+                loader = new egret.URLLoader();
             }
             callBackMap[source] = [[callBack, thisObject]];
             loaderMap[loader.$hashCode] = source;
