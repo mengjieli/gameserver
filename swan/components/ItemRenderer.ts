@@ -37,7 +37,7 @@ module swan {
      * @state down Down state
      * @state upAndSelected Up state when the button is selected
      * @state downAndSelected Down state when the button is selected
-     * @version Lark 1.0
+     * @version Egret 2.4
      * @version Swan 1.0
      * @platform Web,Native
      * @includeExample examples/Samples/src/extension/swan/components/ItemRendererExample.ts
@@ -50,7 +50,7 @@ module swan {
      * @state down 按下状态
      * @state upAndSelected 选择时的弹起状态
      * @state downAndSelected 选择时的按下状态
-     * @version Lark 1.0
+     * @version Egret 2.4
      * @version Swan 1.0
      * @platform Web,Native
      * @includeExample examples/Samples/src/extension/swan/components/ItemRendererExample.ts
@@ -61,7 +61,7 @@ module swan {
          * @language en_US
          * Constructor.
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -69,7 +69,7 @@ module swan {
          * @language zh_CN
          * 构造函数。
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -86,7 +86,7 @@ module swan {
          * @language en_US
          * The data to render or edit.
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -94,7 +94,7 @@ module swan {
          * @language zh_CN
          * 要呈示或编辑的数据。
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -112,7 +112,7 @@ module swan {
          * @language en_US
          * Update the view when the <code>data</code> property changes.
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -120,7 +120,7 @@ module swan {
          * @language zh_CN
          * 当数据改变时，更新视图。
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -137,7 +137,7 @@ module swan {
          * Contains <code>true</code> if the item renderer
          * can show itself as selected.
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -145,7 +145,7 @@ module swan {
          * @language zh_CN
          * 如果项呈示器可以将其自身显示为已选中，则为 true。
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -165,7 +165,7 @@ module swan {
          * The index of the item in the data provider
          * of the host component of the item renderer.
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -173,7 +173,7 @@ module swan {
          * @language zh_CN
          * 项呈示器的数据提供程序中的项目索引。
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -189,7 +189,7 @@ module swan {
          * @language en_US
          * Handles <code>TouchEvent.TOUCH_BEGIN</code> events
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -197,7 +197,7 @@ module swan {
          * @language zh_CN
          * 触碰开始时触发事件
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -222,7 +222,7 @@ module swan {
         /**
          * @inheritDoc
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -239,4 +239,4 @@ module swan {
         }
     }
 
-    registerBindable(ItemRenderer.pro
+    registerBindable(It

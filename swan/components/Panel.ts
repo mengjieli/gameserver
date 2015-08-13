@@ -39,7 +39,7 @@ module swan {
      * you can use <code>event.preventDefault()</code> to prevent close.
      *
      * @defaultProperty elementsContent
-     * @version Lark 1.0
+     * @version Egret 2.4
      * @version Swan 1.0
      * @platform Web,Native
      * @includeExample examples/Samples/src/extension/swan/components/PanelExample.ts
@@ -52,7 +52,7 @@ module swan {
      * 监听此事件并调用<code>event.preventDefault()</code>能够阻止面板被关闭。
      *
      * @defaultProperty elementsContent
-     * @version Lark 1.0
+     * @version Egret 2.4
      * @version Swan 1.0
      * @platform Web,Native
      * @includeExample examples/Samples/src/extension/swan/components/PanelExample.ts
@@ -63,7 +63,7 @@ module swan {
          * @language en_US
          * Constructor.
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -71,7 +71,7 @@ module swan {
          * @language zh_CN
          * 构造函数。
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -93,14 +93,14 @@ module swan {
          * @language en_US
          * [write-only] This property is Usually invoked in resolving an EXML for adding multiple children quickly.
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
         /**
          * @language zh_CN
          * [只写] 此属性通常在 EXML 的解析器中调用，便于快速添加多个子项。
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -120,7 +120,7 @@ module swan {
          *
          * @skinPart
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -130,7 +130,7 @@ module swan {
          *
          * @skinPart
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -140,7 +140,7 @@ module swan {
          * @language en_US
          * The area where the user must drag to move the window.
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -150,7 +150,7 @@ module swan {
          *
          * @skinPart
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -163,7 +163,7 @@ module swan {
          *
          * @skinPart
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -173,7 +173,7 @@ module swan {
          *
          * @skinPart
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -190,7 +190,7 @@ module swan {
          *
          * @default ""
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -200,7 +200,7 @@ module swan {
          *
          * @default ""
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -217,7 +217,7 @@ module swan {
         /**
          * @inheritDoc
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -237,7 +237,7 @@ module swan {
         /**
          * @inheritDoc
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -255,7 +255,7 @@ module swan {
          * @language en_US
          * Emites the "closing" event when the closeButton is clicked.
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -263,7 +263,7 @@ module swan {
          * @language zh_CN
          * 当 closeButton 被点击时派发 “closing” 事件
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -277,7 +277,7 @@ module swan {
          * @language en_US
          * Close the panel and remove from the parent container.
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -285,7 +285,7 @@ module swan {
          * @language zh_CN
          * 关闭面板，从父级容器移除自身。
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -310,7 +310,7 @@ module swan {
          * @language en_US
          * Called when the user starts dragging a Panel.
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -318,7 +318,7 @@ module swan {
          * @language zh_CN
          * 在可移动区域按下
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -334,7 +334,7 @@ module swan {
          * @language en_US
          * Called when the user drags a Panel.
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -342,7 +342,7 @@ module swan {
          * @language zh_CN
          * 触摸拖拽时的移动事件
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -355,7 +355,7 @@ module swan {
          * @language en_US
          * Called when the user releases the Panel.
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -363,10 +363,10 @@ module swan {
          * @language zh_CN
          * 在舞台上弹起事件
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
         protected onTouchEnd(event:egret.TouchEvent):void {
             this.$stage.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.onTouchMove, this);
-            this.$stage.removeEventListener(egret.TouchEvent.TOUCH_END, this.onTouchEnd, th
+            this.$stage.removeEventListener(egret.TouchEvent.TOUCH

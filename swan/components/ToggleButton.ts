@@ -51,7 +51,7 @@ module swan {
 	 * @state upAndSelected Up state when the button is selected
 	 * @state downAndSelected Down state when the button is selected
 	 * @state disabledAndSelected Disabled state when the button is selected
-	 * @version Lark 1.0
+	 * @version Egret 2.4
 	 * @version Swan 1.0
 	 * @platform Web,Native
 	 * @includeExample examples/Samples/src/extension/swan/components/ToggleButtonExample.ts
@@ -71,7 +71,7 @@ module swan {
 	 * @state upAndSelected 按钮选择时的弹起状态
 	 * @state downAndSelected 按钮选择时的按下状态
 	 * @state disabledAndSelected 按钮选择时的禁用状态
-	 * @version Lark 1.0
+	 * @version Egret 2.4
 	 * @version Swan 1.0
 	 * @platform Web,Native
 	 * @includeExample examples/Samples/src/extension/swan/components/ToggleButtonExample.ts
@@ -87,7 +87,7 @@ module swan {
 		 * Contains <code>true</code> if the button is in the down state,
 		 * and <code>false</code> if it is in the up state.
 		 *
-		 * @version Lark 1.0
+		 * @version Egret 2.4
 		 * @version Swan 1.0
 		 * @platform Web,Native
 		 */
@@ -95,7 +95,7 @@ module swan {
 		 * @language zh_CN
 		 * 按钮处于按下状态时为 <code>true</code>，而按钮处于弹起状态时为 <code>false</code>。
 		 *
-		 * @version Lark 1.0
+		 * @version Egret 2.4
 		 * @version Swan 1.0
 		 * @platform Web,Native
 		 */
@@ -124,7 +124,7 @@ module swan {
 		/**
 		 * @inheritDoc
 		 *
-		 * @version Lark 1.0
+		 * @version Egret 2.4
 		 * @version Swan 1.0
 		 * @platform Web,Native
 		 */
@@ -151,7 +151,7 @@ module swan {
 		/**
 		 * @inheritDoc
 		 *
-		 * @version Lark 1.0
+		 * @version Egret 2.4
 		 * @version Swan 1.0
 		 * @platform Web,Native
 		 */
@@ -162,4 +162,4 @@ module swan {
 			this.dispatchEventWith(egret.Event.CHANGE);
 		}
 	}
-	registerBindable(ToggleButton.prototype,"selected");
+	registerBindable(ToggleButton.prototype,"select

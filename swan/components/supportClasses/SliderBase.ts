@@ -57,7 +57,7 @@ module swan {
      * @see swan.HSlider
      * @see swan.VSlider
      *
-     * @version Lark 1.0
+     * @version Egret 2.4
      * @version Swan 1.0
      * @platform Web,Native
      */
@@ -70,7 +70,7 @@ module swan {
      * @see swan.HSlider
      * @see swan.VSlider
      *
-     * @version Lark 1.0
+     * @version Egret 2.4
      * @version Swan 1.0
      * @platform Web,Native
      */
@@ -78,14 +78,14 @@ module swan {
         /**
          * @language en_US
          * Constructor
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
         /**
          * @language zh_CN
          * 创建一个 SliderBase 实例
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -116,7 +116,7 @@ module swan {
          * @language en_US
          * [SkinPart] Highlight of track.
          * @skinPart
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -124,7 +124,7 @@ module swan {
          * @language zh_CN
          * [SkinPart] 轨道高亮显示对象。
          * @skinPart
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -133,7 +133,7 @@ module swan {
          * @language en_US
          * [SkinPart] Thumb display object.
          * @skinPart
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -141,7 +141,7 @@ module swan {
          * @language zh_CN
          * [SkinPart]滑块显示对象。
          * @skinPart
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -151,7 +151,7 @@ module swan {
          * @language en_US
          * [SkinPart] Track display object.
          * @skinPart
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -159,7 +159,7 @@ module swan {
          * @language zh_CN
          * [SkinPart]轨道显示对象。
          * @skinPart
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -171,7 +171,7 @@ module swan {
          *
          * @default 300
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -181,7 +181,7 @@ module swan {
          *
          * @default 300
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -202,7 +202,7 @@ module swan {
          * @param y The y coordinate of the location relative to the track's origin.
          * @return A value between the minimum and maximum, inclusive.
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -214,7 +214,7 @@ module swan {
          * @param y 相对于轨道原点的位置的y坐标。
          * @return 介于最小值和最大值（包括两者）之间的一个值。
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -230,7 +230,7 @@ module swan {
          *
          * @default true
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -240,7 +240,7 @@ module swan {
          *
          * @default true
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -262,7 +262,7 @@ module swan {
          *
          * @default 0
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -274,7 +274,7 @@ module swan {
          *
          * @default 0
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -294,7 +294,7 @@ module swan {
         /**
          * @inheritDoc
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -307,7 +307,7 @@ module swan {
         /**
          * @inheritDoc
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -333,7 +333,7 @@ module swan {
         /**
          * @inheritDoc
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -365,7 +365,7 @@ module swan {
          *
          * @param The <code>egret.TouchEvent</code> object.
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -375,7 +375,7 @@ module swan {
          *
          * @param event 事件 <code>egret.TouchEvent</code> 的对象.
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -417,7 +417,7 @@ module swan {
          * @language en_US
          * Capture touch-move events anywhere on or off the stage.
          * @param newValue new value
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -425,7 +425,7 @@ module swan {
          * @language zh_CN
          * 监听舞台的触碰移动事件。
          * @param newValue 新的值
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -447,7 +447,7 @@ module swan {
          *
          * @param The <code>egret.Event</code> object.
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -457,7 +457,7 @@ module swan {
          *
          * @param event 事件 <code>egret.Event</code> 的对象。
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -534,7 +534,7 @@ module swan {
          * move the thumb to the correct location as well as
          * commit the value.
          * @param The <code>egret.TouchEvent</code> object.
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -544,7 +544,7 @@ module swan {
          *
          * @param event 事件 <code>egret.TouchEvent</code> 的对象.
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -575,4 +575,4 @@ module swan {
                     animation.from = values[Keys.pendingValue];
                     animation.to = values[Keys.slideToValue];
                     UIEvent.emitUIEvent(this, UIEvent.CHANGE_START);
-                    animation.p
+   

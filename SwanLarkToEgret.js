@@ -21,6 +21,7 @@ function replaceAll(content, search, replace) {
 }
 
 var replaces = [
+    ["Lark 1.0","Egret 2.4"],
     ["lark.","egret."],
     ["IEventEmitter","IEventDispatcher"],
     ["EventEmitter","EventDispatcher"],

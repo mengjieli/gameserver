@@ -43,7 +43,7 @@ module swan {
      * @event swan.UIEvent.CREATION_COMPLETE  Emit when the component has finished its construction,
      * property processing, measuring, layout, and drawing.
      *
-     * @version Lark 1.0
+     * @version Egret 2.4
      * @version Swan 1.0
      * @platform Web,Native
      */
@@ -58,7 +58,7 @@ module swan {
      * @event swan.UIEvent.MOVE 当UI组件在父级容器中的位置发生改变时调度
      * @event swan.UIEvent.CREATION_COMPLETE 当UI组件第一次被添加到舞台并完成初始化后调度
      *
-     * @version Lark 1.0
+     * @version Egret 2.4
      * @version Swan 1.0
      * @platform Web,Native
      */
@@ -117,7 +117,7 @@ module swan {
          * container's layout when the <code>visible</code> is false.
          * @default true
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -128,7 +128,7 @@ module swan {
          *
          * @default true
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -140,7 +140,7 @@ module swan {
          *
          * @default NaN
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -150,7 +150,7 @@ module swan {
          *
          * @default NaN
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -163,7 +163,7 @@ module swan {
          *
          * @default NaN
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -173,7 +173,7 @@ module swan {
          *
          * @default NaN
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -186,7 +186,7 @@ module swan {
          *
          * @default NaN
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -196,7 +196,7 @@ module swan {
          *
          * @default NaN
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -209,7 +209,7 @@ module swan {
          *
          * @default NaN
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -219,7 +219,7 @@ module swan {
          *
          * @default NaN
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -232,7 +232,7 @@ module swan {
          *
          * @default NaN
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -242,7 +242,7 @@ module swan {
          *
          * @default NaN
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -255,7 +255,7 @@ module swan {
          *
          * @default NaN
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -265,7 +265,7 @@ module swan {
          *
          * @default NaN
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -280,7 +280,7 @@ module swan {
          *
          * @default NaN
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -290,7 +290,7 @@ module swan {
          *
          * @default NaN
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -305,7 +305,7 @@ module swan {
          *
          * @default NaN
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -315,7 +315,7 @@ module swan {
          *
          * @default NaN
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -325,14 +325,14 @@ module swan {
          * @language en_US
          * Number that specifies the explicit width of the component,
          * in pixels, in the component's coordinates.
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
         /**
          * @language zh_CN
          * 外部显式指定的宽度。
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -343,7 +343,7 @@ module swan {
          * Number that specifies the explicit height of the component,
          * in pixels, in the component's coordinates.
          * @readOnly
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -351,7 +351,7 @@ module swan {
          * @language zh_CN
          * 外部显式指定的高度。
          * @readOnly
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -364,7 +364,7 @@ module swan {
          * component's coordinates, in pixels. The default value depends on
          * the component's implementation.
          * @readOnly
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -372,7 +372,7 @@ module swan {
          * @language zh_CN
          * 组件的最小宽度,此属性设置为大于maxWidth的值时无效。同时影响测量和自动布局的尺寸。
          * @readOnly
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -383,14 +383,14 @@ module swan {
          * by the parent during layout. This value is in the
          * component's coordinates, in pixels. The default value of this property is
          * set by the component developer.
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
         /**
          * @language zh_CN
          * 组件的最大高度。同时影响测量和自动布局的尺寸。
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -402,14 +402,14 @@ module swan {
          * by the parent during layout. This value is in the
          * component's coordinates, in pixels. The default value depends on
          * the component's implementation.
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
         /**
          * @language zh_CN
          * 组件的最小高度,此属性设置为大于maxHeight的值时无效。同时影响测量和自动布局的尺寸。
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -421,14 +421,14 @@ module swan {
          * by the parent during layout. This value is in the
          * component's coordinates, in pixels. The default value of this property is
          * set by the component developer.
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
         /**
          * @language zh_CN
          * 组件的最大高度,同时影响测量和自动布局的尺寸。
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -439,7 +439,7 @@ module swan {
          * Set the result of measuring.
          * @param width measured width
          * @param height measured height
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -448,7 +448,7 @@ module swan {
          * 设置测量结果。
          * @param width 测量宽度
          * @param height 测量高度
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -473,7 +473,7 @@ module swan {
          * In general, setting a property on a component automatically
          * calls the appropriate invalidation method.
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -487,7 +487,7 @@ module swan {
          * 同时更改两个属性后再使用新的大小和颜色一次性呈示文本，效率会更高。<p/>
          *
          * 很少调用 Invalidation 方法。通常，在组件上设置属性会自动调用合适的 invalidation 方法。
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -499,7 +499,7 @@ module swan {
          * by calling the <code>commitProperties()</code> method.
          * In general, subclassers should
          * override the <code>commitProperties()</code> method and not this method.
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -507,7 +507,7 @@ module swan {
          * @language zh_CN
          * 由布局逻辑用于通过调用 commitProperties() 方法来验证组件的属性。
          * 通常，子类应覆盖 commitProperties() 方法，而不是覆盖此方法。
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -532,7 +532,7 @@ module swan {
          * In general, setting a property on a component automatically
          * calls the appropriate invalidation method.
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -547,7 +547,7 @@ module swan {
          *
          * 很少调用 Invalidation 方法。通常，在组件上设置属性会自动调用合适的 invalidation 方法。
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -558,7 +558,7 @@ module swan {
          * Validates the measured size of the component.
          * @param recursive If <code>true</code>, call this method
          *  on the objects children.
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -566,7 +566,7 @@ module swan {
          * @language zh_CN
          * 验证组件的尺寸。
          * @param recursive 如果为 true，则调用对象子项的此方法。
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -591,7 +591,7 @@ module swan {
          * In general, setting a property on a component automatically
          * calls the appropriate invalidation method.
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -606,7 +606,7 @@ module swan {
          *
          * 很少调用 Invalidation 方法。通常，在组件上设置属性会自动调用合适的 invalidation 方法。
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -616,14 +616,14 @@ module swan {
          * @language en_US
          * Validates the position and size of children and draws other
          * visuals.
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
         /**
          * @language zh_CN
          * 验证子项的位置和大小，并绘制其他可视内容。
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -642,7 +642,7 @@ module swan {
          * Delaying the processing prevents it from being repeated
          * multiple times if the script sets the <code>width</code> property more than once.
          * This method lets you manually override this behavior.
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -655,7 +655,7 @@ module swan {
          * 例如，对 width 属性的设置可能会延迟，因为此设置需要重新计算这些对象的子项或父项的宽度。
          * 如果脚本多次设置了 width 属性，则延迟处理可防止进行多次处理。此方法允许您手动覆盖此行为。
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -675,7 +675,7 @@ module swan {
          * @param layoutWidth The element's layout width.
          * @param layoutHeight The element's layout height.
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -691,7 +691,7 @@ module swan {
          * @param layoutWidth 元素的布局宽度。
          * @param layoutHeight 元素的布局高度。
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -707,7 +707,7 @@ module swan {
          * @param x The x-coordinate of the top-left corner of the bounding box.
          * @param y The y-coordinate of the top-left corner of the bounding box.
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -721,7 +721,7 @@ module swan {
          * @param x 边框左上角的 X 坐标。
          * @param y 边框左上角的 Y 坐标。
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -736,7 +736,7 @@ module swan {
          *
          * @param bounds the instance of <code>egret.Rectangle</code> can set result.
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -748,7 +748,7 @@ module swan {
          *
          * @param bounds 可以放置结果的<code>egret.Rectangle</code>实例。
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -763,7 +763,7 @@ module swan {
          *
          * @param bounds the instance of <code>egret.Rectangle</code> can set result.
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -775,7 +775,7 @@ module swan {
          *
          * @param bounds 可以放置结果的<code>egret.Rectangle</code>实例。
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -1902,5 +1902,4 @@ module swan.sys {
                 get: function () {
                     return this.$UIComponent[UIKeys.invalidateDisplayListFlag];
                 },
-                enumerable: true,
-                configur
+   

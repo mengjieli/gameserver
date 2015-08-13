@@ -75,7 +75,7 @@ module swan {
      * @event swan.UIEvent.CHANGE_END Emitted when the scroll position changed complete
      *
      * @defaultProperty viewport
-     * @version Lark 1.0
+     * @version Egret 2.4
      * @version Swan 1.0
      * @platform Web,Native
      * @includeExample examples/Samples/src/extension/swan/components/ScrollerExample.ts
@@ -98,7 +98,7 @@ module swan {
      * @event swan.UIEvent.CHANGE_END 滚动位置改变结束
      *
      * @defaultProperty viewport
-     * @version Lark 1.0
+     * @version Egret 2.4
      * @version Swan 1.0
      * @platform Web,Native
      * @includeExample examples/Samples/src/extension/swan/components/ScrollerExample.ts
@@ -112,7 +112,7 @@ module swan {
          *
          * @default 5
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -122,7 +122,7 @@ module swan {
          *
          * @default 5
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -132,7 +132,7 @@ module swan {
          * @language en_US
          * Constructor.
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -140,7 +140,7 @@ module swan {
          * @language zh_CN
          * 构造函数。
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -169,14 +169,14 @@ module swan {
         /**
          * @language en_US
          * Adjust the speed to get out of the slide end.
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
         /**
          * @language zh_CN
          * 调节滑动结束时滚出的速度。
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -217,7 +217,7 @@ module swan {
          *
          * @skinPart
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -227,7 +227,7 @@ module swan {
          *
          * @skinPart
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -238,7 +238,7 @@ module swan {
          *
          * @skinPart
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -248,7 +248,7 @@ module swan {
          *
          * @skinPart
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -264,7 +264,7 @@ module swan {
          *
          * @default ScrollPolicy.AUTO
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -277,7 +277,7 @@ module swan {
          *
          * @default ScrollPolicy.AUTO
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -304,7 +304,7 @@ module swan {
          *
          * @default ScrollPolicy.AUTO
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -317,7 +317,7 @@ module swan {
          *
          * @default ScrollPolicy.AUTO
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -338,7 +338,7 @@ module swan {
          * @language en_US
          * The viewport component to be scrolled.
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -346,7 +346,7 @@ module swan {
          * @language zh_CN
          * 要滚动的视域组件。
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -418,7 +418,7 @@ module swan {
         /**
          * @inheritDoc
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -745,7 +745,7 @@ module swan {
         /**
          * @inheritDoc
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -763,7 +763,7 @@ module swan {
         /**
          * @inheritDoc
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -779,4 +779,4 @@ module swan {
                 this.verticalScrollBar.touchChildren = false;
                 this.verticalScrollBar.touchEnabled = false;
                 this.verticalScrollBar.viewport = this.viewport;
-                this.ver
+    

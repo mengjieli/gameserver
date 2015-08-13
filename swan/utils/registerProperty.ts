@@ -67,7 +67,7 @@ module swan {
      *          <s:Group/>
      *      </e:Scroller>
      * </pre>
-     * @version Lark 1.0
+     * @version Egret 2.4
      * @version Swan 1.0
      * @platform Web,Native
      */
@@ -98,7 +98,7 @@ module swan {
      *     <s:Group/>
      * </e:Scroller>
      * </pre>
-     * @version Lark 1.0
+     * @version Egret 2.4
      * @version Swan 1.0
      * @platform Web,Native
      */
@@ -123,4 +123,4 @@ module swan {
         if(asDefault){
             prototype.__defaultProperty__ = property;
         }
-  
+ 

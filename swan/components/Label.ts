@@ -54,7 +54,7 @@ module swan {
      * If the text extends below the bottom of the component,
      * it is clipped.</p>
      *
-     * @version Lark 1.0
+     * @version Egret 2.4
      * @version Swan 1.0
      * @platform Web,Native
      * @includeExample examples/Samples/src/extension/swan/components/LabelExample.ts
@@ -67,7 +67,7 @@ module swan {
      * 如果没有为 Label 指定宽度，则由这些显式换行符确定的最长行确定 Label 的宽度。
      * 如果指定了宽度，则指定文本将在组件边界的右边缘换行，如果文本扩展到低于组件底部，则将被剪切。
      *
-     * @version Lark 1.0
+     * @version Egret 2.4
      * @version Swan 1.0
      * @platform Web,Native
      * @includeExample examples/Samples/src/extension/swan/components/LabelExample.ts
@@ -80,7 +80,7 @@ module swan {
          *
          * @param text The text displayed by this text component.
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -90,7 +90,7 @@ module swan {
          *
          * @param text 此文本组件所显示的文本。
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -154,7 +154,7 @@ module swan {
         /**
          * @copy swan.UIComponent#createChildren
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -165,7 +165,7 @@ module swan {
         /**
          * @copy swan.UIComponent#childrenCreated
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -176,7 +176,7 @@ module swan {
         /**
          * @copy swan.UIComponent#commitProperties
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -187,7 +187,7 @@ module swan {
         /**
          * @copy swan.UIComponent#measure
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -215,7 +215,7 @@ module swan {
         /**
          * @copy swan.UIComponent#updateDisplayList
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -227,7 +227,7 @@ module swan {
         /**
          * @copy swan.UIComponent#invalidateParentLayout
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -247,7 +247,7 @@ module swan {
         /**
          * @copy swan.UIComponent#includeInLayout
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -255,7 +255,7 @@ module swan {
         /**
          * @copy swan.UIComponent#left
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -264,7 +264,7 @@ module swan {
         /**
          * @copy swan.UIComponent#right
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -273,7 +273,7 @@ module swan {
         /**
          * @copy swan.UIComponent#top
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -282,7 +282,7 @@ module swan {
         /**
          * @copy swan.UIComponent#bottom
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -291,7 +291,7 @@ module swan {
         /**
          * @copy swan.UIComponent#horizontalCenter
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -300,7 +300,7 @@ module swan {
         /**
          * @copy swan.UIComponent#verticalCenter
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -309,7 +309,7 @@ module swan {
         /**
          * @copy swan.UIComponent#percentWidth
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -318,7 +318,7 @@ module swan {
         /**
          * @copy swan.UIComponent#percentHeight
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -327,7 +327,7 @@ module swan {
         /**
          * @copy swan.UIComponent#explicitWidth
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -336,7 +336,7 @@ module swan {
         /**
          * @copy swan.UIComponent#explicitHeight
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -346,7 +346,7 @@ module swan {
         /**
          * @copy swan.UIComponent#minWidth
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -354,7 +354,7 @@ module swan {
         /**
          * @copy swan.UIComponent#maxWidth
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -363,7 +363,7 @@ module swan {
         /**
          * @copy swan.UIComponent#minHeight
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -371,7 +371,7 @@ module swan {
         /**
          * @copy swan.UIComponent#maxHeight
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -380,7 +380,7 @@ module swan {
         /**
          * @inheritDoc
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -390,7 +390,7 @@ module swan {
         /**
          * @inheritDoc
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -400,7 +400,7 @@ module swan {
         /**
          * @inheritDoc
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -410,7 +410,7 @@ module swan {
         /**
          * @inheritDoc
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -420,7 +420,7 @@ module swan {
         /**
          * @inheritDoc
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -430,7 +430,7 @@ module swan {
         /**
          * @inheritDoc
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -440,7 +440,7 @@ module swan {
         /**
          * @inheritDoc
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -450,7 +450,7 @@ module swan {
         /**
          * @inheritDoc
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -460,7 +460,7 @@ module swan {
         /**
          * @inheritDoc
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -483,7 +483,7 @@ module swan {
         /**
          * @inheritDoc
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -493,7 +493,7 @@ module swan {
         /**
          * @inheritDoc
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -503,7 +503,7 @@ module swan {
         /**
          * @inheritDoc
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -512,4 +512,4 @@ module swan {
     }
 
     sys.implementUIComponent(Label, egret.TextField);
-    registerBindable(Label.prototype, "text"
+    regi

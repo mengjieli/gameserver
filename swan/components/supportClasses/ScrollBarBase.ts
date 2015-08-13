@@ -40,7 +40,7 @@ module swan {
      *
      * @see swan.IViewport
      *
-     * @version Lark 1.0
+     * @version Egret 2.4
      * @version Swan 1.0
      * @platform Web,Native
      */
@@ -52,7 +52,7 @@ module swan {
      *
      * @see swan.IViewport
      *
-     * @version Lark 1.0
+     * @version Egret 2.4
      * @version Swan 1.0
      * @platform Web,Native
      */
@@ -60,14 +60,14 @@ module swan {
         /**
          * @language en_US
          * Constructor.
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
         /**
          * @language zh_CN
          * 创建一个ScrollBarBase实例。
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -79,7 +79,7 @@ module swan {
          * @language en_US
          * [SkinPart] Thumb display object.
          * @skinPart
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -87,7 +87,7 @@ module swan {
          * @language zh_CN
          * [SkinPart]滑块显示对象。
          * @skinPart
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -117,7 +117,7 @@ module swan {
          * @see swan.VScrollBar
          * @see swan.HScrollBar
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -137,7 +137,7 @@ module swan {
          * @see swan.VScrollBar
          * @see swan.HScrollBar
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -177,7 +177,7 @@ module swan {
          * @language en_US
          * Properties of viewport changed.
          * @param event 
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -185,8 +185,8 @@ module swan {
          * @language zh_CN
          * 视区属性发生改变。
          * @param event 
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
-        protected onPropertyChanged(event:swan.PropertyEvent):void
+        protected onPropertyChanged(event:swan.PropertyEv

@@ -59,7 +59,7 @@ module swan {
      * @see swan.Group
      * @defaultProperty dataProvider
      * @includeExample examples/Samples/src/extension/swan/components/DataGroupExample.ts
-     * @version Lark 1.0
+     * @version Egret 2.4
      * @version Swan 1.0
      * @platform Web,Native
      */
@@ -71,7 +71,7 @@ module swan {
      * @see swan.Group
      * @defaultProperty dataProvider
      * @includeExample examples/Samples/src/extension/swan/components/DataGroupExample.ts
-     * @version Lark 1.0
+     * @version Egret 2.4
      * @version Swan 1.0
      * @platform Web,Native
      */
@@ -81,7 +81,7 @@ module swan {
          * @language en_US
          * Constructor.
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -89,7 +89,7 @@ module swan {
          * @language zh_CN
          * 构造函数。
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -117,7 +117,7 @@ module swan {
         /**
          * @copy swan.LayoutBase#useVirtualLayout
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -179,7 +179,7 @@ module swan {
         /**
          * @inheritDoc
          * 
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -201,7 +201,7 @@ module swan {
         /**
          * @inheritDoc
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -256,7 +256,7 @@ module swan {
         /**
          * @inheritDoc
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -317,7 +317,7 @@ module swan {
          * @see swan.ICollection
          * @see swan.ArrayCollection
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -328,7 +328,7 @@ module swan {
          * @see swan.ICollection
          * @see swan.ArrayCollection
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -373,7 +373,7 @@ module swan {
          *
          * @param event 事件<code>swan.CollectionEvent</code>的对象。
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -383,7 +383,7 @@ module swan {
          *
          * @param event 事件<code>swan.CollectionEvent</code>的对象。
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -454,7 +454,7 @@ module swan {
          * @param item The item that was added, the value of dataProvider[index].
          * @param index The index where the dataProvider item was added.
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -467,7 +467,7 @@ module swan {
          * @param item 添加的数据项。
          * @param index 被添加到的索引。
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -501,7 +501,7 @@ module swan {
          * @param item The item that is being removed.
          * @param index The index of the item that is being removed.
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -514,7 +514,7 @@ module swan {
          * @param item 移除的数据项。
          * @param index 被移除的索引。
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -594,7 +594,7 @@ module swan {
          * If defined, the <code>itemRendererFunction</code> property
          * takes precedence over this property.
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -603,7 +603,7 @@ module swan {
          * 用于数据项目的项呈示器。您应该直接为此属性赋值自定义类的类定义，而不是一个实例。注意：该类必须实现 IItemRenderer 接口。<br/>
          * rendererClass获取顺序：itemRendererFunction > itemRenderer > 默认ItemRenerer。
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -631,7 +631,7 @@ module swan {
          * If defined, this property
          * takes precedence over the <code>itemRenderer</code> property.
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -639,7 +639,7 @@ module swan {
          * @language zh_CN
          * 为某个特定数据项返回一个项呈示器类定义的函数。
          * rendererClass获取顺序：itemRendererFunction > itemRenderer > 默认ItemRenerer。
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -683,7 +683,7 @@ module swan {
         /**
          * @inheritDoc
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -701,7 +701,7 @@ module swan {
         /**
          * @inheritDoc
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -743,7 +743,7 @@ module swan {
         /**
          * @inheritDoc
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -758,7 +758,7 @@ module swan {
         /**
          * @inheritDoc
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -929,7 +929,7 @@ module swan {
          * @param itemIndex The index of the data in the data provider.
          * @param data The data object this item renderer is representing.
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -943,7 +943,7 @@ module swan {
          * @param itemIndex 数据提供程序中的数据索引。
          * @param data 此项呈示器正在表示的数据对象。
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -959,7 +959,7 @@ module swan {
         /**
          * @inheritDoc
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -981,7 +981,7 @@ module swan {
          * @param index The index where the dataProvider item was added.
          * @param item The item that was added, the value of dataProvider[index].
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -995,7 +995,7 @@ module swan {
          * @param index 项呈示器的索引
          * @param item 项呈示器对应的数据
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -1013,7 +1013,7 @@ module swan {
          * @param index The index of the item that is being removed.
          * @param item The item that is being removed.
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -1026,7 +1026,7 @@ module swan {
          * @param index 项呈示器的索引
          * @param item 项呈示器对应的数据
          *
-         * @version Lark 1.0
+         * @version Egret 2.4
          * @version Swan 1.0
          * @platform Web,Native
          */
@@ -1037,4 +1037,4 @@ module swan {
     registerProperty(DataGroup, "itemRenderer", "Class");
     registerProperty(DataGroup, "dataProvider", "swan.ICollection", true);
     if(DEBUG){
-        egret.$markReadOnly(DataGr
+    
