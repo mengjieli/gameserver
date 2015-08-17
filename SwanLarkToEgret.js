@@ -14,6 +14,8 @@ var swanFile = path.resolve(process.cwd(), decodeURI(process.argv[2]));
 var outFile = path.resolve(process.cwd(), decodeURI(process.argv[3]));
 global.filedev = "/";
 
+console.log(swanFile);
+
 var files = global.File.readDir(swanFile, function (file) {
     return /.ts/.test(file);
 });
@@ -39,7 +41,7 @@ function changeDefine(content,current,change) {
             content = content.slice(0,i) + "/*" + content.slice(i,content.length);
             i += 2;
             for(; i < content.length; i++) {
-                if(content.slice(i,i + 2) == "*/"){
+                if(content.slice(i,i + 10) == "//END IF*/"){
                     i++;
                     break;
                 }
@@ -51,7 +53,7 @@ function changeDefine(content,current,change) {
             content = before + end;
             i += 2;
             for(; i < content.length; i++) {
-                if(content.slice(i,i + 2) == "*/"){
+                if(content.slice(i,i + 10) == "//END IF*/"){
                     i++;
                     break;
                 }
