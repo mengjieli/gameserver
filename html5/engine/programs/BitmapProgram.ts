@@ -19,8 +19,7 @@ module engine {
              attribute vec2 a_TexCoord;
              attribute vec4 a_Position;
              uniform mat4 u_PMatrix;
-             invariant varying vec2 v_TexCoord;
-             invariant gl_Position;
+             varying vec2 v_TexCoord;
              void main(void)
              {
                 gl_Position = u_PMatrix*a_Position;
@@ -32,7 +31,7 @@ module engine {
             #ifdef GL_ES
                 precision lowp float;
              #endif
-             invariant varying vec2 v_TexCoord;
+             varying vec2 v_TexCoord;
              uniform sampler2D u_Sampler;
              void main(void)
              {
@@ -131,8 +130,8 @@ module engine {
 
         public render(gl:WebGLRenderingContext):void {
             var _this = this;
-            //gl.useProgram(_this.program);
-            //gl.bindBuffer(gl.ARRAY_BUFFER, _this.buffer);
+            gl.useProgram(_this.program);
+            gl.bindBuffer(gl.ARRAY_BUFFER, _this.buffer);
             for(var i = 0,len = _this.textures.length; i < len; i++) {
                 gl.bindTexture(gl.TEXTURE_2D, _this.textures[i]);
                 gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(_this.positionData[i]), gl.STATIC_DRAW);

@@ -8,10 +8,14 @@ module engine {
         private _height:number;
         private children:DisplayObject[] = [];
 
+
+        private frameBuffer:WebGLFramebuffer;
+        private frameTexture:WebGLTexture;
+        private frameBitmap:Bitmap;
+
         constructor(width:number, height:number) {
             this._width = width;
             this._height = height;
-            document.write("<canvas id='engine' width='" + width + "' height='" + height + "'><\\/canvas>");
             this.canvas = <HTMLCanvasElement>document.getElementById("engine");
 
             Engine.instance = this;
@@ -42,8 +46,34 @@ module engine {
             gl.clear(gl.COLOR_BUFFER_BIT);
             gl.enable(gl.BLEND);
             gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
-            gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, 1);
             gl.activeTexture(gl.TEXTURE0);
+            //gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true);
+
+
+            this.frameBuffer = gl.createFramebuffer();
+            var texture = gl.createTexture();
+            gl.bindTexture(gl.TEXTURE_2D,texture);
+            gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,this.width,this.height,0,gl.RGBA,gl.UNSIGNED_BYTE,null);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+            this.frameTexture = texture;
+
+            var depthBuffer= gl.createRenderbuffer();
+            gl.bindRenderbuffer(gl.RENDERBUFFER,depthBuffer);
+            gl.renderbufferStorage(gl.RENDERBUFFER,gl.DEPTH_COMPONENT16,this.width,this.height);
+            gl.bindFramebuffer(gl.FRAMEBUFFER,this.frameBuffer);
+            gl.framebufferTexture2D(gl.FRAMEBUFFER,gl.COLOR_ATTACHMENT0,gl.TEXTURE_2D,texture,0);
+            gl.framebufferRenderbuffer(gl.FRAMEBUFFER,gl.DEPTH_ATTACHMENT,gl.RENDERBUFFER,depthBuffer);
+            if(gl.checkFramebufferStatus(gl.FRAMEBUFFER) !== gl.FRAMEBUFFER_COMPLETE) {
+                console.log("frame buffer error : " + gl.checkFramebufferStatus(gl.FRAMEBUFFER));
+            }
+            this.frameBitmap = new engine.Bitmap();
+            this.frameBitmap.scaleY = -1;
+            this.frameBitmap.y = this.height;
+            this.frameBitmap.setTexture(this.frameTexture,this.width,this.height);
+            gl.bindFramebuffer(gl.FRAMEBUFFER,null);
         }
 
         private startTick():void {
@@ -73,8 +103,10 @@ module engine {
         public render():void {
             FPSCount.addCount();
             var start = (new Date()).getTime();
-            this.gl.clear(this.gl.COLOR_BUFFER_BIT);
+            var gl = this.gl;
 
+            gl.bindFramebuffer(gl.FRAMEBUFFER,this.frameBuffer);
+            //gl.clear(this.gl.COLOR_BUFFER_BIT);
             var children = this.children;
             var child:DisplayObject;
             var program:Program;
@@ -85,15 +117,22 @@ module engine {
             for(var i = 0, len = children.length; i < len; i++) {
                 child = children[i];
                 if(program != child.program) {
-                    program.render(this.gl);
+                    program.render(gl);
                     program = child.program;
                     program.reset();
                 }
                 program.addDisplayObject(child);
             }
             if(program) {
-                program.render(this.gl);
+                program.render(gl);
             }
+
+            gl.bindFramebuffer(gl.FRAMEBUFFER,null);
+            gl.clear(gl.COLOR_BUFFER_BIT);
+            program = this.frameBitmap.program;
+            program.reset();
+            program.addDisplayObject(this.frameBitmap);
+            program.render(gl);
 
             FPSCount.useTime((new Date()).getTime() - start);
         }

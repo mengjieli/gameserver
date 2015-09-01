@@ -36,6 +36,14 @@ module engine {
             return this.$height;
         }
 
+        public set scaleX(val:number) {
+            this._matrix.a = val;
+        }
+
+        public set scaleY(val:number) {
+            this._matrix.d = val;
+        }
+
         /**
          * 子类需要实现具体的 Program
          * @returns {null}
