@@ -11,6 +11,10 @@ class WebGL {
     public height:number;
     private canvas:HTMLCanvasElement;
     public gl:WebGLRenderingContext;
+    public renderBuffer:WebGLRenderbuffer;
+    public frameBuffer:WebGLFramebuffer;
+    public frameTexture:WebGLTexture;
+    private frameProgram:BitmapProgram;
 
     private init():void {
         this.initWebGL();
@@ -40,6 +44,33 @@ class WebGL {
         gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
         gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true);
         gl.activeTexture(gl.TEXTURE0);
+
+        //this.frameBuffer = gl.createFramebuffer();
+        //var texture = gl.createTexture();
+        //gl.bindTexture(gl.TEXTURE_2D,texture);
+        //gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,this.width,this.height,0,gl.RGBA,gl.UNSIGNED_BYTE,null);
+        //gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+        //gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+        //gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+        //gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+        //this.frameTexture = texture;
+        //
+        //var depthBuffer= gl.createRenderbuffer();
+        //gl.bindRenderbuffer(gl.RENDERBUFFER,depthBuffer);
+        //gl.renderbufferStorage(gl.RENDERBUFFER,gl.DEPTH_COMPONENT16,this.width,this.height);
+        //gl.bindFramebuffer(gl.FRAMEBUFFER,this.frameBuffer);
+        //gl.framebufferTexture2D(gl.FRAMEBUFFER,gl.COLOR_ATTACHMENT0,gl.TEXTURE_2D,texture,0);
+        //gl.framebufferRenderbuffer(gl.FRAMEBUFFER,gl.DEPTH_ATTACHMENT,gl.RENDERBUFFER,depthBuffer);
+        //if(gl.checkFramebufferStatus(gl.FRAMEBUFFER) !== gl.FRAMEBUFFER_COMPLETE) {
+        //    console.log("frame buffer error : " + gl.checkFramebufferStatus(gl.FRAMEBUFFER));
+        //}
+        //gl.bindFramebuffer(gl.FRAMEBUFFER);
+
+
+
+        //this.renderBuffer = gl.createRenderbuffer();
+        //gl.bindRenderbuffer(gl.RENDERBUFFER,this.renderBuffer);
+        //gl.renderbufferStorage(gl.RENDERBUFFER,gl.RGBA,this.width,this.height)
     }
 
     public preRender():void {
@@ -55,12 +86,14 @@ class WebGL {
     public render():void {
         var _this = this;
         var gl = _this.gl;
+        //gl.bindFramebuffer(gl.FRAMEBUFFER,this.frameBuffer);
         gl.clear(gl.COLOR_BUFFER_BIT);
         var renderList = _this.renderList;
         var renderInfo:RenderInfo;
         var renderTask = this.renderTask;
         if (renderList.length) {
             renderTask.texture = renderList[0].texture;
+            renderTask.program = renderList[0].program;
         }
         for (var i = 0, len = renderList.length; i < len; i++) {
             renderInfo = renderList[i];
@@ -68,6 +101,7 @@ class WebGL {
                 renderTask.render(gl);
                 renderTask.release();
                 renderTask.texture = renderInfo.texture;
+                renderTask.program = renderInfo.program;
             }
             renderTask.addRendder(renderInfo);
         }
@@ -75,6 +109,25 @@ class WebGL {
             renderTask.render(gl);
             renderTask.release();
         }
+
+        //gl.bindFramebuffer(gl.FRAMEBUFFER,null);
+        //gl.clear(gl.COLOR_BUFFER_BIT);
+        //
+        //if(!this.frameProgram) {
+        //    this.frameProgram = new BitmapProgram(this.gl);
+        //}
+        //gl.useProgram(this.frameProgram.program);
+        //
+        //var renderInfo = this.createRenderInfo();
+        //renderInfo.texture = this.frameTexture;
+        //renderInfo.matrix = new Matrix();
+        //renderInfo.width = this.width;
+        //renderInfo.height = this.height;
+        //
+        //renderTask.texture = renderInfo.texture;
+        //renderTask.program = this.frameProgram;
+        //renderTask.addRendder(renderInfo);
+        //renderTask.render(gl);
     }
 
     public addRender(info:RenderInfo):void {

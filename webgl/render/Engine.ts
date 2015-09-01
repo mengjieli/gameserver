@@ -23,8 +23,8 @@ class Engine {
         var _this = this;
         requestAnimationFrame.call(window, onTick);
         function onTick():void {
-            _this.render();
-            requestAnimationFrame.call(window, onTick);
+            //_this.render();
+            //requestAnimationFrame.call(window, onTick);
         }
     }
 

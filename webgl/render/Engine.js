@@ -11,8 +11,8 @@ var Engine = (function () {
         var _this = this;
         requestAnimationFrame.call(window, onTick);
         function onTick() {
-            _this.render();
-            requestAnimationFrame.call(window, onTick);
+            //_this.render();
+            //requestAnimationFrame.call(window, onTick);
         }
     }
     Engine.prototype.addChild = function (child) {

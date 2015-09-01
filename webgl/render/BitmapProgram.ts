@@ -36,8 +36,8 @@ class BitmapProgram extends ProgramBase {
              `);
         this.gl = gl;
         var projectionMatrix = this.projectionMatrix;
-        projectionMatrix[0] = 2 / this.width;
-        projectionMatrix[5] = -2 / this.height;
+        projectionMatrix[0] = 2 / WebGL.getInstance().width;
+        projectionMatrix[5] = -2 / WebGL.getInstance().height;
         this.initAttriLocation();
     }
 

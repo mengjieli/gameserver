@@ -45,7 +45,21 @@ var Bitmap = (function (_super) {
         renderInfo.matrix = _this.matrix;
         renderInfo.width = _this.width;
         renderInfo.height = _this.height;
+        renderInfo.program = this.program;
         webgl.addRender(renderInfo);
+    };
+    Bitmap.prototype.getRenderInfo = function (webgl) {
+        var _this = this;
+        if (!_this.texture) {
+            return;
+        }
+        var renderInfo = webgl.createRenderInfo();
+        renderInfo.texture = _this.texture;
+        renderInfo.matrix = _this.matrix;
+        renderInfo.width = _this.width;
+        renderInfo.height = _this.height;
+        renderInfo.program = this.program;
+        return renderInfo;
     };
     Bitmap.prototype.getProgram = function () {
         return this.program;

@@ -1,13 +1,9 @@
-var http = require("http");
-
-http.createServer(function(request, response) {
-
-    response.writeHead(200, {"Content-Type": "text/plain"});
-
-    response.write("Hello World");
-
-    response.end();
-
-    console.log("a request");
-
-}).listen(8888);
+document.write("<script src='bin-debug/engine/displays/DisplayObject.js'></script>");
+document.write("<script src='bin-debug/engine/displays/Bitmap.js'></script>");
+document.write("<script src='bin-debug/engine/geom/Matrix.js'></script>");
+document.write("<script src='bin-debug/engine/core/Engine.js'></script>");
+document.write("<script src='bin-debug/engine/programs/superClasses/Program.js'></script>");
+document.write("<script src='bin-debug/engine/programs/BitmapProgram.js'></script>");
+document.write("<script src='bin-debug/engine/utils/FPSCount.js'></script>");
+document.write("<script src='bin-debug/game/utils/ImageLoader.js'></script>");
+document.write("<script src='bin-debug/game/GameMain.js'></script>");

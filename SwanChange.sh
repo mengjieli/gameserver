@@ -1,1 +1,0 @@
-node SwanLarkToEgret.js /Users/egret/Documents/Program/HTML5/Lark/src/extension/swan /Users/egret/Documents/Program/HTML5/Egret/src/extension/swan

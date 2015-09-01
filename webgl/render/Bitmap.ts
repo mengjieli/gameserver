@@ -46,7 +46,22 @@ class Bitmap extends DisplayObject {
         renderInfo.matrix = _this.matrix;
         renderInfo.width = _this.width;
         renderInfo.height = _this.height;
+        renderInfo.program = this.program;
         webgl.addRender(renderInfo);
+    }
+
+    public getRenderInfo(webgl:WebGL):void {
+        var _this = this;
+        if (!_this.texture) {
+            return;
+        }
+        var renderInfo = webgl.createRenderInfo();
+        renderInfo.texture = _this.texture;
+        renderInfo.matrix = _this.matrix;
+        renderInfo.width = _this.width;
+        renderInfo.height = _this.height;
+        renderInfo.program = this.program;
+        return renderInfo;
     }
 
     public getProgram():ProgramBase {

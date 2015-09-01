@@ -3,6 +3,7 @@ class Game {
         var engine = new Engine(document.getElementById('canvas'));
 
 
+        var gl:WebGL
         //var ps:ProgramBase[] = [];
         //for(var i = 0; i < 1000000; i++) {
         //    ps.push(new BitmapProgram());
@@ -49,6 +50,17 @@ class Game {
                     //bitmap.setY(450 * Math.random());
                     bitmaps.push(bitmap);
                 }
+
+                engine.render();
+                //setTimeout(function(){
+                //    bitmap.setX(500);
+                //    var gl = WebGL.getInstance().gl;
+                //    var buffer = new Uint8Array(WebGL.getInstance().width*WebGL.getInstance().height*4);
+                //    var t = (new Date()).getTime();
+                //    WebGL.getInstance().readColorBuffer(buffer);
+                //    console.log("time : ",(new Date()).getTime() - t);
+                //    engine.render();
+                //},500);
 
                 //for(var i = 0; i < count; i++) {
                 //

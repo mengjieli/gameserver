@@ -45,6 +45,7 @@ class RenderTask {
     }
 
     public render(gl:WebGLRenderingContext):void {
+        //gl.useProgram(this.program.program);
         var _this = this;
         gl.bindTexture(gl.TEXTURE_2D, _this.texture);
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(_this.positionData), gl.STATIC_DRAW);
