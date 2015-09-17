@@ -40,11 +40,14 @@ var files = [
     //"game/GameMain.ts",
 
 
+    "webgl/utils/FPSCount.ts",
+
     "webgl/textures/Texture.ts",
 
     "webgl/renderTasks/superClasses/RenderTask.ts",
     "webgl/renderTasks/BitmapTask.ts",
     "webgl/renderTasks/RectShapeTask.ts",
+    "webgl/renderTasks/ClearTask.ts",
 
     "webgl/programs/superClasses/Program.ts",
     "webgl/programs/BitmapProgram.ts",
@@ -55,6 +58,8 @@ var files = [
     "webgl/core/Stage.ts",
 
     "testproj/utils/ImageLoader.ts",
+    "testproj/MoveBitmap.ts",
+
     "testproj/Main.ts"
 
     //"compiler/CompilerTest.ts",

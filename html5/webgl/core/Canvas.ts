@@ -3,12 +3,11 @@ module webgl {
     export class Canvas {
 
         private context2d:CanvasRenderingContext2D;
-        private addToStage:boolean;
+        private stage:Stage;
 
-        constructor(width:number, height:number, addToStage:boolean = true) {
+        constructor(width:number, height:number) {
             this._width = width;
             this._height = height;
-            this.addToStage = addToStage;
         }
 
         private _width:number;
@@ -47,8 +46,9 @@ module webgl {
                 if (!this.context2d) {
                     this.context2d = new CanvasRenderingContext2D(this, options);
                 }
-                if (this.addToStage) {
-                    Stage.getInstance().addCanvas(this);
+                if (this.stage) {
+                    Stage.getInstance().$setCanvasTask(this);
+                    this.context2d.$addedToStage = true;
                 }
                 return this.context2d;
             }
@@ -56,6 +56,13 @@ module webgl {
                 return Stage.$webgl;
             }
             return null;
+        }
+
+        set $stage(stage:Stage) {
+            this.stage = stage;
+            if(this.context2d) {
+                this.context2d.$addedToStage = true;
+            }
         }
 
         public get $context2d():CanvasRenderingContext2D {

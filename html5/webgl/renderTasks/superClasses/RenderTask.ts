@@ -1,7 +1,7 @@
 module webgl {
     export class RenderTask {
 
-        constructor(program:Program,blendSFactor,blendDFactor) {
+        constructor(program:Program,blendSFactor?:number,blendDFactor?:number) {
             this._program = program;
             this._blendSFactor = blendSFactor;
             this._blendDFactor = blendDFactor;

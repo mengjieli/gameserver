@@ -26,10 +26,9 @@ module webgl {
             Stage.$bitmapProgram = new BitmapProgram(gl, this.width, this.height);
             Stage.$rectShapeProgram = new RectShapeProgram(gl, this.width, this.height);
             gl.viewport(0, 0, this.width, this.height);
-            gl.clearColor(1.0, 1.0, 1.0, 1.0);
+            gl.clearColor(0.0,0.0,0.0,0.0);
             gl.enable(gl.BLEND);
             //gl.enable(gl.CULL_FACE);
-
             gl.activeTexture(gl.TEXTURE0);
             gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, 1);
         }
@@ -52,51 +51,101 @@ module webgl {
             requestAnimationFrame.call(window, onTick);
             function onTick():void {
                 if (_this.runFlag) {
+                    var time:number = (new Date()).getTime();
                     _this.preRender();
                     _this.$render();
+                    FPSCount.useTime((new Date()).getTime() - time);
+                    FPSCount.addCount();
                 }
                 requestAnimationFrame.call(window, onTick);
             }
         }
 
-        public addCanvas(canvas:Canvas) {
+        public addCanvasAt(canvas:Canvas, index:number = -1) {
             var gl = this.gl;
-            this.children.push(canvas);
-            this.tasks.push(new BitmapTask(Stage.$bitmapProgram, canvas.$context2d.$texture, {
-                a: 1,
-                b: 0,
-                c: 0,
-                d: -1,
-                tx: 0,
-                ty: this.height
-            }, 1.0, gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA));
+            if (index == -1) {
+                index = this.children.length;
+            }
+            this.children.splice(index, 0, canvas);
+            if (canvas.$context2d == null) {
+                this.tasks.splice(index, 0, null);
+            } else {
+                this.tasks.splice(index, 0, new BitmapTask(Stage.$bitmapProgram, canvas.$context2d.$texture, {
+                    a: 1,
+                    b: 0,
+                    c: 0,
+                    d: -1,
+                    tx: 0,
+                    ty: this.height
+                }, 1.0, gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA));
+            }
+            canvas.$stage = this;
         }
+
+        $setCanvasTask(canvas:Canvas):void {
+            for(var i = 0; i < this.children.length; i++) {
+                if(this.children[i] == canvas) {
+                    var gl = this.gl;
+                    this.tasks[i] = new BitmapTask(Stage.$bitmapProgram, canvas.$context2d.$texture, {
+                        a: 1,
+                        b: 0,
+                        c: 0,
+                        d: -1,
+                        tx: 0,
+                        ty: this.height
+                    }, 1.0, gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+                    break;
+                }
+            }
+        }
+
+        public removeCanvas(canvas:Canvas):void {
+            for (var i = 0; i < this.children.length; i++) {
+                if (this.children[i] == canvas) {
+                    canvas.$stage = null;
+                    this.children.splice(i, 1);
+                    this.tasks.splice(i, 1);
+                    break;
+                }
+            }
+        }
+
+        //public set clearColor(color:number) {
+        //    this.gl.clearColor(color>>16, color>>8|0XFF, color|0XFF, 1.0);
+        //}
 
         private _dirty:boolean = false;
 
-        public setDirty():void {
+        $setDirty():void {
             this._dirty = true;
         }
 
         private preRender():void {
             var children = this.children;
             for (var i = 0; i < children.length; i++) {
+                if (!children[i].$context2d) {
+                    continue;
+                }
                 children[i].$context2d.$render();
             }
         }
 
-        public $render():void {
+        $render():void {
             if (!this._dirty) {
                 return;
             }
             this._dirty = false;
             var gl = this.gl;
             gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+            gl.clearColor(0.0,0.0,1.0,1.0);
             gl.clear(gl.COLOR_BUFFER_BIT);
             var program = Stage.$bitmapProgram;
             program.reset();
             var children = this.children;
-            for (var i = 0; i < children.length; i++) {
+            for (var i = 0; i < this.tasks.length; i++) {
+                if (!children[i].$context2d) {
+                    continue;
+                }
                 program.addTask(this.tasks[i]);
             }
             program.render();
