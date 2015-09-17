@@ -1,15 +1,15 @@
-module engine {
+module cengine {
+
     export class DisplayObject {
 
         $width:number = 0;
         $height:number = 0;
-        $texture:WebGLTexture;
 
         public constructor() {
         }
 
-        private _matrix:engine.Matrix = new Matrix();
-        public get matrix():engine.Matrix {
+        private _matrix:cengine.Matrix = new Matrix();
+        public get matrix():cengine.Matrix {
             return this._matrix;
         }
 
@@ -53,16 +53,9 @@ module engine {
             this._matrix.d = val;
         }
 
-        public get texture():WebGLTexture {
-            return this.$texture;
-        }
+        public render(context2d:CanvasRenderingContext2D):void
+        {
 
-        /**
-         * 子类需要实现具体的 Program
-         * @returns {null}
-         */
-        public get program():Program {
-            return null;
         }
     }
 }

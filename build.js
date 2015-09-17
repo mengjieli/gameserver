@@ -2,21 +2,62 @@ var fs = require("fs");
 
 var fileBefore = "/Users/egret/Documents/Program/NodeServer/gameserver/html5/";
 var files = [
-    "engine/displays/DisplayObject.ts",
-    "engine/displays/Bitmap.ts",
+    //"engine/displays/DisplayObject.ts",
+    //"engine/displays/Bitmap.ts",
+    //"engine/displays/TextField.ts",
+    //"engine/displays/Shape.ts",
+    //"engine/displays/Point.ts",
+    //"engine/displays/Line.ts",
+    //"engine/displays/Traingle.ts",
+    //
+    //"engine/geom/Matrix.ts",
+    //
+    //"engine/core/GLInfo.ts",
+    //"engine/core/Engine.ts",
+    //
+    //"engine/programs/superClasses/Program.ts",
+    //"engine/programs/BitmapProgram.ts",
+    //"engine/programs/ShapeProgram.ts",
+    //"engine/programs/PointProgram.ts",
+    //"engine/programs/LineProgram.ts",
+    //"engine/programs/TraingleProgram.ts",
+    //
+    //"engine/utils/FPSCount.ts",
+    //
+    //
+    //"canvas/Matrix.ts",
+    //"canvas/DisplayObject.ts",
+    //"canvas/TextField.ts",
+    //"canvas/Bitmap.ts",
+    //"canvas/FPSCount.ts",
+    //"canvas/CEngine.ts",
+    //
+    //"game/utils/ImageLoader.ts",
+    //"game/Test.ts",
+    //"game/Test1.ts",
+    //"game/Test2.ts",
+    //"game/Test3.ts",
+    //"game/GameMain.ts",
 
-    "engine/geom/Matrix.ts",
 
-    "engine/core/Engine.ts",
+    "webgl/textures/Texture.ts",
 
-    "engine/programs/superClasses/Program.ts",
-    "engine/programs/BitmapProgram.ts",
+    "webgl/renderTasks/superClasses/RenderTask.ts",
+    "webgl/renderTasks/BitmapTask.ts",
+    "webgl/renderTasks/RectShapeTask.ts",
 
-    "engine/utils/FPSCount.ts",
+    "webgl/programs/superClasses/Program.ts",
+    "webgl/programs/BitmapProgram.ts",
+    "webgl/programs/RectShapeProgram.ts",
 
+    "webgl/core/CanvasRenderingContext2D.ts",
+    "webgl/core/Canvas.ts",
+    "webgl/core/Stage.ts",
 
-    "game/utils/ImageLoader.ts",
-    "game/GameMain.ts",
+    "testproj/utils/ImageLoader.ts",
+    "testproj/Main.ts"
+
+    //"compiler/CompilerTest.ts",
 ];
 
 var content = "tsc --target es5 --sourceMap ";

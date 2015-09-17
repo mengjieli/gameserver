@@ -1,4 +1,4 @@
-module engine {
+module cengine {
     export class FPSCount extends TextField {
 
         private renderCount:number = 0;

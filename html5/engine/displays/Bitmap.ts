@@ -2,19 +2,14 @@ module engine {
     export class Bitmap extends DisplayObject {
 
         private _program:Program;
-        private _texture:WebGLTexture;
 
         constructor() {
             super();
             this._program = Bitmap.program;
         }
 
-        public get texture():WebGLTexture {
-            return this._texture;
-        }
-
         public setTexture(val:WebGLTexture,width:number,height:number) {
-            this._texture = val;
+            this.$texture = val;
             this.$width = width;
             this.$height = height;
         }

@@ -1,4 +1,4 @@
-module engine {
+module game {
     export class ImageLoader {
 
         /**

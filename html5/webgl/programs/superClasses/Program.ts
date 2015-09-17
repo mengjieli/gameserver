@@ -1,4 +1,4 @@
-module engine {
+module webgl {
 
     export var $size = (new Float32Array([0.0])).BYTES_PER_ELEMENT;
 
@@ -12,11 +12,11 @@ module engine {
 
         }
 
-        public addDisplayObject(display:DisplayObject):void {
+        public addTask(task:RenderTask):void {
 
         }
 
-        public render(gl:WebGLRenderingContext):void {
+        public render():void {
 
         }
 
