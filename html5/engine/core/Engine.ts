@@ -24,6 +24,7 @@ module engine {
             Engine.instance = this;
 
             this.init();
+            this.startTick();
         }
 
         private init():void {

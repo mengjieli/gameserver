@@ -115,7 +115,7 @@ module webgl {
                 return;
             }
 
-            if (!this.textures.length || this.textures[this.textures.length - 1] != texture ||
+            if (!this.textures.length || this.textures[this.textures.length - 1] != texture.texture ||
                 this.blendSFactors[this.blendSFactors.length - 1] != task.blendSFactor ||
                 this.blendDFactors[this.blendDFactors.length - 1] != task.blendDFactor) {
                 this.textures.push(texture.texture);

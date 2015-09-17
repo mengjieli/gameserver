@@ -2,10 +2,10 @@ module engine {
 
     export class Test1 extends Test {
 
-        private size = 256;
-        private init = 0;
-        private add = 5;
-        private change = true;
+        private size = 64;
+        private init = 1500;
+        private add = 50;
+        private change = false;
         private scale = false;
         private move = false;
         private bitmaps = [];
@@ -132,6 +132,7 @@ module engine {
 
         protected ready():void {
             super.ready();
+            return;
             var bitmap;
             for (var i = 0; i < this.init; i++) {
                 if (Test.engine == "webgl") {

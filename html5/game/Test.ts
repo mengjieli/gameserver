@@ -56,7 +56,7 @@ module engine {
 
         public static statrt():void {
 
-            Test.currentTest = new Test2();
+            Test.currentTest = new Test1();
 
             document.onclick = function () {
                 if (Test.currentTest) {

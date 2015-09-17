@@ -14,7 +14,7 @@ module game {
             webgl.Stage.getInstance().addCanvasAt(this.canvas);
             this.context2d = <any>this.canvas.getContext("2d",{"realTime":false});
 
-            new ImageLoader(["resources/64x64_1.png", "resources/64x64_2.png"], this.loadImageComplete, this);
+            new ImageLoader(["resources/256x256_1.png", "resources/256x256_2.png"], this.loadImageComplete, this);
         }
 
         private loadImageComplete(images:HTMLImageElement[]):void {
@@ -22,7 +22,7 @@ module game {
             //this.context2d.drawImage(images[1], 200, 300);
             var t1 = new webgl.Texture(webgl.CanvasRenderingContext2D.createTexture(images[0]),images[0].width,images[0].height);
             var t2 = new webgl.Texture(webgl.CanvasRenderingContext2D.createTexture(images[1]),images[1].width,images[1].height);
-            var loop = 750;
+            var loop = 400;
             for(var i = 0; i < loop; i++) {
                 new MoveBitmap(t1,this.context2d);
                 new MoveBitmap(t1,this.context2d);
