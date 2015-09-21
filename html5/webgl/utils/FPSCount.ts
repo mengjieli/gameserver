@@ -48,7 +48,7 @@ module webgl {
                 var fps = FPSCount.count * 1000 / (t - FPSCount.lastTime);
                 FPSCount.count = 0;
                 FPSCount.lastTime = t;
-                console.log("fps:", Math.round(fps), "time:", FPSCount.timeUsed);
+                //console.log("fps:", Math.round(fps), "time:", FPSCount.timeUsed);
                 FPSCount.getInstance().setFps(Math.round(fps));
                 FPSCount.timeUsed = 0;
             }

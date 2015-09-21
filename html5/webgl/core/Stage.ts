@@ -25,12 +25,20 @@ module webgl {
             Stage.$webgl = gl;
             Stage.$bitmapProgram = new BitmapProgram(gl, this.width, this.height);
             Stage.$rectShapeProgram = new RectShapeProgram(gl, this.width, this.height);
+            if(!Stage.$shareContext2D) {
+                var canvas = document.createElement("canvas");
+                canvas.width = this.width;
+                canvas.height = this.height;
+                Stage.$shareContext2D = canvas.getContext("2d");
+            }
             gl.viewport(0, 0, this.width, this.height);
             gl.clearColor(0.0,0.0,0.0,0.0);
             gl.enable(gl.BLEND);
             //gl.enable(gl.CULL_FACE);
             gl.activeTexture(gl.TEXTURE0);
             gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, 1);
+
+            t.MainCommand.getInstance();
         }
 
         private startTick():void {
@@ -164,5 +172,7 @@ module webgl {
         public static $webgl:WebGLRenderingContext;
         public static $bitmapProgram:BitmapProgram;
         public static $rectShapeProgram:RectShapeProgram;
+        //HTML 的 CanvasRenderingContext2D
+        public static $shareContext2D:any;
     }
 }

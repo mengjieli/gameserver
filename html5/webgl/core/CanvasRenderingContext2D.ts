@@ -188,6 +188,45 @@ module webgl {
             }
         }
 
+        private _fillStyle:string = "#000000";
+        public get fillStyle():string {
+            return this._fillStyle;
+        }
+
+        public set fillStyle(val:string) {
+            this._fillStyle = val;
+        }
+
+        private _font:string = "10px sans-serif";
+        public get font():string {
+            return this._font;
+        }
+
+        public set font(val:string) {
+            this._font = val;
+        }
+
+        private _textAlign:string = "start";
+        public get textAlign():string {
+            return this._textAlign;
+        }
+
+        public set textAlign(val:string) {
+            this._textAlign = val;
+        }
+
+        private _textBaseline:string = "alphabetic";
+        public get textBaseline():string {
+            return this._textBaseline;
+        }
+
+        public set textBaseline(val:string) {
+            this._textBaseline = val;
+        }
+
+        public fillText(text:string,x:number,y:number,maxWidth?:number):void {
+
+        }
         //////////////////////////更多的 API 支持//////////////////////////////
         /**
          * 清空 canvas 内容，比调用 clearRect 要快
@@ -215,6 +254,10 @@ module webgl {
             gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, <any>image);
             gl.bindTexture(gl.TEXTURE_2D, null);
             return texture;
+        }
+
+        public static createTextTexture(text:string,style:{fillStyle?:string;font?:string;textAlign?:string;textBaseline?:string;lineSpacing?:number},maxWidth?:number) {
+
         }
 
         private static createRenderTexture(width:number, height:number):WebGLTexture {

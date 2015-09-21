@@ -57,6 +57,10 @@ var files = [
     "webgl/core/Canvas.ts",
     "webgl/core/Stage.ts",
 
+    "webgl/commands/Command.ts",
+    "webgl/commands/ExtendCommand.ts",
+    "webgl/commands/MainCommand.ts",
+
     "testproj/utils/ImageLoader.ts",
     "testproj/MoveBitmap.ts",
 

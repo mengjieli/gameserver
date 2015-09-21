@@ -37,8 +37,8 @@ module game {
                 this.x = 0;
                 this.vx = this.maxvx;
             }
-            else if (this.x > this.maxWidth) {
-                this.x = this.maxWidth;
+            else if (this.x > this.maxWidth - this.texture.width) {
+                this.x = this.maxWidth - this.texture.width;
                 this.vx = -this.maxvx;
             }
             this.matrix.tx = this.x;
