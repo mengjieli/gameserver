@@ -4,6 +4,8 @@ module webgl {
         private gl:WebGLRenderingContext;
         private children:Canvas[] = [];
         private tasks:BitmapTask[] = [];
+        private topChildren:Canvas[] = [];
+        private topTasks:BitmapTask[] = [];
         private runFlag:boolean = true;
         private _width:number;
         private _height:number;
@@ -76,6 +78,12 @@ module webgl {
                             break;
                         }
                     }
+                    for(var s = 0; s < _this.topChildren.length; s++) {
+                        if(_this.topChildren[s].$context2d && _this.topChildren[s].$context2d.$clearScreen == false) {
+                            Stage.$renderBuffer = true;
+                            break;
+                        }
+                    }
                     _this.preRender();
                     if(Stage.$renderBuffer) {
                         _this.$render();
@@ -113,11 +121,49 @@ module webgl {
             }
         }
 
+        public $addTopCanvasAt(canvas:Canvas, index:number = -1) {
+            var gl = this.gl;
+            if (index == -1) {
+                index = this.topChildren.length;
+            }
+            this.topChildren.splice(index, 0, canvas);
+            if (canvas.$context2d == null) {
+                this.topTasks.splice(index, 0, null);
+            } else {
+                this.topTasks.splice(index, 0, new BitmapTask(Stage.$bitmapProgram, canvas.$context2d.$texture, {
+                    a: 1,
+                    b: 0,
+                    c: 0,
+                    d: -1,
+                    tx: 0,
+                    ty: canvas.height
+                }, 1.0, gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA));
+            }
+            canvas.$stage = this;
+            if(this.topChildren.length == 0) {
+                FPSCount.getInstance();
+            }
+        }
+
         $setCanvasTask(canvas:Canvas):void {
             for (var i = 0; i < this.children.length; i++) {
                 if (this.children[i] == canvas) {
                     var gl = this.gl;
                     this.tasks[i] = new BitmapTask(Stage.$bitmapProgram, canvas.$context2d.$texture, {
+                        a: 1,
+                        b: 0,
+                        c: 0,
+                        d: -1,
+                        tx: 0,
+                        ty: canvas.height
+                    }, 1.0, gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+                    break;
+                }
+            }
+            for (var i = 0; i < this.topChildren.length; i++) {
+                if (this.topChildren[i] == canvas) {
+                    var gl = this.gl;
+                    this.topTasks[i] = new BitmapTask(Stage.$bitmapProgram, canvas.$context2d.$texture, {
                         a: 1,
                         b: 0,
                         c: 0,
@@ -141,6 +187,17 @@ module webgl {
             }
         }
 
+        public $removeTopCanvas(canvas:Canvas):void {
+            for (var i = 0; i < this.topChildren.length; i++) {
+                if (this.topChildren[i] == canvas) {
+                    canvas.$stage = null;
+                    this.topChildren.splice(i, 1);
+                    this.topTasks.splice(i, 1);
+                    break;
+                }
+            }
+        }
+
         //public set clearColor(color:number) {
         //    this.gl.clearColor(color>>16, color>>8|0XFF, color|0XFF, 1.0);
         //}
@@ -153,6 +210,13 @@ module webgl {
 
         private preRender():void {
             var children = this.children;
+            for (var i = 0; i < children.length; i++) {
+                if (!children[i].$context2d) {
+                    continue;
+                }
+                children[i].$context2d.$render();
+            }
+            children = this.topChildren;
             for (var i = 0; i < children.length; i++) {
                 if (!children[i].$context2d) {
                     continue;
@@ -179,6 +243,13 @@ module webgl {
                     continue;
                 }
                 program.addTask(this.tasks[i]);
+            }
+            children = this.topChildren;
+            for (var i = 0; i < this.topTasks.length; i++) {
+                if (!children[i].$context2d) {
+                    continue;
+                }
+                program.addTask(this.topTasks[i]);
             }
             program.render();
         }
