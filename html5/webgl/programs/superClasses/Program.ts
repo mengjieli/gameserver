@@ -16,8 +16,17 @@ module webgl {
 
         }
 
+        protected _offY:number = 0;
+        public set offY(val:number) {
+            this._offY = val;
+        }
+
         public render():void {
 
+        }
+
+        public get drawCount():number {
+            return 0;
         }
 
         /**

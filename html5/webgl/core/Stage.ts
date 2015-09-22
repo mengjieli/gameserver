@@ -5,8 +5,8 @@ module webgl {
         private children:Canvas[] = [];
         private tasks:BitmapTask[] = [];
         private runFlag:boolean = true;
-        private width:number;
-        private height:number;
+        private _width:number;
+        private _height:number;
 
         constructor(gl:WebGLRenderingContext, width:number, height:number) {
             if (Stage.instance) {
@@ -14,25 +14,33 @@ module webgl {
             }
             Stage.instance = this;
             this.gl = gl;
-            this.width = width;
-            this.height = height;
+            this._width = width;
+            this._height = height;
             this.init();
             this.startTick();
+        }
+
+        public get width():number {
+            return this._width;
+        }
+
+        public get height():number {
+            return this._height;
         }
 
         private init():void {
             var gl = this.gl;
             Stage.$webgl = gl;
-            Stage.$bitmapProgram = new BitmapProgram(gl, this.width, this.height);
-            Stage.$rectShapeProgram = new RectShapeProgram(gl, this.width, this.height);
-            if(!Stage.$shareContext2D) {
+            Stage.$bitmapProgram = new BitmapProgram(gl, this._width, this._height);
+            Stage.$rectShapeProgram = new RectShapeProgram(gl, this._width, this._height);
+            if (!Stage.$shareContext2D) {
                 var canvas = document.createElement("canvas");
-                canvas.width = this.width;
-                canvas.height = this.height;
+                canvas.width = this._width;
+                canvas.height = this._height;
                 Stage.$shareContext2D = canvas.getContext("2d");
             }
-            gl.viewport(0, 0, this.width, this.height);
-            gl.clearColor(0.0,0.0,0.0,0.0);
+            gl.viewport(0, 0, this._width, this._height);
+            gl.clearColor(0.0, 0.0, 0.0, 0.0);
             gl.enable(gl.BLEND);
             //gl.enable(gl.CULL_FACE);
             gl.activeTexture(gl.TEXTURE0);
@@ -60,8 +68,20 @@ module webgl {
             function onTick():void {
                 if (_this.runFlag) {
                     var time:number = (new Date()).getTime();
+                    Stage.$count = Stage.$draw = 0;
+                    Stage.$renderBuffer = false;
+                    for(var s = 0; s < _this.children.length; s++) {
+                        if(_this.children[s].$context2d && _this.children[s].$context2d.$clearScreen == false) {
+                            Stage.$renderBuffer = true;
+                            break;
+                        }
+                    }
                     _this.preRender();
-                    _this.$render();
+                    if(Stage.$renderBuffer) {
+                        _this.$render();
+                    }
+                    FPSCount.getInstance().setRenderCount(Stage.$count);
+                    FPSCount.getInstance().setRenderDraw(Stage.$draw);
                     FPSCount.useTime((new Date()).getTime() - time);
                     FPSCount.addCount();
                 }
@@ -84,15 +104,18 @@ module webgl {
                     c: 0,
                     d: -1,
                     tx: 0,
-                    ty: this.height
+                    ty: canvas.height
                 }, 1.0, gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA));
             }
             canvas.$stage = this;
+            if(this.children.length == 0) {
+                FPSCount.getInstance();
+            }
         }
 
         $setCanvasTask(canvas:Canvas):void {
-            for(var i = 0; i < this.children.length; i++) {
-                if(this.children[i] == canvas) {
+            for (var i = 0; i < this.children.length; i++) {
+                if (this.children[i] == canvas) {
                     var gl = this.gl;
                     this.tasks[i] = new BitmapTask(Stage.$bitmapProgram, canvas.$context2d.$texture, {
                         a: 1,
@@ -100,7 +123,7 @@ module webgl {
                         c: 0,
                         d: -1,
                         tx: 0,
-                        ty: this.height
+                        ty: canvas.height
                     }, 1.0, gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
                     break;
                 }
@@ -145,10 +168,11 @@ module webgl {
             this._dirty = false;
             var gl = this.gl;
             gl.bindFramebuffer(gl.FRAMEBUFFER, null);
-            gl.clearColor(0.0,0.0,1.0,1.0);
+            gl.clearColor(1.0, 0.95, 0.95, 1.0);
             gl.clear(gl.COLOR_BUFFER_BIT);
             var program = Stage.$bitmapProgram;
             program.reset();
+            program.offY = 0;
             var children = this.children;
             for (var i = 0; i < this.tasks.length; i++) {
                 if (!children[i].$context2d) {
@@ -168,6 +192,11 @@ module webgl {
         public static create(gl:WebGLRenderingContext, width:number, height:number):void {
             new Stage(gl, width, height);
         }
+
+        public static $renderBuffer = false;
+
+        public static $count:number = 0;
+        public static $draw:number = 0;
 
         public static $webgl:WebGLRenderingContext;
         public static $bitmapProgram:BitmapProgram;

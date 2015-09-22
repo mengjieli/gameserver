@@ -98,6 +98,10 @@ module webgl {
         private blendSFactors = [];
         private blendDFactors = [];
 
+        public get drawCount():number {
+            return this.count.length;
+        }
+
         public reset():void {
             var _this = this;
             _this.textures = [];
@@ -128,25 +132,26 @@ module webgl {
             var index = this.count[this.count.length - 1] * 24;
             var positionData = this.positionData[this.positionData.length - 1];
 
+            //matrix.ty += this._offY;
             positionData[index] = matrix.tx;
-            positionData[1 + index] = matrix.ty + texture.height * matrix.d;
-            positionData[2 + index] = 0.0;
-            positionData[3 + index] = 1.0;
+            positionData[1 + index] = matrix.ty + texture.sourceHeight * matrix.d;
+            positionData[2 + index] = texture.startX;
+            positionData[3 + index] = texture.endY;
 
             positionData[16 + index] = positionData[4 + index] = matrix.tx;
             positionData[17 + index] = positionData[5 + index] = matrix.ty;
-            positionData[18 + index] = positionData[6 + index] = 0.0;
-            positionData[19 + index] = positionData[7 + index] = 0.0;
+            positionData[18 + index] = positionData[6 + index] = texture.startX;
+            positionData[19 + index] = positionData[7 + index] = texture.startY;
 
-            positionData[12 + index] = positionData[8 + index] = matrix.tx + texture.width * matrix.a;
-            positionData[13 + index] = positionData[9 + index] = matrix.ty + texture.height * matrix.d;
-            positionData[14 + index] = positionData[10 + index] = 1.0;
-            positionData[15 + index] = positionData[11 + index] = 1.0;
+            positionData[12 + index] = positionData[8 + index] = matrix.tx + texture.sourceWidth * matrix.a;
+            positionData[13 + index] = positionData[9 + index] = matrix.ty + texture.sourceHeight * matrix.d;
+            positionData[14 + index] = positionData[10 + index] = texture.endX;
+            positionData[15 + index] = positionData[11 + index] = texture.endY;
 
-            positionData[20 + index] = matrix.tx + texture.width * matrix.a;
+            positionData[20 + index] = matrix.tx + texture.sourceWidth * matrix.a;
             positionData[21 + index] = matrix.ty;
-            positionData[22 + index] = 1.0;
-            positionData[23 + index] = 0.0;
+            positionData[22 + index] = texture.endX;
+            positionData[23 + index] = texture.startY;
 
             this.count[this.count.length - 1]++;
         }
@@ -158,6 +163,23 @@ module webgl {
             gl.bindBuffer(gl.ARRAY_BUFFER, this.buffer);
             gl.vertexAttribPointer(_this.a_Position, 2, gl.FLOAT, false, $size * 4, 0);
             gl.vertexAttribPointer(_this.a_TexCoord, 2, gl.FLOAT, false, $size * 4, $size * 2);
+            if(Stage.$renderBuffer && this._offY) {
+                var positionData = this.positionData;
+                var pdata;
+                var index = 0;
+                for(var p = 0,plen = positionData.length; p < plen; p++) {
+                    pdata = positionData[p];
+                    for (var q = 0,qlen = pdata.length/24; q < qlen; q++) {
+                        index = q*24;
+                        pdata[index + 1] += this._offY;
+                        pdata[index + 5] += this._offY;
+                        pdata[index + 9] += this._offY;
+                        pdata[index + 13] += this._offY;
+                        pdata[index + 17] += this._offY;
+                        pdata[index + 21] += this._offY;
+                    }
+                }
+            }
             for (var i = 0, len = _this.textures.length; i < len; i++) {
                 gl.blendFunc(_this.blendSFactors[i], _this.blendDFactors[i]);
                 gl.bindTexture(gl.TEXTURE_2D, _this.textures[i]);

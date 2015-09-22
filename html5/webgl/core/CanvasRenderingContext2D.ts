@@ -39,7 +39,7 @@ module webgl {
                 return;
             }
             this.frameBuffer = gl.createFramebuffer();
-            var texture = CanvasRenderingContext2D.createRenderTexture(this._width,this._height);
+            var texture = CanvasRenderingContext2D.createRenderTexture(this._width, this._height);
             this.frameTexture = new Texture(texture, this._width, this._height);
             gl.bindFramebuffer(gl.FRAMEBUFFER, this.frameBuffer);
             gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, texture, 0);
@@ -60,6 +60,7 @@ module webgl {
             this.gl = null;
             this._width = 0;
             this._height = 0;
+            this.offY = 0;
         }
 
         /**
@@ -68,6 +69,13 @@ module webgl {
         public get canvas():Canvas {
             return this._canvas;
         }
+
+        private _inDraw:boolean = true;
+        public set inDraw(val:boolean) {
+            this._inDraw = !!val;
+        }
+
+        private offY = 0;
 
         public set canvas(canvas:Canvas) {
             if (this._canvas == canvas) {
@@ -80,6 +88,7 @@ module webgl {
             }
             this._width = canvas.width;
             this._height = canvas.height;
+            this.offY = Stage.getInstance().height - this._height;
             this.gl = Stage.$webgl;
             this.init();
         }
@@ -89,11 +98,15 @@ module webgl {
         public set $width(val:number) {
             this._width = +val | 0;
         }
-
         private _height:number;
 
         public set $height(val:number) {
             this._height = +val | 0;
+        }
+
+        private _clearScreen:boolean = false;
+        public get $clearScreen():boolean {
+            return this._clearScreen;
         }
 
         public get $texture():Texture {
@@ -124,6 +137,7 @@ module webgl {
             }
         }
 
+        private noDrawTaskLength:number = 0;
         public $render():void {
             var gl = this.gl;
             var tasks = this.tasks;
@@ -132,31 +146,49 @@ module webgl {
             if (!tasks.length) {
                 return;
             }
-            gl.bindFramebuffer(gl.FRAMEBUFFER, this.frameBuffer);
+            if(this._inDraw) {
+                Stage.$count += tasks.length - this.noDrawTaskLength;
+            }
+            TextAtlas.$checkUpdate();
+            if(Stage.$renderBuffer) {
+                gl.bindFramebuffer(gl.FRAMEBUFFER, this.frameBuffer);
+            } else {
+                gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+            }
             tasks.reverse();
             while (tasks.length) {
                 task = tasks.pop();
-                if(task instanceof ClearTask) {
+                if (task instanceof ClearTask) {
                     task.render();
                     continue;
                 }
                 if (!program) {
                     program = task.program;
                     program.reset();
+                    program.offY = this.offY;
                 }
                 if (program != task.program) {
+                    if(this._inDraw) {
+                        Stage.$draw += program.drawCount;
+                    }
                     program.render();
                     program = task.program;
                     program.reset();
+                    program.offY = this.offY;
                 }
                 program.addTask(task);
             }
             if (program) {
+                if(this._inDraw) {
+                    Stage.$draw += program.drawCount;
+                }
                 program.render();
             }
             while (this.deleteTextures.length) {
                 this.deleteTextures.pop().dispose();
             }
+            this.noDrawTaskLength = 0;
+            this._clearScreen = false;
             Stage.getInstance().$setDirty();
         }
 
@@ -170,6 +202,10 @@ module webgl {
         }
 
         public clearRect(x:number, y:number, width:number, height:number):void {
+            if(x <= 0 && y <= 0 && x + width >= this._width && y + height >= this._height) {
+                this.clearAll();
+                return;
+            }
             var gl = this.gl;
             var task = new RectShapeTask(Stage.$rectShapeProgram, width, height, {
                 a: 1,
@@ -224,15 +260,37 @@ module webgl {
             this._textBaseline = val;
         }
 
-        public fillText(text:string,x:number,y:number,maxWidth?:number):void {
-
+        public fillText(text:string, x:number, y:number, maxWidth?:number):void {
+            maxWidth = +maxWidth | 0;
+            var size = parseInt(this._font.slice(0,this._font.search("px")));
+            var family = this._font.slice(this._font.search("px")+3,this._font.length);
+            var bold = this._font.indexOf("");
+            var startX = x;
+            var startY = y;
+            for (var i = 0; i < text.length; i++) {
+                if(text.charCodeAt(i) == 10) {
+                    startX = x;
+                    startY += atlas.height;
+                    continue;
+                }
+                var atlas = TextAtlas.getChar(this._fillStyle,family,size,this._font.search("bold")>=0?true:false,this._font.search("italic")>=0?true:false,text.charAt(i));
+                if(maxWidth && startX + atlas.width > maxWidth) {
+                    startX = x;
+                    startY += atlas.height;
+                }
+                this.drawTexture(atlas.texture,{a:1,b:0,c:0,d:1,tx:startX,ty:startY});
+                startX += atlas.width;
+            }
         }
+
         //////////////////////////更多的 API 支持//////////////////////////////
         /**
          * 清空 canvas 内容，比调用 clearRect 要快
          */
         public clearAll():void {
             this.tasks.push(ClearTask.getInstance());
+            this.noDrawTaskLength++;
+            this._clearScreen = true;
         }
 
         public get width():number {
@@ -256,11 +314,14 @@ module webgl {
             return texture;
         }
 
-        public static createTextTexture(text:string,style:{fillStyle?:string;font?:string;textAlign?:string;textBaseline?:string;lineSpacing?:number},maxWidth?:number) {
-
+        public static updateTexture(texture:WebGLTexture, image:HTMLImageElement|HTMLCanvasElement|HTMLVideoElement|ImageData):void {
+            var gl = Stage.$webgl;
+            gl.bindTexture(gl.TEXTURE_2D, texture);
+            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, <any>image);
+            gl.bindTexture(gl.TEXTURE_2D, null);
         }
 
-        private static createRenderTexture(width:number, height:number):WebGLTexture {
+        public static createRenderTexture(width:number, height:number):WebGLTexture {
             var gl = Stage.$webgl;
             var texture = gl.createTexture();
             gl.bindTexture(gl.TEXTURE_2D, texture);

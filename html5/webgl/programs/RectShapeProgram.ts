@@ -122,6 +122,23 @@ module webgl {
         public render():void {
             var gl = Stage.$webgl;
             var _this = this;
+            if(Stage.$renderBuffer && this._offY) {
+                var positionData = this.positionData;
+                var pdata;
+                var index = 0;
+                for(var p = 0,plen = positionData.length; p < plen; p++) {
+                    pdata = positionData[p];
+                    for (var q = 0,qlen = pdata.length/24; q < qlen; q++) {
+                        index = q*24;
+                        pdata[index + 1] += this._offY;
+                        pdata[index + 3] += this._offY;
+                        pdata[index + 5] += this._offY;
+                        pdata[index + 7] += this._offY;
+                        pdata[index + 9] += this._offY;
+                        pdata[index + 11] += this._offY;
+                    }
+                }
+            }
             gl.useProgram(_this.program);
             gl.bindBuffer(gl.ARRAY_BUFFER, _this.buffer);
             gl.vertexAttribPointer(this.a_Position, 2, gl.FLOAT, false, $size * 2, 0);

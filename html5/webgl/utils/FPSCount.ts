@@ -2,27 +2,42 @@ module webgl {
     export class FPSCount {
 
         private renderCount:number = 0;
+        private renderDraw:number = 0;
         private fps:number = 0;
+        private canvas:Canvas;
+        private timeUsed:number = 0;
+        private width = 150;
+        private height = 100;
 
         constructor() {
-            //super();
-            //this.fontSize = 20;
-            //this.$height = 50;
+            var canvas = new Canvas(this.width,this.height);
+            Stage.getInstance().addCanvasAt(canvas);
+            canvas.getContext("2d");
+            canvas.$context2d.inDraw = false;
+            this.canvas = canvas;
         }
 
-        private resetText():void {
-            //this.text = "fps : " + this.fps + "\n" +
-            //        "r : " + this.renderCount;
+        public render():void {
+            this.canvas.$context2d.clearAll();
+            this.canvas.$context2d.fillStyle = "#000000";
+            this.canvas.$context2d.font = "20px sans-serif";
+            this.canvas.$context2d.fillText("fps : " + this.fps + ", " + this.timeUsed + "\n" + "draw : " + this.renderCount + ", " + this.renderDraw,0,0);
         }
 
-        public setRenderInfo(count:number):void {
+        public setRenderCount(count:number):void {
             this.renderCount = count;
-            this.resetText();
+        }
+
+        public setRenderDraw(draw:number):void {
+            this.renderDraw = draw;
         }
 
         public setFps(fps:number):void {
             this.fps = fps;
-            this.resetText();
+        }
+
+        public setTimeUsed(val:number):void {
+            this.timeUsed = val;
         }
 
         private static instance:FPSCount;
@@ -50,8 +65,10 @@ module webgl {
                 FPSCount.lastTime = t;
                 //console.log("fps:", Math.round(fps), "time:", FPSCount.timeUsed);
                 FPSCount.getInstance().setFps(Math.round(fps));
+                FPSCount.getInstance().setTimeUsed(FPSCount.timeUsed);
                 FPSCount.timeUsed = 0;
             }
+            FPSCount.getInstance().render();
         }
     }
 }

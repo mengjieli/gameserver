@@ -31,11 +31,18 @@ module game {
         }
 
         private loadImageComplete(images:HTMLImageElement[]):void {
+            var texture = new webgl.Texture(webgl.CanvasRenderingContext2D.createTexture(images[1]),images[1].width,images[1].height,64,64,128,128);
+
+            //this.context2d.drawTexture(texture,{a:1,b:0,c:0,d:1,tx:100,ty:100});
+            //this.context2d.fillStyle = "#ffffff";
+            //this.context2d.font = "50px sans-serif";
+            //this.context2d.fillText("01",0,0,100);
             //this.context2d.drawImage(images[0], 100, 200);
             //this.context2d.drawImage(images[1], 200, 300);
+
             var t1 = new webgl.Texture(webgl.CanvasRenderingContext2D.createTexture(images[0]),images[0].width,images[0].height);
             var t2 = new webgl.Texture(webgl.CanvasRenderingContext2D.createTexture(images[1]),images[1].width,images[1].height);
-            var loop = 1;
+            var loop = 550;
             for(var i = 0; i < loop; i++) {
                 new MoveBitmap(t1,this.context2d);
                 new MoveBitmap(t1,this.context2d);

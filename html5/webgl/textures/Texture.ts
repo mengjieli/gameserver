@@ -16,6 +16,10 @@ module webgl {
             if (!this._sourceHeight) {
                 this._sourceHeight = this._height;
             }
+            this._startX = this._sourceX/this._width;
+            this._startY = this._sourceY/this._height;
+            this._endX = (this._sourceX + this._sourceWidth)/this._width;
+            this._endY = (this._sourceY + this._sourceHeight)/this._height;
         }
 
         private _texture:WebGLTexture;
@@ -81,9 +85,31 @@ module webgl {
             this._sourceHeight = +val | 0;
         }
 
+        private _startX:number;
+        public get startX():number {
+            return this._startX;
+        }
+
+        private _startY:number;
+        public get startY():number {
+            return this._startY;
+        }
+
+        private _endX:number;
+        public get endX():number {
+            return this._endX;
+        }
+
+        private _endY:number;
+        public get endY():number {
+            return this._endY;
+        }
+
         public dispose():void {
             Stage.$webgl.deleteTexture(this._texture);
             this._texture = null;
         }
+
+
     }
 }
