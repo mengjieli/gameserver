@@ -98,6 +98,7 @@ module webgl {
         public set $width(val:number) {
             this._width = +val | 0;
         }
+
         private _height:number;
 
         public set $height(val:number) {
@@ -105,6 +106,7 @@ module webgl {
         }
 
         private _clearScreen:boolean = false;
+
         public get $clearScreen():boolean {
             return this._clearScreen;
         }
@@ -126,18 +128,8 @@ module webgl {
 
         private tasks:RenderTask[] = [];
 
-        public drawTexture(texture:Texture, matrix:{a:number;b:number;c:number;d:number;tx:number;ty:number}):void {
-            var gl = this.gl;
-            this.tasks.push(new BitmapTask(this.bitmapProgram, texture, matrix, this._globalAlpha, gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA));
-            if (this.realTime) {
-                this.$render();
-                if (this.$addedToStage) {
-                    Stage.getInstance().$render();
-                }
-            }
-        }
-
         private noDrawTaskLength:number = 0;
+
         public $render():void {
             var gl = this.gl;
             var tasks = this.tasks;
@@ -146,11 +138,11 @@ module webgl {
             if (!tasks.length) {
                 return;
             }
-            if(this._inDraw) {
+            if (this._inDraw) {
                 Stage.$count += tasks.length - this.noDrawTaskLength;
             }
             TextAtlas.$checkUpdate();
-            if(Stage.$renderBuffer) {
+            if (Stage.$renderBuffer) {
                 gl.bindFramebuffer(gl.FRAMEBUFFER, this.frameBuffer);
             } else {
                 gl.bindFramebuffer(gl.FRAMEBUFFER, null);
@@ -168,7 +160,7 @@ module webgl {
                     program.offY = this.offY;
                 }
                 if (program != task.program) {
-                    if(this._inDraw) {
+                    if (this._inDraw) {
                         Stage.$draw += program.drawCount;
                     }
                     program.render();
@@ -179,7 +171,7 @@ module webgl {
                 program.addTask(task);
             }
             if (program) {
-                if(this._inDraw) {
+                if (this._inDraw) {
                     Stage.$draw += program.drawCount;
                 }
                 program.render();
@@ -202,7 +194,7 @@ module webgl {
         }
 
         public clearRect(x:number, y:number, width:number, height:number):void {
-            if(x <= 0 && y <= 0 && x + width >= this._width && y + height >= this._height) {
+            if (x <= 0 && y <= 0 && x + width >= this._width && y + height >= this._height) {
                 this.clearAll();
                 return;
             }
@@ -214,7 +206,7 @@ module webgl {
                 d: 1,
                 tx: x,
                 ty: y
-            }, 0x00000000, gl.SRC_ALPHA, gl.ZERO);
+            }, 0xffff0000, BlendMode.OVERRIDE);
             this.tasks.push(task);
             if (this.realTime) {
                 this.$render();
@@ -261,32 +253,91 @@ module webgl {
         }
 
         public fillText(text:string, x:number, y:number, maxWidth?:number):void {
-            maxWidth = +maxWidth | 0;
-            var size = parseInt(this._font.slice(0,this._font.search("px")));
-            var family = this._font.slice(this._font.search("px")+3,this._font.length);
-            var bold = this._font.indexOf("");
-            var startX = x;
-            var startY = y;
-            for (var i = 0; i < text.length; i++) {
-                if(text.charCodeAt(i) == 10) {
-                    startX = x;
-                    startY += atlas.height;
-                    continue;
-                }
-                var atlas = TextAtlas.getChar(this._fillStyle,family,size,this._font.search("bold")>=0?true:false,this._font.search("italic")>=0?true:false,text.charAt(i));
-                if(maxWidth && startX + atlas.width > maxWidth) {
-                    startX = x;
-                    startY += atlas.height;
-                }
-                this.drawTexture(atlas.texture,{a:1,b:0,c:0,d:1,tx:startX,ty:startY});
-                startX += atlas.width;
-            }
+            this.fillTextMatrix(text, {a: 1, b: 0, c: 0, d: 1, tx: x, ty: y}, maxWidth);
         }
 
         //////////////////////////更多的 API 支持//////////////////////////////
+        private _blendMode:number = 0;
+        public get blendMode():number {
+            return this._blendMode;
+        }
+
+        public set blendMode(val:number) {
+            this._blendMode = +val | 0;
+        }
+
         /**
          * 清空 canvas 内容，比调用 clearRect 要快
          */
+        public drawTexture(texture:Texture, matrix:{a:number;b:number;c:number;d:number;tx:number;ty:number}):void {
+            var gl = this.gl;
+            this.tasks.push(new BitmapTask(this.bitmapProgram, texture, matrix, this._globalAlpha, this._blendMode));
+            if (this.realTime) {
+                this.$render();
+                if (this.$addedToStage) {
+                    Stage.getInstance().$render();
+                }
+            }
+        }
+
+        public fillTextMatrix(text:string, matrix:{a:number;b:number;c:number;d:number;tx:number;ty:number}, maxWidth?:number):void {
+            maxWidth = +maxWidth | 0;
+            var size = parseInt(this._font.slice(0, this._font.search("px")));
+            var realSize = Math.ceil(size * Math.sqrt(matrix.b * matrix.b + matrix.d * matrix.d));
+            var fontScale = realSize / size;
+            matrix.a /= fontScale;
+            matrix.d /= fontScale;
+            matrix.b /= fontScale;
+            matrix.c /= fontScale;
+            var family = this._font.slice(this._font.search("px") + 3, this._font.length);
+            var bold = this._font.indexOf("");
+            var startX = 0;
+            var startY = 0;
+            var textWidth = 0;
+            var textHeight = 0;
+            var textures = [];
+            var matrixs = [];
+            for (var i = 0; i < text.length; i++) {
+                if (text.charCodeAt(i) == 10) {
+                    startX = 0;
+                    startY += atlas.height;
+                    continue;
+                }
+                var atlas = TextAtlas.getChar(this._fillStyle, family, realSize, this._font.search("bold") >= 0 ? true : false, this._font.search("italic") >= 0 ? true : false, text.charAt(i));
+                if (maxWidth && startX + atlas.width > maxWidth) {
+                    startX = 0;
+                    startY += atlas.height;
+                }
+                textures.push(atlas.texture);
+                matrixs.push({
+                    a: matrix.a,
+                    b: matrix.b,
+                    c: matrix.c,
+                    d: matrix.d,
+                    tx: matrix.a * startX + matrix.b * startY + matrix.tx,
+                    ty: matrix.c * startX + matrix.d * startY + matrix.ty
+                });
+                startX += atlas.width;
+                if (textWidth < startX) {
+                    textWidth = startX;
+                }
+            }
+            textHeight = startY + atlas.height;
+            for (i = 0; i < textures.length; i++) {
+                if(this._textAlign == "center") {
+                    matrixs[i].tx -= textWidth/2;
+                } else if(this._textAlign == "right" || this._textAlign == "end") {
+                    matrixs[i].tx -= textWidth;
+                }
+                if(this._textBaseline == "middle") {
+                    matrixs[i].ty -= textHeight/2;
+                } else if(this._textBaseline == "alphabetic") {
+                    matrixs[i].ty -= textHeight;
+                }
+                this.drawTexture(textures[i], matrixs[i]);
+            }
+        }
+
         public clearAll():void {
             this.tasks.push(ClearTask.getInstance());
             this.noDrawTaskLength++;
@@ -317,6 +368,10 @@ module webgl {
         public static updateTexture(texture:WebGLTexture, image:HTMLImageElement|HTMLCanvasElement|HTMLVideoElement|ImageData):void {
             var gl = Stage.$webgl;
             gl.bindTexture(gl.TEXTURE_2D, texture);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
             gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, <any>image);
             gl.bindTexture(gl.TEXTURE_2D, null);
         }
@@ -325,11 +380,11 @@ module webgl {
             var gl = Stage.$webgl;
             var texture = gl.createTexture();
             gl.bindTexture(gl.TEXTURE_2D, texture);
-            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, width, height, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, width, height, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
             return texture;
         }
     }

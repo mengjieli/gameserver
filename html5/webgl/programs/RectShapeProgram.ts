@@ -75,29 +75,25 @@ module webgl {
         private colors:number[] = [];
         private count = [];
         private positionData = [];
-        private blendSFactors = [];
-        private blendDFactors = [];
+        private blendMode = [];
 
         public reset():void {
             var _this = this;
             _this.colors = [];
             _this.count = [];
             _this.positionData = [];
-            _this.blendSFactors = [];
-            _this.blendDFactors = [];
+            _this.blendMode = [];
         }
 
         public addTask(task:RenderTask):void {
             var shapeTask:RectShapeTask = <any>task;
 
             if (!this.colors.length || this.colors[this.colors.length - 1] != shapeTask.fillColor ||
-                this.blendSFactors[this.blendSFactors.length - 1] != task.blendSFactor ||
-                this.blendDFactors[this.blendDFactors.length - 1] != task.blendDFactor) {
+                this.blendMode[this.blendMode.length - 1] != task.blendMode) {
                 this.colors.push(shapeTask.fillColor);
                 this.positionData.push([]);
                 this.count.push(0);
-                this.blendSFactors.push(task.blendSFactor);
-                this.blendDFactors.push(task.blendDFactor);
+                this.blendMode.push(task.blendMode);
             }
 
             var index = this.count[this.count.length - 1] * 12;
@@ -143,7 +139,7 @@ module webgl {
             gl.bindBuffer(gl.ARRAY_BUFFER, _this.buffer);
             gl.vertexAttribPointer(this.a_Position, 2, gl.FLOAT, false, $size * 2, 0);
             for (var i = 0, len = _this.colors.length; i < len; i++) {
-                gl.blendFunc(_this.blendSFactors[i], _this.blendDFactors[i]);
+                BlendMode.changeBlendMode(this.blendMode[i]);
                 var color = _this.colors[i];
                 gl.uniform4f(this.u_FragColor, color >>> 16 & 0xff, color >>> 8 & 0xff, color & 0xff, (color >>> 24) / 256);
                 gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(_this.positionData[i]), gl.STATIC_DRAW);

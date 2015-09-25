@@ -1,4 +1,5 @@
 document.write("<script src='bin-debug/webgl/utils/FPSCount.js'></script>");
+document.write("<script src='bin-debug/webgl/utils/BlendMode.js'></script>");
 document.write("<script src='bin-debug/webgl/textures/Texture.js'></script>");
 document.write("<script src='bin-debug/webgl/renderTasks/superClasses/RenderTask.js'></script>");
 document.write("<script src='bin-debug/webgl/renderTasks/BitmapTask.js'></script>");
@@ -16,5 +17,6 @@ document.write("<script src='bin-debug/webgl/commands/Command.js'></script>");
 document.write("<script src='bin-debug/webgl/commands/ExtendCommand.js'></script>");
 document.write("<script src='bin-debug/webgl/commands/MainCommand.js'></script>");
 document.write("<script src='bin-debug/testproj/utils/ImageLoader.js'></script>");
+document.write("<script src='bin-debug/testproj/geom/Matrix.js'></script>");
 document.write("<script src='bin-debug/testproj/MoveBitmap.js'></script>");
 document.write("<script src='bin-debug/testproj/Main.js'></script>");

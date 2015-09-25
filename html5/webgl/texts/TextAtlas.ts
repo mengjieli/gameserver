@@ -51,12 +51,15 @@ module webgl {
             this.canvas = document.createElement("canvas");
             this.canvas.width = this.canvas.height = this.size;
             this.context2d = this.canvas.getContext("2d");
+            this.context2d.clearRect(0,0,this.size,this.size);
+            this.context2d.scale(1,1);
             this.context2d.textAlign = "left";
             this.context2d.textBaseline = "top";
             this.context2d.font = (this._bold ? "bold " : "") + (this._italic ? "italic " : "") + this._fontSize + "px " + this._fontFamily;
             this.context2d.fillStyle = this._fontColor;
             this.texture = webgl.CanvasRenderingContext2D.createTexture(this.canvas);
             this.startX = this.startY = 0;
+            //document.body.appendChild(this.canvas);
         }
 
         private chars = {};
@@ -97,11 +100,10 @@ module webgl {
         private static updateList:TextAtlas[] = [];
 
         public static $checkUpdate():void {
-            while(TextAtlas.updateList.length) {
+            while (TextAtlas.updateList.length) {
                 TextAtlas.updateList.pop().update();
             }
         }
-
 
         private static atlases = {};
 

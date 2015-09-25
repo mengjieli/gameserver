@@ -2,8 +2,8 @@ module webgl {
 
     export class RectShapeTask extends RenderTask {
 
-        constructor(program:RectShapeProgram, width:number, height:number, matrix:{a:number;b:number;c:number;d:number;tx:number;ty:number}, fillColor:number,blendSFactor:number,blendDFactor:number) {
-            super(program,blendSFactor,blendDFactor);
+        constructor(program:RectShapeProgram, width:number, height:number, matrix:{a:number;b:number;c:number;d:number;tx:number;ty:number}, fillColor:number,blendMode:number) {
+            super(program,blendMode);
             this._width = width;
             this._height = height;
             this._matrix = matrix;

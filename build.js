@@ -41,6 +41,7 @@ var files = [
 
 
     "webgl/utils/FPSCount.ts",
+    "webgl/utils/BlendMode.ts",
 
     "webgl/textures/Texture.ts",
 
@@ -65,6 +66,7 @@ var files = [
     "webgl/commands/MainCommand.ts",
 
     "testproj/utils/ImageLoader.ts",
+    "testproj/geom/Matrix.ts",
     "testproj/MoveBitmap.ts",
 
     "testproj/Main.ts"

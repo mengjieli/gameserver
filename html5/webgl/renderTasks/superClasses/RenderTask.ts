@@ -1,10 +1,9 @@
 module webgl {
     export class RenderTask {
 
-        constructor(program:Program,blendSFactor?:number,blendDFactor?:number) {
+        constructor(program:Program,blendMode?:number) {
             this._program = program;
-            this._blendSFactor = blendSFactor;
-            this._blendDFactor = blendDFactor;
+            this._blendMode = +blendMode|0;
         }
 
         private _program:Program;
@@ -12,14 +11,9 @@ module webgl {
             return this._program;
         }
 
-        private _blendSFactor:number;
-        public get blendSFactor():number {
-            return this._blendSFactor;
-        }
-
-        private _blendDFactor:number;
-        public get blendDFactor():number {
-            return this._blendDFactor;
+        private _blendMode:number;
+        public get blendMode():number {
+            return this._blendMode;
         }
     }
 }

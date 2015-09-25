@@ -77,7 +77,7 @@ module game {
         private static bitmaps:MoveBitmap[] = [];
         private static context2d:webgl.CanvasRenderingContext2D;
         private static update():void {
-            MoveBitmap.context2d.clearAll();
+            MoveBitmap.context2d.clearRect(0,0,window.innerWidth,window.innerHeight);
             var bitmaps = MoveBitmap.bitmaps;
             for (var i = 0, len = bitmaps.length; i < bitmaps.length; i++) {
                 bitmaps[i].update();

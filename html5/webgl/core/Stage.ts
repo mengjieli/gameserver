@@ -42,8 +42,8 @@ module webgl {
                 Stage.$shareContext2D = canvas.getContext("2d");
             }
             gl.viewport(0, 0, this._width, this._height);
-            gl.clearColor(0.0, 0.0, 0.0, 0.0);
             gl.enable(gl.BLEND);
+            gl.blendColor(1.0, 1.0, 1.0, 1.0);
             //gl.enable(gl.CULL_FACE);
             gl.activeTexture(gl.TEXTURE0);
             gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, 1);
@@ -72,20 +72,21 @@ module webgl {
                     var time:number = (new Date()).getTime();
                     Stage.$count = Stage.$draw = 0;
                     Stage.$renderBuffer = false;
-                    for(var s = 0; s < _this.children.length; s++) {
-                        if(_this.children[s].$context2d && _this.children[s].$context2d.$clearScreen == false) {
+                    for (var s = 0; s < _this.children.length; s++) {
+                        if (_this.children[s].$context2d && _this.children[s].$context2d.$clearScreen == false) {
                             Stage.$renderBuffer = true;
                             break;
                         }
                     }
-                    for(var s = 0; s < _this.topChildren.length; s++) {
-                        if(_this.topChildren[s].$context2d && _this.topChildren[s].$context2d.$clearScreen == false) {
+                    for (var s = 0; s < _this.topChildren.length; s++) {
+                        if (_this.topChildren[s].$context2d && _this.topChildren[s].$context2d.$clearScreen == false) {
                             Stage.$renderBuffer = true;
                             break;
                         }
                     }
+                    //Stage.$renderBuffer = false;
                     _this.preRender();
-                    if(Stage.$renderBuffer) {
+                    if (Stage.$renderBuffer) {
                         _this.$render();
                     }
                     FPSCount.getInstance().setRenderCount(Stage.$count);
@@ -113,10 +114,10 @@ module webgl {
                     d: -1,
                     tx: 0,
                     ty: canvas.height
-                }, 1.0, gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA));
+                }, 1.0, BlendMode.NORMAL));
             }
             canvas.$stage = this;
-            if(this.children.length == 0) {
+            if (this.children.length == 0) {
                 FPSCount.getInstance();
             }
         }
@@ -137,10 +138,10 @@ module webgl {
                     d: -1,
                     tx: 0,
                     ty: canvas.height
-                }, 1.0, gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA));
+                }, 1.0, BlendMode.NORMAL));
             }
             canvas.$stage = this;
-            if(this.topChildren.length == 0) {
+            if (this.topChildren.length == 0) {
                 FPSCount.getInstance();
             }
         }
@@ -156,7 +157,7 @@ module webgl {
                         d: -1,
                         tx: 0,
                         ty: canvas.height
-                    }, 1.0, gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+                    }, 1.0, BlendMode.NORMAL);
                     break;
                 }
             }
@@ -170,7 +171,7 @@ module webgl {
                         d: -1,
                         tx: 0,
                         ty: canvas.height
-                    }, 1.0, gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+                    }, 1.0, BlendMode.NORMAL);
                     break;
                 }
             }
@@ -198,9 +199,9 @@ module webgl {
             }
         }
 
-        //public set clearColor(color:number) {
-        //    this.gl.clearColor(color>>16, color>>8|0XFF, color|0XFF, 1.0);
-        //}
+        public set clearColor(color:number) {
+            this.gl.clearColor(color >> 16, color >> 8 | 0XFF, color | 0XFF, 1.0);
+        }
 
         private _dirty:boolean = false;
 
@@ -232,7 +233,7 @@ module webgl {
             this._dirty = false;
             var gl = this.gl;
             gl.bindFramebuffer(gl.FRAMEBUFFER, null);
-            gl.clearColor(1.0, 0.95, 0.95, 1.0);
+            gl.clearColor(0.5, 0.0, 0.0, 1.0);
             gl.clear(gl.COLOR_BUFFER_BIT);
             var program = Stage.$bitmapProgram;
             program.reset();

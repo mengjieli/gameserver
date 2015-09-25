@@ -11,7 +11,7 @@ module webgl {
 
         constructor() {
             var canvas = new Canvas(this.width,this.height);
-            Stage.getInstance().addCanvasAt(canvas);
+            Stage.getInstance().$addTopCanvasAt(canvas);
             canvas.getContext("2d");
             canvas.$context2d.inDraw = false;
             this.canvas = canvas;
