@@ -4,6 +4,9 @@ module webgl {
      */
     export class BlendMode {
 
+        //重置混合模式
+        public static NONE:number = -1;
+
         //普通的混合
         public static NORMAL:number = 0;
 

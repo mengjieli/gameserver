@@ -6,6 +6,7 @@ module webgl {
         private buffer:WebGLBuffer;
         private a_Position:any;
         private a_TexCoord:any;
+        private a_Alpha:any;
         private u_PMatrix:any;
         private gl:WebGLRenderingContext;
 
@@ -21,12 +22,15 @@ module webgl {
             var vertexSource = `
              attribute vec2 a_TexCoord;
              attribute vec4 a_Position;
+             attribute float a_Alpha;
              uniform mat4 u_PMatrix;
              varying vec2 v_TexCoord;
+             varying float v_Alpha;
              void main(void)
              {
                 gl_Position = u_PMatrix*a_Position;
                 v_TexCoord = a_TexCoord;
+                v_Alpha = a_Alpha;
              }
              `;
 
@@ -34,10 +38,11 @@ module webgl {
             var fragmentSource = `
             precision mediump float;
              varying vec2 v_TexCoord;
+             varying float v_Alpha;
              uniform sampler2D u_Sampler;
              void main(void)
              {
-                gl_FragColor = texture2D(u_Sampler,v_TexCoord);
+                gl_FragColor = texture2D(u_Sampler,v_TexCoord)*v_Alpha;
              }
              `;
 
@@ -76,11 +81,15 @@ module webgl {
 
             this.a_Position = gl.getAttribLocation(program, "a_Position");
             gl.enableVertexAttribArray(this.a_Position);
-            gl.vertexAttribPointer(this.a_Position, 2, gl.FLOAT, false, $size * 4, 0);
+            gl.vertexAttribPointer(this.a_Position, 2, gl.FLOAT, false, $size * 5, 0);
 
             this.a_TexCoord = gl.getAttribLocation(program, "a_TexCoord");
             gl.enableVertexAttribArray(this.a_TexCoord);
-            gl.vertexAttribPointer(this.a_TexCoord, 2, gl.FLOAT, false, $size * 4, $size * 2);
+            gl.vertexAttribPointer(this.a_TexCoord, 2, gl.FLOAT, false, $size * 5, $size * 2);
+
+            this.a_Alpha = gl.getAttribLocation(program, "a_Alpha");
+            gl.enableVertexAttribArray(this.a_Alpha);
+            gl.vertexAttribPointer(this.a_Alpha, 1, gl.FLOAT, false, $size * 5, $size * 4);
 
             this.u_PMatrix = gl.getUniformLocation(program, "u_PMatrix");
             gl.uniformMatrix4fv(this.u_PMatrix, false, projectionMatrix);
@@ -120,7 +129,7 @@ module webgl {
                 this.blendMode.push(task.blendMode);
             }
 
-            var index = this.count[this.count.length - 1] * 24;
+            var index = this.count[this.count.length - 1] * 30;
             var positionData = this.positionData[this.positionData.length - 1];
             var width = texture.sourceWidth;
             var height = texture.sourceHeight;
@@ -130,21 +139,25 @@ module webgl {
             positionData[1 + index] = matrix.d * height + matrix.ty;
             positionData[2 + index] = texture.startX;
             positionData[3 + index] = texture.endY;
+            positionData[4 + index] = bitmapTask.alpha;
 
-            positionData[16 + index] = positionData[4 + index] = matrix.tx;
-            positionData[17 + index] = positionData[5 + index] = matrix.ty;
-            positionData[18 + index] = positionData[6 + index] = texture.startX;
-            positionData[19 + index] = positionData[7 + index] = texture.startY;
+            positionData[20 + index] = positionData[5 + index] = matrix.tx;
+            positionData[21 + index] = positionData[6 + index] = matrix.ty;
+            positionData[22 + index] = positionData[7 + index] = texture.startX;
+            positionData[23 + index] = positionData[8 + index] = texture.startY;
+            positionData[24 + index] = positionData[9 + index] = bitmapTask.alpha;
 
-            positionData[12 + index] = positionData[8 + index] = matrix.a * width + matrix.b * height + matrix.tx;
-            positionData[13 + index] = positionData[9 + index] = matrix.c * width + matrix.d * height + matrix.ty;
-            positionData[14 + index] = positionData[10 + index] = texture.endX;
-            positionData[15 + index] = positionData[11 + index] = texture.endY;
+            positionData[15 + index] = positionData[10 + index] = matrix.a * width + matrix.b * height + matrix.tx;
+            positionData[16 + index] = positionData[11 + index] = matrix.c * width + matrix.d * height + matrix.ty;
+            positionData[17 + index] = positionData[12 + index] = texture.endX;
+            positionData[18 + index] = positionData[13 + index] = texture.endY;
+            positionData[19 + index] = positionData[14 + index] = bitmapTask.alpha;
 
-            positionData[20 + index] = matrix.a * width + matrix.tx;
-            positionData[21 + index] = matrix.c * width + matrix.ty;
-            positionData[22 + index] = texture.endX;
-            positionData[23 + index] = texture.startY;
+            positionData[25 + index] = matrix.a * width + matrix.tx;
+            positionData[26 + index] = matrix.c * width + matrix.ty;
+            positionData[27 + index] = texture.endX;
+            positionData[28 + index] = texture.startY;
+            positionData[29 + index] = bitmapTask.alpha;
 
             this.count[this.count.length - 1]++;
         }
@@ -154,22 +167,23 @@ module webgl {
             var gl = _this.gl;
             gl.useProgram(_this.program);
             gl.bindBuffer(gl.ARRAY_BUFFER, this.buffer);
-            gl.vertexAttribPointer(_this.a_Position, 2, gl.FLOAT, false, $size * 4, 0);
-            gl.vertexAttribPointer(_this.a_TexCoord, 2, gl.FLOAT, false, $size * 4, $size * 2);
+            gl.vertexAttribPointer(_this.a_Position, 2, gl.FLOAT, false, $size * 5, 0);
+            gl.vertexAttribPointer(_this.a_TexCoord, 2, gl.FLOAT, false, $size * 5, $size * 2);
+            gl.vertexAttribPointer(_this.a_Alpha, 1, gl.FLOAT, false, $size * 5, $size * 4);
             if (Stage.$renderBuffer && this._offY) {
                 var positionData = this.positionData;
                 var pdata;
                 var index = 0;
                 for (var p = 0, plen = positionData.length; p < plen; p++) {
                     pdata = positionData[p];
-                    for (var q = 0, qlen = pdata.length / 24; q < qlen; q++) {
-                        index = q * 24;
+                    for (var q = 0, qlen = pdata.length / 30; q < qlen; q++) {
+                        index = q * 30;
                         pdata[index + 1] += this._offY;
-                        pdata[index + 5] += this._offY;
-                        pdata[index + 9] += this._offY;
-                        pdata[index + 13] += this._offY;
-                        pdata[index + 17] += this._offY;
+                        pdata[index + 6] += this._offY;
+                        pdata[index + 11] += this._offY;
+                        pdata[index + 16] += this._offY;
                         pdata[index + 21] += this._offY;
+                        pdata[index + 26] += this._offY;
                     }
                 }
             }

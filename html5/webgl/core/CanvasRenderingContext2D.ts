@@ -206,7 +206,7 @@ module webgl {
                 d: 1,
                 tx: x,
                 ty: y
-            }, 0xffff0000, BlendMode.OVERRIDE);
+            }, 0x00000000, BlendMode.OVERRIDE);
             this.tasks.push(task);
             if (this.realTime) {
                 this.$render();

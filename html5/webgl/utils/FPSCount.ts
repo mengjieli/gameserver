@@ -18,8 +18,9 @@ module webgl {
         }
 
         public render():void {
-            this.canvas.$context2d.clearAll();
-            this.canvas.$context2d.fillStyle = "#000000";
+            this.canvas.$context2d.clearRect(0,0,this.width-1,this.height);
+            this.canvas.$context2d.fillStyle = "#000100";
+            this.canvas.$context2d.textBaseline = "top";
             this.canvas.$context2d.font = "20px sans-serif";
             this.canvas.$context2d.fillText("fps : " + this.fps + ", " + this.timeUsed + "\n" + "draw : " + this.renderCount + ", " + this.renderDraw,0,0);
         }
