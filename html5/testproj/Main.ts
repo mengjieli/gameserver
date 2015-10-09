@@ -16,6 +16,7 @@ module game {
 
             this.canvas = new webgl.Canvas(window.innerWidth, window.innerHeight);
             webgl.Stage.getInstance().addCanvasAt(this.canvas);
+            //webgl.Stage.getInstance().clearColor = 0x888888;
             this.context2d = <any>this.canvas.getContext("2d", {"realTime": false});
 
             new ImageLoader(["resources/128x128_1.png", "resources/128x128_2.png", "resources/512x512_1.png"], this.loadImageComplete, this);
@@ -31,7 +32,6 @@ module game {
             //this.context2d.blendMode = webgl.BlendMode.ADD;
             //this.context2d.drawImage(images[1], 150, 250);
 
-            //var cxt2d:CanvasRenderingContext2D = this.h5Canvas.getContext("2d");
             //cxt2d.fillStyle = "#0000aa";
             //cxt2d.fillRect(0,0,100,100);
             //
@@ -53,19 +53,56 @@ module game {
                 new MoveBitmap(t1, this.context2d);
                 new MoveBitmap(t2, this.context2d);
             }
-            console.log(Math.pow(2,32));
-            var a = 0xffffffff;
-            console.log(a);
-            a = a|0;
-            console.log(a);
 
-            this.context2d.drawTexture(t1,{a:1,b:0,c:0,d:1,tx:0,ty:0});
-            this.context2d.globalAlpha = 0.5;
-            this.context2d.drawTexture(t2,{a:1,b:0,c:0,d:1,tx:0,ty:0});
-            //this.context2d.drawImage(images[1],0,0);
+            //this.context2d.drawTexture(t1, {a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0});
+            //this.context2d.globalAlpha = 0.5;
+            //this.context2d.drawTexture(t2, {a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0});
+            //var matrix = {a: 1.25, b: 0.9, c: -0.15, d: 1.15, tx: 30, ty: 70};
+            var matrix = {a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0};
+            this.context2d.setTransform(matrix.a, matrix.c, matrix.b, matrix.d, matrix.tx, matrix.ty);
+            //this.context2d.rotate(Math.PI/4);
+            //this.context2d.translate(100, 150);
+            //this.context2d.scale(2,2);
+            ////this.context2d.rotate(Math.PI/4);
+            //this.context2d.translate(-70, -50);
+            this.context2d.transform(matrix.a, matrix.c, matrix.b, matrix.d, matrix.tx, matrix.ty);
+            ////this.context2d.drawImage(images[0], 0, 0);
+            //this.context2d.drawImage(images[0], 0, 25, images[0].width / 2, images[0].height / 4);
+            this.context2d.textBaseline = "top";
+            this.context2d.font = "48px Helvetica";
+            //this.context2d.fillText("况我们1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",0,0,200);
+            this.context2d.fillText("况啊呀1234567890abdjfhpq奥们我cdeyghijklmnopqrstufvwxyzABC奥了吗1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", 500, 0, 400);
+            this.context2d.clearRect(0, 0, this.canvas.width, this.canvas.height);
+            //this.context2d.fillText("pqrstuvwxyzABCpqrstuvwxyzABCpqrstuvwxyzABCpqrstuvwxyzABCpqrstuvwxyzABCpqrstuvwxyzABC",0,0,200);
+            //this.context2d.fillText("矢量图的基本思路无论是线段还是曲线段全部都会转成三角形线段是用两个三角形分割曲线会全部转成贝塞尔曲线贝塞尔曲线再划分为线段线段转三角形",0,0,200);
+            this.context2d.fillText("ABCABCABCABCABCABCABC", 0, 0, 400);
+            //this.context2d.fillText("1M", 0, 0, 400);
+
+            var canvas = <any>document.getElementById("c2d");
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            var cxt2d:CanvasRenderingContext2D = canvas.getContext("2d", {"antialiasing": true});
+            cxt2d.fillStyle = "rgb(200,200,255)";
+            cxt2d.fillRect(0, 0, canvas.width, canvas.height);
+            cxt2d.fillStyle = "rgb(0,0,0)";
+
+            cxt2d.setTransform(matrix.a, matrix.c, matrix.b, matrix.d, matrix.tx, matrix.ty);
+            //cxt2d.rotate(Math.PI/4);
+            //cxt2d.translate(100, 150);
+            //cxt2d.scale(2, 2);
+            ////cxt2d.rotate(Math.PI/4);
+            //cxt2d.translate(-70, -50);
+            cxt2d.transform(matrix.a, matrix.c, matrix.b, matrix.d, matrix.tx, matrix.ty);
+            ////cxt2d.drawImage(images[0], 0, 0);
+            //cxt2d.drawImage(images[0], 0, 25, images[0].width / 2, images[0].height / 4);
+            cxt2d.textBaseline = "top";
+            cxt2d.font = "96px Helvetica";
+            cxt2d.fillText("况我们1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", 0, 0);
+            cxt2d.fillText("况我们1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", 0, 96);
+            cxt2d.fillText("况我们1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", 0, 192);
 
 
-            ////var t1 = new webgl.Texture(webgl.CanvasRenderingContext2D.createTexture(images[0]),images[0].width,images[0].height);
+            ////var t1 = new webgl.Texture(webgl.Canva,images[1].width/2,images[1].height*2);sRenderingContext2D.createTexture(images[0]),images[0].width,images[0].height);
             //var matrix = new Matrix();
             ////matrix.rotate(-Math.PI/4);
             //matrix.scale(4,4);

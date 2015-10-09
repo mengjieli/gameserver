@@ -2,6 +2,8 @@ module webgl {
 
     export class Texture {
 
+        private static id:number = 0;
+
         constructor(texture:WebGLTexture, width:number, height:number, sourceX?:number, sourceY?:number, sourceWidth?:number, sourceHeight?:number) {
             this._texture = texture;
             this._width = +width | 0;
@@ -16,10 +18,17 @@ module webgl {
             if (!this._sourceHeight) {
                 this._sourceHeight = this._height;
             }
-            this._startX = this._sourceX/this._width;
-            this._startY = this._sourceY/this._height;
-            this._endX = (this._sourceX + this._sourceWidth)/this._width;
-            this._endY = (this._sourceY + this._sourceHeight)/this._height;
+            this._startX = this._sourceX / this._width;
+            this._startY = this._sourceY / this._height;
+            this._endX = (this._sourceX + this._sourceWidth) / this._width;
+            this._endY = (this._sourceY + this._sourceHeight) / this._height;
+            this._id = Texture.id;
+            Texture.id++;
+        }
+
+        private _id:number = 0;
+        public get id():number {
+            return this._id;
         }
 
         private _texture:WebGLTexture;

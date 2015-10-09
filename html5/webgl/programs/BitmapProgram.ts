@@ -189,6 +189,7 @@ module webgl {
             }
             for (var i = 0, len = _this.textures.length; i < len; i++) {
                 BlendMode.changeBlendMode(this.blendMode[i]);
+                console.log("切换纹理：",i,_this.textures[i]["textureId"],_this.positionData[i],_this.count[i]);
                 gl.bindTexture(gl.TEXTURE_2D, _this.textures[i]);
                 gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(_this.positionData[i]), gl.STATIC_DRAW);
                 gl.drawArrays(gl.TRIANGLES, 0, 6 * _this.count[i]);

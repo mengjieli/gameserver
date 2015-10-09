@@ -41,13 +41,13 @@ module webgl {
                 canvas.height = this._height;
                 Stage.$shareContext2D = canvas.getContext("2d");
             }
-            gl.clearColor(0.5, 0.5, 0.5, 1.0);
             gl.viewport(0, 0, this._width, this._height);
             gl.enable(gl.BLEND);
             gl.blendColor(1.0, 1.0, 1.0, 1.0);
             //gl.enable(gl.CULL_FACE);
             gl.activeTexture(gl.TEXTURE0);
             gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, 1);
+            gl.clearColor(0.5, 0.5, 0.5, 1.0);
 
             t.MainCommand.getInstance();
         }
