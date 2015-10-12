@@ -198,7 +198,7 @@ module webgl {
                 this.deleteTextures.pop().dispose();
             }
             this.noDrawTaskLength = 0;
-            if(hasRender) {
+            if (hasRender) {
                 Stage.getInstance().$setDirty();
             }
         }
@@ -267,6 +267,28 @@ module webgl {
             matrix.d = d;
         }
 
+        private states = [];
+
+        public save():void {
+            this.states.push({
+                "globalAlpha": this._globalAlpha,
+                "transform": {
+                    "a": this._transform.a,
+                    "b": this._transform.b,
+                    "c": this._transform.c,
+                    "d": this._transform.d,
+                    "tx": this._transform.tx,
+                    "ty": this._transform.ty
+                }
+            });
+        }
+
+        public resotre():void {
+            var state = this.states.pop();
+            this.globalAlpha = state.globalAlpha;
+            this.setTransform(state.transform.a, state.transform.c, state.transform.b, state.transform.d, state.transform.tx, state.transform.ty);
+        }
+
         /**
          * 清除一块矩形区域内的像素颜色
          * @param x
@@ -289,10 +311,14 @@ module webgl {
             }, 0x00000000, BlendMode.OVERRIDE);
             this.tasks.push(task);
             if (this.realTime) {
-                this.$render();
-                if (this.$addedToStage) {
-                    Stage.getInstance().$render();
-                }
+                this.realTimeRender();
+            }
+        }
+
+        private realTimeRender():void {
+            this.$render();
+            if (this.$addedToStage) {
+                Stage.getInstance().$render();
             }
         }
 
@@ -359,10 +385,7 @@ module webgl {
         public drawTexture(texture:Texture, matrix:{a:number;b:number;c:number;d:number;tx:number;ty:number}):void {
             this.tasks.push(new BitmapTask(this.bitmapProgram, texture, matrix, this._globalAlpha, this._blendMode));
             if (this.realTime) {
-                this.$render();
-                if (this.$addedToStage) {
-                    Stage.getInstance().$render();
-                }
+                this.realTimeRender();
             }
         }
 
@@ -432,6 +455,9 @@ module webgl {
         public clearAll():void {
             this.tasks.push(ClearTask.getInstance());
             this.noDrawTaskLength++;
+            if (this.realTime) {
+                this.realTimeRender();
+            }
         }
 
         public get width():number {

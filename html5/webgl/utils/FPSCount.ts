@@ -10,15 +10,16 @@ module webgl {
         private height = 100;
 
         constructor() {
-            var canvas = new Canvas(this.width,this.height);
+            var canvas = new Canvas(this.width*2,this.height);
             Stage.getInstance().$addTopCanvasAt(canvas);
-            canvas.getContext("2d");
+            canvas.getContext("2d", {"realTime": false});
             canvas.$context2d.inDraw = false;
             this.canvas = canvas;
         }
 
         public render():void {
             this.canvas.$context2d.clearAll();
+            //this.canvas.$context2d.clearRect(0,0,this.width,this.height);
             this.canvas.$context2d.fillStyle = "#000100";
             this.canvas.$context2d.textBaseline = "top";
             this.canvas.$context2d.font = "20px sans-serif";

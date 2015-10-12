@@ -17,7 +17,7 @@ module game {
             this.canvas = new webgl.Canvas(window.innerWidth, window.innerHeight);
             webgl.Stage.getInstance().addCanvasAt(this.canvas);
             //webgl.Stage.getInstance().clearColor = 0x888888;
-            this.context2d = <any>this.canvas.getContext("2d", {"realTime": false});
+            this.context2d = <any>this.canvas.getContext("2d", {"realTime": true});
 
             new ImageLoader(["resources/128x128_1.png", "resources/128x128_2.png", "resources/512x512_1.png"], this.loadImageComplete, this);
         }
@@ -57,22 +57,27 @@ module game {
             //this.context2d.drawTexture(t1, {a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0});
             //this.context2d.globalAlpha = 0.5;
             //this.context2d.drawTexture(t2, {a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0});
-            //var matrix = {a: 1.25, b: 0.9, c: -0.15, d: 1.15, tx: 30, ty: 70};
-            var matrix = {a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0};
+            var matrix = {a: 1.25, b: 0.9, c: -0.15, d: 1.15, tx: 30, ty: 70};
+            //var matrix = {a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0};
+            this.context2d.save();
             this.context2d.setTransform(matrix.a, matrix.c, matrix.b, matrix.d, matrix.tx, matrix.ty);
+            this.context2d.rotate(Math.PI/4);
+            this.context2d.translate(100, 150);
+            this.context2d.scale(2,2);
             //this.context2d.rotate(Math.PI/4);
-            //this.context2d.translate(100, 150);
-            //this.context2d.scale(2,2);
-            ////this.context2d.rotate(Math.PI/4);
-            //this.context2d.translate(-70, -50);
+            this.context2d.translate(-70, -50);
             this.context2d.transform(matrix.a, matrix.c, matrix.b, matrix.d, matrix.tx, matrix.ty);
             ////this.context2d.drawImage(images[0], 0, 0);
-            //this.context2d.drawImage(images[0], 0, 25, images[0].width / 2, images[0].height / 4);
-            this.context2d.textBaseline = "top";
-            this.context2d.font = "100px Helvetica";
-            this.context2d.fillText("QX！", 0, 100);
-            this.context2d.fillText("我abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", 500, 0, 400);
-            this.context2d.clearRect(0, 0, this.canvas.width, 150);
+            this.context2d.drawImage(images[0], 0, 25, images[0].width / 2, images[0].height / 4);
+            this.context2d.resotre();
+            this.context2d.drawImage(images[1],100,100,images[1].width / 2, images[1].height / 4);
+
+
+            //this.context2d.textBaseline = "top";
+            //this.context2d.font = "100px Helvetica";
+            //this.context2d.fillText("QX！", 0, 100);
+            //this.context2d.fillText("我abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", 500, 0, 400);
+            //this.context2d.clearRect(0, 0, this.canvas.width, 150);
             //this.context2d.clearAll();
             //this.context2d.fillText("1M", 0, 0, 400);
 

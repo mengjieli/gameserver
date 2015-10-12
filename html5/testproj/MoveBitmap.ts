@@ -5,7 +5,7 @@ module game {
         private texture:webgl.Texture;
         private x:number;
         private y:number;
-        private maxvx:number = 1;
+        private maxvx:number = 100;
         private vx:number;
         private maxWidth:number;
         private maxHeight:number;
@@ -22,7 +22,7 @@ module game {
             this.maxHeight = h;
             this.x = Math.random() * (w - texture.width);
             this.y = Math.random() * (h - texture.height);
-            this.maxvx = 0.5 + 1.5 * Math.random();
+            this.maxvx = (0.5 + 1.5 * Math.random())*1;
             if (Math.random() > 0.5) {
                 this.vx = this.maxvx;
             } else {
@@ -78,7 +78,8 @@ module game {
         private static context2d:webgl.CanvasRenderingContext2D;
 
         private static update():void {
-            MoveBitmap.context2d.clearRect(0, 0, window.innerWidth, window.innerHeight);
+            //MoveBitmap.context2d.clearRect(0, 0, window.innerWidth, window.innerHeight);
+            MoveBitmap.context2d.clearAll();
             var bitmaps = MoveBitmap.bitmaps;
             for (var i = 0, len = bitmaps.length; i < bitmaps.length; i++) {
                 bitmaps[i].update();
