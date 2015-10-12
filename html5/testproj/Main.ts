@@ -69,37 +69,35 @@ module game {
             ////this.context2d.drawImage(images[0], 0, 0);
             //this.context2d.drawImage(images[0], 0, 25, images[0].width / 2, images[0].height / 4);
             this.context2d.textBaseline = "top";
-            this.context2d.font = "48px Helvetica";
-            //this.context2d.fillText("况我们1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",0,0,200);
-            this.context2d.fillText("况啊呀1234567890abdjfhpq奥们我cdeyghijklmnopqrstufvwxyzABC奥了吗1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", 500, 0, 400);
-            this.context2d.clearRect(0, 0, this.canvas.width, this.canvas.height);
-            //this.context2d.fillText("pqrstuvwxyzABCpqrstuvwxyzABCpqrstuvwxyzABCpqrstuvwxyzABCpqrstuvwxyzABCpqrstuvwxyzABC",0,0,200);
-            //this.context2d.fillText("矢量图的基本思路无论是线段还是曲线段全部都会转成三角形线段是用两个三角形分割曲线会全部转成贝塞尔曲线贝塞尔曲线再划分为线段线段转三角形",0,0,200);
-            this.context2d.fillText("ABCABCABCABCABCABCABC", 0, 0, 400);
+            this.context2d.font = "100px Helvetica";
+            this.context2d.fillText("QX！", 0, 100);
+            this.context2d.fillText("我abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", 500, 0, 400);
+            this.context2d.clearRect(0, 0, this.canvas.width, 150);
+            //this.context2d.clearAll();
             //this.context2d.fillText("1M", 0, 0, 400);
 
-            var canvas = <any>document.getElementById("c2d");
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            var cxt2d:CanvasRenderingContext2D = canvas.getContext("2d", {"antialiasing": true});
-            cxt2d.fillStyle = "rgb(200,200,255)";
-            cxt2d.fillRect(0, 0, canvas.width, canvas.height);
-            cxt2d.fillStyle = "rgb(0,0,0)";
-
-            cxt2d.setTransform(matrix.a, matrix.c, matrix.b, matrix.d, matrix.tx, matrix.ty);
-            //cxt2d.rotate(Math.PI/4);
-            //cxt2d.translate(100, 150);
-            //cxt2d.scale(2, 2);
+            //var canvas = <any>document.getElementById("c2d");
+            //canvas.width = window.innerWidth;
+            //canvas.height = window.innerHeight;
+            //var cxt2d:CanvasRenderingContext2D = canvas.getContext("2d", {"antialiasing": true});
+            //cxt2d.fillStyle = "rgb(200,200,255)";
+            //cxt2d.fillRect(0, 0, canvas.width, canvas.height);
+            //cxt2d.fillStyle = "rgb(0,0,0)";
+            //
+            //cxt2d.setTransform(matrix.a, matrix.c, matrix.b, matrix.d, matrix.tx, matrix.ty);
             ////cxt2d.rotate(Math.PI/4);
-            //cxt2d.translate(-70, -50);
-            cxt2d.transform(matrix.a, matrix.c, matrix.b, matrix.d, matrix.tx, matrix.ty);
-            ////cxt2d.drawImage(images[0], 0, 0);
-            //cxt2d.drawImage(images[0], 0, 25, images[0].width / 2, images[0].height / 4);
-            cxt2d.textBaseline = "top";
-            cxt2d.font = "96px Helvetica";
-            cxt2d.fillText("况我们1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", 0, 0);
-            cxt2d.fillText("况我们1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", 0, 96);
-            cxt2d.fillText("况我们1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", 0, 192);
+            ////cxt2d.translate(100, 150);
+            ////cxt2d.scale(2, 2);
+            //////cxt2d.rotate(Math.PI/4);
+            ////cxt2d.translate(-70, -50);
+            //cxt2d.transform(matrix.a, matrix.c, matrix.b, matrix.d, matrix.tx, matrix.ty);
+            //////cxt2d.drawImage(images[0], 0, 0);-*+-
+            ////cxt2d.drawImage(images[0], 0, 25, images[0].width / 2, images[0].height / 4);
+            //cxt2d.textBaseline = "top";
+            //cxt2d.font = "24px Helvetica";
+            //cxt2d.fillText("况我们\r12345678\n90abc\tdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", 0, 0);
+            //cxt2d.fillText("我们", 0, 96,100);
+            //cxt2d.fillText("况我们1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", 0, 192);
 
 
             ////var t1 = new webgl.Texture(webgl.Canva,images[1].width/2,images[1].height*2);sRenderingContext2D.createTexture(images[0]),images[0].width,images[0].height);

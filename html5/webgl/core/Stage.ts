@@ -73,24 +73,8 @@ module webgl {
                     var time:number = (new Date()).getTime();
                     BlendMode.changeBlendMode(BlendMode.NONE);
                     Stage.$count = Stage.$draw = 0;
-                    Stage.$renderBuffer = false;
-                    for (var s = 0; s < _this.children.length; s++) {
-                        if (_this.children[s].$context2d && _this.children[s].$context2d.$clearScreen == false) {
-                            Stage.$renderBuffer = true;
-                            break;
-                        }
-                    }
-                    for (var s = 0; s < _this.topChildren.length; s++) {
-                        if (_this.topChildren[s].$context2d && _this.topChildren[s].$context2d.$clearScreen == false) {
-                            Stage.$renderBuffer = true;
-                            break;
-                        }
-                    }
-                    //Stage.$renderBuffer = false;
                     _this.preRender();
-                    if (Stage.$renderBuffer) {
-                        _this.$render();
-                    }
+                    _this.$render();
                     FPSCount.getInstance().setRenderCount(Stage.$count);
                     FPSCount.getInstance().setRenderDraw(Stage.$draw);
                     FPSCount.useTime((new Date()).getTime() - time);
@@ -265,8 +249,6 @@ module webgl {
         public static create(gl:WebGLRenderingContext, width:number, height:number):void {
             new Stage(gl, width, height);
         }
-
-        public static $renderBuffer = false;
 
         public static $count:number = 0;
         public static $draw:number = 0;

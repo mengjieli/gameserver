@@ -134,7 +134,6 @@ module webgl {
             var width = texture.sourceWidth;
             var height = texture.sourceHeight;
 
-            //matrix.ty += this._offY;
             positionData[index] = matrix.b * height + matrix.tx;
             positionData[1 + index] = matrix.d * height + matrix.ty;
             positionData[2 + index] = texture.startX;
@@ -170,7 +169,7 @@ module webgl {
             gl.vertexAttribPointer(_this.a_Position, 2, gl.FLOAT, false, $size * 5, 0);
             gl.vertexAttribPointer(_this.a_TexCoord, 2, gl.FLOAT, false, $size * 5, $size * 2);
             gl.vertexAttribPointer(_this.a_Alpha, 1, gl.FLOAT, false, $size * 5, $size * 4);
-            if (Stage.$renderBuffer && this._offY) {
+            if (this._offY) {
                 var positionData = this.positionData;
                 var pdata;
                 var index = 0;
@@ -189,7 +188,6 @@ module webgl {
             }
             for (var i = 0, len = _this.textures.length; i < len; i++) {
                 BlendMode.changeBlendMode(this.blendMode[i]);
-                console.log("切换纹理：",i,_this.textures[i]["textureId"],_this.positionData[i],_this.count[i]);
                 gl.bindTexture(gl.TEXTURE_2D, _this.textures[i]);
                 gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(_this.positionData[i]), gl.STATIC_DRAW);
                 gl.drawArrays(gl.TRIANGLES, 0, 6 * _this.count[i]);

@@ -118,7 +118,7 @@ module webgl {
         public render():void {
             var gl = Stage.$webgl;
             var _this = this;
-            if(Stage.$renderBuffer && this._offY) {
+            if(this._offY) {
                 var positionData = this.positionData;
                 var pdata;
                 var index = 0;

@@ -47,8 +47,8 @@ module webgl {
         private dirtyTextures:WebGLTexture[] = [];
         private dirtyTextureIds = {};
         private dirtyCanvas = [];
+        private lineHeight:number = 0;
         private dirty:boolean = false;
-        private offY:number = 0;
 
         private addNewTexture():void {
             this.canvas = document.createElement("canvas");
@@ -62,37 +62,54 @@ module webgl {
             this.context2d.fillStyle = this._fontColor;
             this.texture = webgl.CanvasRenderingContext2D.createTexture(this.canvas);
             this.startX = this.startY = 0;
-            this.offY = 0;//-Math.floor(this._fontSize / 12);
+            this.lineHeight = 0;
             document.body.appendChild(this.canvas);
         }
 
         private chars = {};
 
-        public getChar(char):TextAtlasInfo {
+        public getChar(char:string, realTime:boolean):TextAtlasInfo {
             if (!this.chars[char]) {
                 var context2d = Stage.$shareContext2D;
                 context2d.font = (this._bold ? "bold " : "") + (this._italic ? "italic " : "") + this._fontSize + "px " + this._fontFamily;
-                var w = Stage.$shareContext2D.measureText(char).width;
-                if (w + this.startX > this.size && this.startY + this.charHeight*2 > this.size) {
-                    this.addNewTexture();
+                //由于中文文字也会超出基线下方，字体每大 50 号多一像素
+                var charHeight = Math.ceil(this.charHeight * 1.02);
+                //gjpqy会超出基线下方，字体每大 5 号多一像素
+                if (char == "g" || char == "j" || char == "p" || char == "q" || char == "y") {
+                    charHeight = Math.ceil(this.charHeight * 1.2);
                 }
+                //Q会超出基线下方，字体每大 15 号多一像素
+                if (char == "Q") {
+                    charHeight += Math.ceil(this.charHeight * 0.066);
+                }
+                var w = Stage.$shareContext2D.measureText(char).width;
                 if (w + this.startX > this.size) {
                     this.startX = 0;
-                    this.startY += this.charHeight;
+                    this.startY += this.lineHeight;
+                    this.lineHeight = 0;
                 }
-                if(char == "们" || char == "p") console.log(char,this.startY);
-                this.chars[char] = new TextAtlasInfo(new Texture(this.texture, this.size, this.size, this.startX, this.startY, Math.ceil(w), this.charHeight), this.startX, this.startY, w, this.charHeight, char);
-                this.context2d.fillText(char, this.startX, this.startY + this.offY);
+                if (this.startY + charHeight > this.size) {
+                    this.addNewTexture();
+                }
+                if (charHeight > this.lineHeight) {
+                    this.lineHeight = charHeight;
+                }
+                this.chars[char] = new TextAtlasInfo(new Texture(this.texture, this.size, this.size, this.startX, this.startY, Math.ceil(w), charHeight), this.startX, this.startY, w, charHeight, char);
+                this.context2d.fillText(char, this.startX, this.startY);
                 this.startX += Math.ceil(w);
-                if(!this.dirtyTextureIds[this.texture["id"]]) {
+                if (!this.dirtyTextureIds[this.texture["id"]]) {
                     this.dirtyTextureIds[this.texture["id"]] = true;
                     this.dirtyTextures.push(this.texture);
                     this.dirtyCanvas.push(this.canvas);
                 }
-                if (!this.dirty) {
-                    TextAtlas.updateList.push(this);
+                if (realTime) {
+                    this.update();
+                } else {
+                    if (!this.dirty) {
+                        TextAtlas.updateList.push(this);
+                        this.dirty = true;
+                    }
                 }
-                this.dirty = true;
             }
             return this.chars[char];
         }
@@ -118,12 +135,12 @@ module webgl {
 
         private static atlases = {};
 
-        public static getChar(fontColor:String, fontFamily:string, fontSize:number, bold:boolean, italic:boolean, char:string):TextAtlasInfo {
+        public static getChar(fontColor:String, fontFamily:string, fontSize:number, bold:boolean, italic:boolean, char:string, realTime:boolean):TextAtlasInfo {
             var key = fontFamily + fontSize + (bold ? "1" : "0") + (italic ? "1" : "0");
             if (!TextAtlas.atlases[key]) {
                 TextAtlas.atlases[key] = new TextAtlas(fontColor, fontFamily, fontSize, bold, italic);
             }
-            return TextAtlas.atlases[key].getChar(char);
+            return TextAtlas.atlases[key].getChar(char, realTime);
         }
     }
 }

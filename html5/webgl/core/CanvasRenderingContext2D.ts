@@ -105,12 +105,6 @@ module webgl {
             this._height = +val | 0;
         }
 
-        private _clearScreen:boolean = false;
-
-        public get $clearScreen():boolean {
-            return this._clearScreen;
-        }
-
         public get $texture():Texture {
             return this.frameTexture;
         }
@@ -164,18 +158,20 @@ module webgl {
                 Stage.$count += tasks.length - this.noDrawTaskLength;
             }
             TextAtlas.$checkUpdate();
-            if (Stage.$renderBuffer) {
-                gl.bindFramebuffer(gl.FRAMEBUFFER, this.frameBuffer);
-            } else {
-                gl.bindFramebuffer(gl.FRAMEBUFFER, null);
-            }
+            gl.bindFramebuffer(gl.FRAMEBUFFER, this.frameBuffer);
             tasks.reverse();
+            var hasRender = false;
             while (tasks.length) {
                 task = tasks.pop();
                 if (task instanceof ClearTask) {
+                    if (program) {
+                        program.render();
+                        program = null;
+                    }
                     task.render();
                     continue;
                 }
+                hasRender = true;
                 if (!program) {
                     program = task.program;
                     program.reset();
@@ -202,8 +198,9 @@ module webgl {
                 this.deleteTextures.pop().dispose();
             }
             this.noDrawTaskLength = 0;
-            this._clearScreen = false;
-            Stage.getInstance().$setDirty();
+            if(hasRender) {
+                Stage.getInstance().$setDirty();
+            }
         }
 
         private _globalAlpha:number = 1.0;
@@ -270,12 +267,18 @@ module webgl {
             matrix.d = d;
         }
 
+        /**
+         * 清除一块矩形区域内的像素颜色
+         * @param x
+         * @param y
+         * @param width
+         * @param height
+         */
         public clearRect(x:number, y:number, width:number, height:number):void {
             if (x <= 0 && y <= 0 && x + width >= this._width && y + height >= this._height) {
                 this.clearAll();
                 return;
             }
-            var gl = this.gl;
             var task = new RectShapeTask(Stage.$rectShapeProgram, width, height, {
                 a: 1,
                 b: 0,
@@ -354,7 +357,6 @@ module webgl {
          * @param matrix 仿射变换矩阵。
          */
         public drawTexture(texture:Texture, matrix:{a:number;b:number;c:number;d:number;tx:number;ty:number}):void {
-            var gl = this.gl;
             this.tasks.push(new BitmapTask(this.bitmapProgram, texture, matrix, this._globalAlpha, this._blendMode));
             if (this.realTime) {
                 this.$render();
@@ -381,7 +383,7 @@ module webgl {
             var realSizeH = Math.ceil(size * Math.sqrt(matrix.b * matrix.b + matrix.d * matrix.d));
             var realSize = realSizeW > realSizeH ? realSizeW : realSizeH;
             var fontScale = realSize / size;
-            var offY = Math.floor(size/10);
+            var offY = Math.floor(size / 10);
             matrix.a /= fontScale;
             matrix.d /= fontScale;
             matrix.b /= fontScale;
@@ -389,37 +391,29 @@ module webgl {
             var family = this._font.slice(this._font.search("px") + 3, this._font.length);
             var bold = this._font.indexOf("");
             var startX = 0;
-            var startY = 0;
             var textWidth = 0;
-            var textHeight = 0;
             var textures = [];
             var matrixs = [];
+            var textHeight = 0;
             for (var i = 0; i < text.length; i++) {
-                if (text.charCodeAt(i) == 10) {
-                    startX = 0;
-                    startY += atlas.height;
-                    continue;
-                }
-                var atlas = TextAtlas.getChar(this._fillStyle, family, realSize, this._font.search("bold") >= 0 ? true : false, this._font.search("italic") >= 0 ? true : false, text.charAt(i));
-                if (maxWidth && startX + atlas.width > maxWidth) {
-                    startX = 0;
-                    startY += atlas.height;
-                }
+                var atlas = TextAtlas.getChar(this._fillStyle, family, realSize, this._font.search("bold") >= 0 ? true : false, this._font.search("italic") >= 0 ? true : false, text.charAt(i), this.realTime);
+                textHeight = atlas.height;
+                textWidth += atlas.width;
+            }
+            var scaleX = maxWidth && textWidth > maxWidth ? maxWidth / textWidth : 1;
+            for (var i = 0; i < text.length; i++) {
+                var atlas = TextAtlas.getChar(this._fillStyle, family, realSize, this._font.search("bold") >= 0 ? true : false, this._font.search("italic") >= 0 ? true : false, text.charAt(i), this.realTime);
                 textures.push(atlas.texture);
                 matrixs.push({
-                    a: matrix.a,
+                    a: matrix.a * scaleX,
                     b: matrix.b,
                     c: matrix.c,
                     d: matrix.d,
-                    tx: matrix.a * startX + matrix.b * startY + matrix.tx,
-                    ty: matrix.c * startX + matrix.d * startY + matrix.ty + offY,
+                    tx: matrix.a * startX + matrix.tx,
+                    ty: matrix.c * startX + matrix.ty + offY,
                 });
-                startX += atlas.width;
-                if (textWidth < startX) {
-                    textWidth = startX;
-                }
+                startX += atlas.width * scaleX;
             }
-            textHeight = startY + atlas.height;
             for (i = 0; i < textures.length; i++) {
                 if (this._textAlign == "center") {
                     matrixs[i].tx -= textWidth / 2;
@@ -438,7 +432,6 @@ module webgl {
         public clearAll():void {
             this.tasks.push(ClearTask.getInstance());
             this.noDrawTaskLength++;
-            this._clearScreen = true;
         }
 
         public get width():number {
@@ -450,6 +443,7 @@ module webgl {
         }
 
         private static textureId:number = 0;
+
         public static createTexture(image:HTMLImageElement|HTMLCanvasElement|HTMLVideoElement|ImageData):WebGLTexture {
             var gl = Stage.$webgl;
             var texture = gl.createTexture();
