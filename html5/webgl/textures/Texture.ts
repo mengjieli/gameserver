@@ -1,5 +1,9 @@
 module webgl {
 
+    /**
+     * 纹理信息
+     * 包含一个真正的 2D 纹理 WebGLTexture 和纹理的别的信息，比如是否是里面的某一块(sourceX、sourceY、sourceWidth、sourceHeight)，目前没有做取某一块并旋转的功能
+     */
     export class Texture {
 
         private static id:number = 0;

@@ -33,12 +33,18 @@ module webgl {
             }
         }
 
+        /**
+         * 初始化，主要是初始化帧缓冲，一个 Context2D 就对应一个帧缓冲
+         * 帧缓冲必须绑定一个纹理，可以不绑定深度缓冲区
+         */
         private init():void {
             var gl = this.gl;
             if (!gl) {
                 return;
             }
+            //初始化帧缓冲
             this.frameBuffer = gl.createFramebuffer();
+            //初始化帧缓冲绑定的纹理
             var texture = CanvasRenderingContext2D.createRenderTexture(this._width, this._height);
             this.frameTexture = new Texture(texture, this._width, this._height);
             gl.bindFramebuffer(gl.FRAMEBUFFER, this.frameBuffer);
@@ -48,6 +54,9 @@ module webgl {
             }
         }
 
+        /**
+         * 清除内存，释放帧缓冲
+         */
         private clear():void {
             var gl = this.gl;
             if (!gl) {
@@ -77,6 +86,10 @@ module webgl {
 
         private offY = 0;
 
+        /**
+         * 设置要渲染哪个 Canvas，修改 Canvas 后必须重置帧缓冲，大小问题
+         * @param canvas
+         */
         public set canvas(canvas:Canvas) {
             if (this._canvas == canvas) {
                 return;
@@ -109,6 +122,20 @@ module webgl {
             return this.frameTexture;
         }
 
+        /**
+         * 绘制图像，包含了绘制图像的3个方法，这里只是一些数字转换问题和纹理处理问题，主要的内容还是在 drawTexture 里。
+         * 如果调用 drawImage ,每调用一次 drawImage 都会创建一个新的 Texture ，在绘制结束后自动释放。所以建议引擎里的 Bitmap 持有一个 Texture ，这样绘制时不用再创建 Texture ，效率会高 N 倍。
+         * 不过这个也可以优化，比如调用 drawImage 后创建的 Texture ，做一个失效机制，比如当 Texture 内存大于多少时释放一些最早创建的 Texture，这样效率也会高很多。
+         * @param image
+         * @param sx
+         * @param sy
+         * @param sWidth
+         * @param sHeight
+         * @param dx
+         * @param dy
+         * @param dWidth
+         * @param dHeight
+         */
         public drawImage(image:HTMLImageElement|Canvas, sx:number, sy:number, sWidth?:number, sHeight?:number, dx?:number, dy?:number, dWidth?:number, dHeight?:number):void {
             var texture:Texture;
             if (image instanceof Canvas) {
@@ -146,6 +173,9 @@ module webgl {
 
         private noDrawTaskLength:number = 0;
 
+        /**
+         * 渲染主体
+         */
         public $render():void {
             var gl = this.gl;
             var tasks = this.tasks;
@@ -154,15 +184,21 @@ module webgl {
             if (!tasks.length) {
                 return;
             }
+            //渲染计数器
             if (this._inDraw) {
                 Stage.$count += tasks.length - this.noDrawTaskLength;
             }
+            //检查文字纹理
             TextAtlas.$checkUpdate();
+            //绑定当前帧缓冲纹理
             gl.bindFramebuffer(gl.FRAMEBUFFER, this.frameBuffer);
+            //反转任务后，从尾部开始执行
             tasks.reverse();
             var hasRender = false;
+            //渲染任务
             while (tasks.length) {
                 task = tasks.pop();
+                //如果是清屏的任务，直接执行就可以。
                 if (task instanceof ClearTask) {
                     if (program) {
                         program.render();
@@ -172,12 +208,14 @@ module webgl {
                     continue;
                 }
                 hasRender = true;
+                //其它任务就看能否合并，如果不能合并就执行之前的任务。这里还有个优化没来的及做，就是图片如果纹理不同，但是区域没有跟之前的合并还是能继续合并渲染任务。
                 if (!program) {
                     program = task.program;
                     program.reset();
                     program.offY = this.offY;
                 }
                 if (program != task.program) {
+                    //draw 计数（合并过之后的）
                     if (this._inDraw) {
                         Stage.$draw += program.drawCount;
                     }
@@ -188,7 +226,9 @@ module webgl {
                 }
                 program.addTask(task);
             }
+            //执行最后的那个渲染 program。
             if (program) {
+                //draw 计数（合并过之后的）
                 if (this._inDraw) {
                     Stage.$draw += program.drawCount;
                 }
@@ -203,6 +243,11 @@ module webgl {
             }
         }
 
+        /**
+         * 全局透明度
+         * @type {number}
+         * @private
+         */
         private _globalAlpha:number = 1.0;
         public set globalAlpha(val:number) {
             this._globalAlpha = +val;
@@ -470,6 +515,11 @@ module webgl {
 
         private static textureId:number = 0;
 
+        /**
+         * 这里并没有加 image 对应 texture 的对应表，也就是说调用两次 createTexture，传同一个 image，会创建两个 texture，还可以进一步优化。
+         * @param image
+         * @returns {WebGLTexture}
+         */
         public static createTexture(image:HTMLImageElement|HTMLCanvasElement|HTMLVideoElement|ImageData):WebGLTexture {
             var gl = Stage.$webgl;
             var texture = gl.createTexture();

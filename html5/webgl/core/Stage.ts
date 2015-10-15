@@ -10,6 +10,13 @@ module webgl {
         private _width:number;
         private _height:number;
 
+        /**
+         * 一个 stage 里面可以有好几个 canvas 按照顺序叠加显示
+         * stage 分两层，一层是普通的 canvas 层，一层是 top，添加到 top ($addTopCanvasAt)的永远在普通的 canvas 层上。
+         * @param gl
+         * @param width
+         * @param height
+         */
         constructor(gl:WebGLRenderingContext, width:number, height:number) {
             if (Stage.instance) {
                 return;
@@ -30,6 +37,9 @@ module webgl {
             return this._height;
         }
 
+        /**
+         * 初始化 webgl 的基本参数，如果合并 3D 引擎后，这部分代码需要踢出去，看是做到一个公共库，还是做到 2d 或者 3d 里。需要合并的内容不多。
+         */
         private init():void {
             var gl = this.gl;
             Stage.$webgl = gl;
@@ -48,10 +58,10 @@ module webgl {
             gl.activeTexture(gl.TEXTURE0);
             gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, 1);
             gl.clearColor(0.5, 0.5, 0.5, 1.0);
-
             t.MainCommand.getInstance();
         }
 
+        //时间轴
         private startTick():void {
             var requestAnimationFrame =
                 window["requestAnimationFrame"] ||
@@ -65,7 +75,6 @@ module webgl {
                     return window.setTimeout(callback, 1000 / 60);
                 };
             }
-
             var _this = this;
             requestAnimationFrame.call(window, onTick);
             function onTick():void {
@@ -73,8 +82,11 @@ module webgl {
                     var time:number = (new Date()).getTime();
                     BlendMode.changeBlendMode(BlendMode.NONE);
                     Stage.$count = Stage.$draw = 0;
+                    //渲染每个 Canvas (帧缓冲)
                     _this.preRender();
+                    //把 Canvas (帧缓冲)绘制到舞台(屏幕)上
                     _this.$render();
+                    //渲染计数
                     FPSCount.getInstance().setRenderCount(Stage.$count);
                     FPSCount.getInstance().setRenderDraw(Stage.$draw);
                     FPSCount.useTime((new Date()).getTime() - time);
@@ -84,6 +96,11 @@ module webgl {
             }
         }
 
+        /**
+         * 添加一个 Canvas 到舞台，每个 Canvas 相当于一张图片，所以渲染的时候加一个图片渲染任务就可以了。
+         * @param canvas
+         * @param index
+         */
         public addCanvasAt(canvas:Canvas, index:number = -1) {
             var gl = this.gl;
             if (index == -1) {
@@ -195,6 +212,9 @@ module webgl {
             this._dirty = true;
         }
 
+        /**
+         * 渲染每个 Canvas
+         */
         private preRender():void {
             var children = this.children;
             for (var i = 0; i < children.length; i++) {
@@ -212,17 +232,25 @@ module webgl {
             }
         }
 
+        /**
+         * 渲染到舞台
+         */
         $render():void {
+            //如果舞台没有 dirty（Canvas 没有渲染任务），舞台也不需要刷新。
             if (!this._dirty) {
                 return;
             }
             this._dirty = false;
             var gl = this.gl;
+            //绑定舞台的渲染纹理。
             gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+            //清除舞台，这句如果和 3d 合并之后应该去掉
             gl.clear(gl.COLOR_BUFFER_BIT);
+            //渲染每个 Canvas
             var program = Stage.$bitmapProgram;
             program.reset();
             program.offY = 0;
+            //渲染普通的 Canvas 层
             var children = this.children;
             for (var i = 0; i < this.tasks.length; i++) {
                 if (!children[i].$context2d) {
@@ -230,6 +258,7 @@ module webgl {
                 }
                 program.addTask(this.tasks[i]);
             }
+            //渲染 top 层的 Canvas
             children = this.topChildren;
             for (var i = 0; i < this.topTasks.length; i++) {
                 if (!children[i].$context2d) {
@@ -254,7 +283,9 @@ module webgl {
         public static $draw:number = 0;
 
         public static $webgl:WebGLRenderingContext;
+        //图片渲染程序，渲染程序基本是固定的几个，渲染任务是每次调用一个 drawImage 或则 fillText 之类的用来保存渲染命令的，其实也可以立马渲染，但是立马渲染就不能做合并操作的优化了。
         public static $bitmapProgram:BitmapProgram;
+        //渲染一个矩形区域的程序，暂时只用来清部分屏幕 (clearRect)，叠加模式用 override （颜色覆盖），然后渲染一个颜色为 0x00000000 的矩形区域。
         public static $rectShapeProgram:RectShapeProgram;
         //HTML 的 CanvasRenderingContext2D
         public static $shareContext2D:any;

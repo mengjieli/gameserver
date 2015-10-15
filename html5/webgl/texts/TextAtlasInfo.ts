@@ -1,4 +1,8 @@
 module webgl {
+
+    /**
+     * 单个文字信息比如字母 a 就对应一个 TextAtlasInfo，字母 b 又是另外一个 TextAtlasInfo
+     */
     export class TextAtlasInfo {
         constructor(texture:Texture,x:number,y:number,width:number,height:number,char:string) {
             this._texture = texture;

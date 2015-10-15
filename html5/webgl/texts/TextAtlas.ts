@@ -1,5 +1,12 @@
 module webgl {
 
+    /**
+     * 文本内容管理(主要是文本纹理管理)
+     * 一个 TextAtlas 对应一种 fontColor、fontFamily、fontSize、bold、italic，这些值只要一个改变就会创建不同的 TextAtlas
+     * 文字在 Texture 是按照从上到下、从左到右一个个拍的，每一行文字的纹理高度取最高的那个，然后紧接着排下一行文字纹理。
+     * 一张文字纹理的大小目前是 512 x 512，排满后会申请一个新的纹理来存储新的文字纹理。
+     * 如果想看当前有哪些文字纹理的话可以打开 addNewTexture() 里的 document.body.appendChild(this.canvas); 就可以了。
+     */
     export class TextAtlas {
 
         constructor(fontColor:String, fontFamily:string, fontSize:number, bold:boolean, italic:boolean) {
@@ -50,6 +57,9 @@ module webgl {
         private lineHeight:number = 0;
         private dirty:boolean = false;
 
+        /**
+         * 添加一张新的纹理用于存储文字纹理
+         */
         private addNewTexture():void {
             this.canvas = document.createElement("canvas");
             this.canvas.width = this.canvas.height = this.size;
@@ -63,11 +73,18 @@ module webgl {
             this.texture = webgl.CanvasRenderingContext2D.createTexture(this.canvas);
             this.startX = this.startY = 0;
             this.lineHeight = 0;
-            document.body.appendChild(this.canvas);
+            //document.body.appendChild(this.canvas);
         }
 
         private chars = {};
 
+        /**
+         * 获取文字信息
+         * 有新的文字信息后不会立马更新对应的 Texture，会在第一个 Canvas 绘制(render)时更新
+         * @param char
+         * @param realTime
+         * @returns {any}
+         */
         public getChar(char:string, realTime:boolean):TextAtlasInfo {
             if (!this.chars[char]) {
                 var context2d = Stage.$shareContext2D;
@@ -94,6 +111,7 @@ module webgl {
                 if (charHeight > this.lineHeight) {
                     this.lineHeight = charHeight;
                 }
+                //产生一个新的文字信息
                 this.chars[char] = new TextAtlasInfo(new Texture(this.texture, this.size, this.size, this.startX, this.startY, Math.ceil(w), charHeight), this.startX, this.startY, w, charHeight, char);
                 this.context2d.fillText(char, this.startX, this.startY);
                 this.startX += Math.ceil(w);
@@ -114,6 +132,9 @@ module webgl {
             return this.chars[char];
         }
 
+        /**
+         * 更新对应的纹理
+         */
         public update():void {
             if (this.dirtyTextures.length) {
                 while (this.dirtyTextures.length) {

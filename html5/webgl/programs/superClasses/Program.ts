@@ -16,6 +16,12 @@ module webgl {
 
         }
 
+        /**
+         * offY 是来自于 Canvas 的高度不等于最初的 glViewPort 的高度时需要用到的值。如果这个 Canvas 没有显示到舞台也没关系了，不会影响到任何性能。
+         * offY 不能合并到 glsl 里是因为 canvas 的宽高会改变，所以没法一开始就写死。
+         * @type {number}
+         * @private
+         */
         protected _offY:number = 0;
         public set offY(val:number) {
             this._offY = val;
