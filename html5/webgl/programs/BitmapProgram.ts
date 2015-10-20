@@ -58,6 +58,7 @@ module webgl {
              void main(void)
              {
                 gl_FragColor = texture2D(u_Sampler,v_TexCoord)*v_Alpha;
+                discard;
              }
              `;
 

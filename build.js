@@ -40,7 +40,6 @@ var files = [
     //"game/GameMain.ts",
 
 
-    "webgl/utils/FPSCount.ts",
     "webgl/utils/BlendMode.ts",
 
     "webgl/textures/Texture.ts",

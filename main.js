@@ -1,4 +1,3 @@
-document.write("<script src='bin-debug/webgl/utils/FPSCount.js'></script>");
 document.write("<script src='bin-debug/webgl/utils/BlendMode.js'></script>");
 document.write("<script src='bin-debug/webgl/textures/Texture.js'></script>");
 document.write("<script src='bin-debug/webgl/renderTasks/superClasses/RenderTask.js'></script>");

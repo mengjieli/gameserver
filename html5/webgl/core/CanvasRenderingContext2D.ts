@@ -192,6 +192,7 @@ module webgl {
             TextAtlas.$checkUpdate();
             //绑定当前帧缓冲纹理
             gl.bindFramebuffer(gl.FRAMEBUFFER, this.frameBuffer);
+            gl.clear(gl.COLOR_BUFFER_BIT);
             //反转任务后，从尾部开始执行
             tasks.reverse();
             var hasRender = false;

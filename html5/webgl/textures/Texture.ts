@@ -122,7 +122,5 @@ module webgl {
             Stage.$webgl.deleteTexture(this._texture);
             this._texture = null;
         }
-
-
     }
 }

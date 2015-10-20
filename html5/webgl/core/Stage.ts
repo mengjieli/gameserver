@@ -87,10 +87,10 @@ module webgl {
                     //把 Canvas (帧缓冲)绘制到舞台(屏幕)上
                     _this.$render();
                     //渲染计数
-                    FPSCount.getInstance().setRenderCount(Stage.$count);
-                    FPSCount.getInstance().setRenderDraw(Stage.$draw);
-                    FPSCount.useTime((new Date()).getTime() - time);
-                    FPSCount.addCount();
+                    //FPSCount.getInstance().setRenderCount(Stage.$count);
+                    //FPSCount.getInstance().setRenderDraw(Stage.$draw);
+                    //FPSCount.useTime((new Date()).getTime() - time);
+                    //FPSCount.addCount();
                 }
                 requestAnimationFrame.call(window, onTick);
             }
@@ -120,9 +120,9 @@ module webgl {
                 }, 1.0, BlendMode.NORMAL));
             }
             canvas.$stage = this;
-            if (this.children.length == 0) {
-                FPSCount.getInstance();
-            }
+            //if (this.children.length == 0) {
+            //    FPSCount.getInstance();
+            //}
         }
 
         public $addTopCanvasAt(canvas:Canvas, index:number = -1) {
@@ -144,9 +144,9 @@ module webgl {
                 }, 1.0, BlendMode.NORMAL));
             }
             canvas.$stage = this;
-            if (this.topChildren.length == 0) {
-                FPSCount.getInstance();
-            }
+            //if (this.topChildren.length == 0) {
+            //    FPSCount.getInstance();
+            //}
         }
 
         $setCanvasTask(canvas:Canvas):void {

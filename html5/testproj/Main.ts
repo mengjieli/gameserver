@@ -27,7 +27,6 @@ module game {
         }
 
         private loadImageComplete(images:HTMLImageElement[]):void {
-
             var t1 = new webgl.Texture(webgl.CanvasRenderingContext2D.createTexture(images[0]), images[0].width, images[0].height);
             var t2 = new webgl.Texture(webgl.CanvasRenderingContext2D.createTexture(images[1]), images[1].width, images[1].height);
             var loop = 0;
@@ -35,12 +34,20 @@ module game {
                 new MoveBitmap(t1, this.context2d);
                 new MoveBitmap(t2, this.context2d);
             }
+            this.context2d.drawTexture(t1, {a: 1, b: 0, c: 0, d: 1, tx: 100, ty: 100});
+            this.context2d.clearRect(175,175,10,10);
+
+            var cxt2d = this.context2d;
+            setTimeout(function(){
+                cxt2d.clearRect(200,200,10,10);
+                cxt2d.drawTexture(t1, {a: 1, b: 0, c: 0, d: 1, tx: 250, ty: 250});
+            },1000);
         }
 
         // webgl 的环境获取写在外面主要考虑需要和 3D 的合并。
         private getWebGL(domcanvas:HTMLCanvasElement):WebGLRenderingContext {
             var names = ["experimental-webgl", "webgl"];
-            var options = {"antialias": false};
+            var options = {"antialias": false, "stencil": true};
             var gl:WebGLRenderingContext;
             for (var i = 0; i < names.length; i++) {
                 try {
