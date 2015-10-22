@@ -15,5 +15,9 @@ module webgl {
         public get blendMode():number {
             return this._blendMode;
         }
+
+        public render():void {
+
+        }
     }
 }

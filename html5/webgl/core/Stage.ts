@@ -53,6 +53,7 @@ module webgl {
             }
             gl.viewport(0, 0, this._width, this._height);
             gl.enable(gl.BLEND);
+            gl.enable(gl.STENCIL_TEST);
             gl.blendColor(1.0, 1.0, 1.0, 1.0);
             //gl.enable(gl.CULL_FACE);
             gl.activeTexture(gl.TEXTURE0);

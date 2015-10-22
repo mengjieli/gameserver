@@ -1,5 +1,5 @@
 module webgl {
-    export class ClearTask extends RenderTask{
+    export class ClearTask extends RenderTask {
         constructor() {
             super(null);
         }

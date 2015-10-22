@@ -8,6 +8,7 @@ module webgl {
          * 帧缓冲
          */
         private frameBuffer:WebGLFramebuffer;
+        private depthRenderbuffer:WebGLRenderbuffer;
         /**
          * 帧纹理
          */
@@ -44,14 +45,21 @@ module webgl {
             }
             //初始化帧缓冲
             this.frameBuffer = gl.createFramebuffer();
+            var depthRenderbuffer = gl.createRenderbuffer();
+            this.depthRenderbuffer = depthRenderbuffer;
             //初始化帧缓冲绑定的纹理
             var texture = CanvasRenderingContext2D.createRenderTexture(this._width, this._height);
             this.frameTexture = new Texture(texture, this._width, this._height);
             gl.bindFramebuffer(gl.FRAMEBUFFER, this.frameBuffer);
+            gl.bindRenderbuffer(gl.RENDERBUFFER, depthRenderbuffer);
+            gl.renderbufferStorage(gl.RENDERBUFFER, gl.STENCIL_INDEX8, this._width, this._height);
+            gl.framebufferRenderbuffer(gl.FRAMEBUFFER, gl.STENCIL_ATTACHMENT, gl.RENDERBUFFER, depthRenderbuffer);
             gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, texture, 0);
             if (gl.checkFramebufferStatus(gl.FRAMEBUFFER) !== gl.FRAMEBUFFER_COMPLETE) {
                 console.log("frame buffer error : " + gl.checkFramebufferStatus(gl.FRAMEBUFFER));
+                return;
             }
+            this.clearStencil();
         }
 
         /**
@@ -192,7 +200,6 @@ module webgl {
             TextAtlas.$checkUpdate();
             //绑定当前帧缓冲纹理
             gl.bindFramebuffer(gl.FRAMEBUFFER, this.frameBuffer);
-            gl.clear(gl.COLOR_BUFFER_BIT);
             //反转任务后，从尾部开始执行
             tasks.reverse();
             var hasRender = false;
@@ -200,7 +207,7 @@ module webgl {
             while (tasks.length) {
                 task = tasks.pop();
                 //如果是清屏的任务，直接执行就可以。
-                if (task instanceof ClearTask) {
+                if (task.program == null) {
                     if (program) {
                         program.render();
                         program = null;
@@ -420,6 +427,37 @@ module webgl {
 
         public set blendMode(val:number) {
             this._blendMode = +val | 0;
+        }
+
+        /**
+         * 清除模板缓冲区
+         * 主要功能是清除所有的遮罩
+         */
+        public clearStencil():void {
+            this.tasks.push(ClearStencilTask.getInstance());
+        }
+
+        /**
+         * 添加一个矩形区域当做遮罩
+         * @param x
+         * @param y
+         * @param width
+         * @param height
+         */
+        public addRectClip(x:number, y:number, width:number, height:number):void {
+            this.tasks.push(new RectClipTask(this.frameBuffer, x, y, width, height));
+        }
+
+        public addImageClip(image:HTMLImageElement, x:number, y:number):void {
+            this.addTextureClip(new Texture(CanvasRenderingContext2D.createTexture(image), image.width, image.height), x, y);
+        }
+
+        /**
+         * 添加一个图像纹理当做遮罩，并且图像颜色 alpha 为 0 的地方不属于遮罩内
+         * @param texture
+         */
+        public addTextureClip(texture:Texture, x:number, y:number):void {
+            this.tasks.push(new TextureClipTask(this.frameBuffer, texture, x, y));
         }
 
         /**

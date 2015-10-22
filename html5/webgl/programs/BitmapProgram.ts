@@ -8,6 +8,7 @@ module webgl {
         private a_TexCoord:any;
         private a_Alpha:any;
         private u_PMatrix:any;
+        private u_alphaZeroPass:any;
         private gl:WebGLRenderingContext;
 
         /**
@@ -41,9 +42,11 @@ module webgl {
              uniform mat4 u_PMatrix;
              varying vec2 v_TexCoord;
              varying float v_Alpha;
+             varying vec2 v_Position;
              void main(void)
              {
                 gl_Position = u_PMatrix*a_Position;
+                v_Position = vec2(a_Position[0],a_Position[1]);
                 v_TexCoord = a_TexCoord;
                 v_Alpha = a_Alpha;
              }
@@ -51,14 +54,18 @@ module webgl {
 
 
             var fragmentSource = `
-            precision mediump float;
+             precision mediump float;
              varying vec2 v_TexCoord;
              varying float v_Alpha;
+             varying vec2 v_Position;
              uniform sampler2D u_Sampler;
+             uniform int u_alphaZeroPass;
              void main(void)
              {
                 gl_FragColor = texture2D(u_Sampler,v_TexCoord)*v_Alpha;
-                discard;
+                if(u_alphaZeroPass != 0 && gl_FragColor[3] == 0.0) {
+                    discard;
+                }
              }
              `;
 
@@ -117,6 +124,9 @@ module webgl {
 
             this.u_PMatrix = gl.getUniformLocation(program, "u_PMatrix");
             gl.uniformMatrix4fv(this.u_PMatrix, false, projectionMatrix);
+
+            this.u_alphaZeroPass = gl.getUniformLocation(program, "u_alphaZeroPass");
+            gl.uniform1i(this.u_alphaZeroPass,0.0);
         }
 
 
@@ -124,6 +134,7 @@ module webgl {
         private count = [];
         private positionData = [];
         private blendMode = [];
+        private alphaZeroPass = [];
 
         public get drawCount():number {
             return this.count.length;
@@ -135,6 +146,7 @@ module webgl {
             _this.count = [];
             _this.positionData = [];
             _this.blendMode = [];
+            _this.alphaZeroPass = [];
         }
 
         /**
@@ -150,11 +162,13 @@ module webgl {
             }
 
             if (!this.textures.length || this.textures[this.textures.length - 1] != texture.texture ||
-                this.blendMode[this.blendMode.length - 1] != task.blendMode) {
+                this.blendMode[this.blendMode.length - 1] != task.blendMode ||
+                this.alphaZeroPass[this.alphaZeroPass.length-1] != bitmapTask.alphaZeroPass) {
                 this.textures.push(texture.texture);
                 this.positionData.push([]);
                 this.count.push(0);
                 this.blendMode.push(task.blendMode);
+                this.alphaZeroPass.push(bitmapTask.alphaZeroPass);
             }
 
             var index = this.count[this.count.length - 1] * 30;
@@ -220,6 +234,7 @@ module webgl {
             }
             //开始渲染任务
             for (var i = 0, len = _this.textures.length; i < len; i++) {
+                gl.uniform1i(this.u_alphaZeroPass,this.alphaZeroPass[i]?0:1);
                 //切换混合模式
                 BlendMode.changeBlendMode(this.blendMode[i]);
                 //绑定当前需要渲染的纹理

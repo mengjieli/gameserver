@@ -48,6 +48,9 @@ var files = [
     "webgl/renderTasks/BitmapTask.ts",
     "webgl/renderTasks/RectShapeTask.ts",
     "webgl/renderTasks/ClearTask.ts",
+    "webgl/renderTasks/ClearStencilTask.ts",
+    "webgl/renderTasks/RectClipTask.ts",
+    "webgl/renderTasks/TextureClipTask.ts",
 
     "webgl/programs/superClasses/Program.ts",
     "webgl/programs/BitmapProgram.ts",
